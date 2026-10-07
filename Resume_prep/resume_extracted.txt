@@ -1,0 +1,110 @@
+--- PAGE 1 ---
+Subrat 
+                                                                                                                                                                           
+ 
+SUMMARY 
+AI & Data Specialist with 10+ years of experience in building AI systems and ML solutions across industries like fintech, logistics, healthcare, 
+e-commerce, and media. I have hands on experience with LLMs, RAG pipelines and Computer Vision Models and worked across the full 
+lifecycle from data gathering and modeling to deployment and integration. Over the years, I have built and scaled AI -driven products to 
+400K+ users, including solutions like predictive and marketing models . I am experienced in bridging business strategy with practical AI 
+implementation, driving revenue growth, reducing marketing spend, and improving customer retention.  
+ 
+KEY HIGHLIGHT 
+- Zero-to-One Builder: Launched 2 successful business platforms and AI-powered products in MENA region and scaled to 400K+ users 
+with $2M+ MRR. 
+- Gen AI & Voice Agents: Worked on building Voice AI agents and LLM-based systems (RAG, LoRA/PEFT), improving automation, 
+accuracy, and real-time decision-making. 
+- AI-Driven Business Impact: Designed AI and ML solutions for fraud detection, customer segmentation, and revenue optimization, 
+improving conversion, retention, and operational efficiency. 
+ 
+SKILLS 
+• Generative AI & LLMs: LangGraph, LangChain, Multi-Agent Systems, RAG, LLM Fine-tuning (PEFT, LoRA), Azure Open AI, Azure Foundry, 
+Azure AI Search 
+• Machine Learning & Data Science: 
+◦ Algorithms: Classification, Regression, Clustering (K-Means), Random Forest, XGBoost, Fraud Detection Models, Computer Vision 
+Models 
+◦ Libraries: Hugging Face Transformers, Pandas, Scikit-learn, matplotlib, numpy, OpenCV. 
+◦ Methodologies: Predictive Modeling, User Segmentation, Funnel Analysis, MMM, MLOps, Model Drift Monitoring. 
+• Data Engineering & Cloud Platforms: 
+◦ Cloud Databases/Warehouses:Azure Data Factory, Azure Data Bricks, ADLS, Azure Synapse,  AWS Cloud, Google Cloud, SQL Server, 
+MySQL, PostgreSQL. 
+◦ ETL/Data Processing: Data Modeling, Data Warehousing, Data Collection. 
+• Business Intelligence & Analytics: 
+◦ Tools: Python, Git, SQL, CI/CD, Power BI (DAX, Power Query/M Language), Tableau, Looker Studio, Microsoft BI Stack, Microsoft Fabric 
+◦ Web Analytics: Google Analytics, Firebase, Mo Engage 
+ 
+WORK EXPERIENCE 
+Confidential - (Contract) AI Engineer Dubai Jun 2026 – Present 
+• Developed Agentic AI model in databricks to for rule  generaiton and automate end-to-end traffic data for data profiling and anomaly 
+detection workflows, reducing manual monitoring effort by 60%, improving issue detection, and enabling proactive identification of 
+critical incidents. 
+• Worked on ETL pipelines in Informatica by designing mappings, mapplets, transformations, workflows, and scheduled jobs, integrating 
+data from Oracle databases and flat files. 
+• Worked on implementing DAMA-based data quality practices and governance controls in databases to improve data readiness, 
+integrity, and compliance. 
+• Built and orchestrated Azure Data Factory (ADF) workflows for automated data ingestion and extraction, ensuring reliable and scalable 
+data pipelines. 
+• Designed AI-powered data quality and governance frameworks using sovereign AI models , automating 75% of data quality checks, 
+improving data accuracy by 30%, and establishing end-to-end data lineage across traffic data datasets. 
+ 
+Nyukt.AI - (Healthcare) AI Engineer Dubai September 2025 – Feb 2026 
+• Worked on the development of a conversational Design & human -like multilingual AI voice system capable of handling more than 
+1000+ calls daily. The platform integrates speech-to-text (STT), text-to-speech (TTS), and LLM to deliver natural interactions. 
+• Domain-Specific LLM Fine tuning: Optimization of an clinically-grade LLMs using PEFT (LoRA) on proprietary healthcare datasets, 
+achieving a 15% higher accuracy in medical suggestion compared to base foundation models (OpenAI, Claude).  
+• Worked on the development of AI-driven KYC agent using LangGraph framework and Azure Document Intelligence with Computer 
+Vision(OpenCV), automating user onboarding and reducing manual processing time by 70% & maintaining regulatory compliance. 
+
+--- PAGE 2 ---
+• Worked on setting up LLM evaluation frameworks and optimizing the latency with Grafana and LangSmith dashboards to monitor 
+performance, track model drift and optimize P95/P99 system reliability. 
+• Worked on RAG pipelines utilizing vector database implemented chunking, embedding, vector search, and hybrid retrieval strategies. 
+• Built AI safety framework or LLM guardrails using a Gatekeeper model for multilabel classification, helping reduce unsafe clinical 
+queries by 40% and improving overall AI safety and compliance. 
+• Contributed to MLOps practices including CI/CD pipelines, model & prompt versioning, using version control systems like Git. 
+ 
+ 
+TruKKer (MoXey Fintech) - (UAE & KSA) AI & Data Analytics Manager Dubai August 2022 – October 2024 
+• Built the analytics infrastructure for a fintech platform in UAE & KSA, supporting its scale to ARR of 100M AED. 
+• Designed and ML-based prediciton model (XGBoost, Random Forest), reducing fraud cases by 20% across Middle East markets. 
+• Designed ML-driven customer segmentation and CLV model, using marketing mix modelling (MMM) insights to optimize acquisition 
+and retention strategies, resulting in a 15% increase in retention and a 20% reduction in CAC. 
+• Built K-Means clustering model to identify high-value customer segments from transactional data, enabling more effective targeted 
+marketing strategies. 
+• Developed RFM models and performed customer profiling based on transactional behavior & App engagement. 
+• Drove analytical adoption and self-service reporting by standardizing 70+ reports into 25+ streamlined executive dashboards, utilizing 
+reusable semantic models and visualization best practices 
+• Built data pipeline with golden dataset design, star schema, and MS Fabric data flows, reducing data inaccuracies by 80%. 
+• Built a robust Data Warehouse using Azure Databricks and SQL, establishing a single source of truth across different business units in 
+Africa and the UAE. 
+• Developed Azure-based data pipelines integrated with MS Fabric, implementing star schema and created self-service tables to support 
+multi-country, multi-timezone, and multi-currency analytics. 
+• Led the implementation of structured data models (Star Schema) for key data pipelines, improving data accuracy, reducing duplication, 
+and enhancing data processing efficiency for reporting and analytics.  
+ 
+ASIANET NEWS NETWORK – Data & Growth Analytics Lead India May 2017 - September 2021 
+• Managed user and traffic growth for all 7 channels at Asianet News, achieving over 1B+  Page Views (PVs) and 90M+ Monthly Active 
+Users (MAUs). 
+• Built unique audience profiles using Audience Manager for sales teams to identify their most valuable segments and utilize th  em 
+across any digital channel. 
+• Worked on K-Means model, which was used to create clusters & generate segmented profiles of customers. The clusters Information 
+was used in FB marketing to lower the Cost per Acquisition (CPC) 
+• Have set up the entire reporting structure framework for all the channels (from the analytics report to content report). 
+• Building unique audience profiles using Audience Manager for sales so they can identify their most valuable segments and use them 
+across any digital channel. 
+ 
+INDIAMART - Category Manager India May 2015 - Jun 2016 
+• Worked directly with senior management and key stakeholders, including the CEO, to expand the Business of the Tool category unit 
+of IndiaMart into the B2B market, with an emphasis on aggressive expansion into the SME segment.  
+• Led the creation of a 6-month growth business roadmap to deliver a GMV of 3.2 crore, utilizing business demographics and 
+forecasting models, and executed plans based on consensus among key management and division heads.  
+ 
+ 
+ADITYA BIRLA GROUP Senior Engineer India July 2011 - Jun 2013 
+• As part of the procurement team, developed the concept of an Integrated Vendor Experience Centre, which reduced merchant 
+onboarding complexities, centralized ordering, and improved auditing.  
+• Handled the onboarding of over 200+ vendors within two months for material supply. 
+ 
+EDUCATION 
+MBA, Operations and Strategy | Great Lakes Institute of Management | 2015 | 3/4 (Deans List) 
+Bachelor of Engineering |VSSUT, Burla – India | 2011 | 80% 

@@ -1,0 +1,51 @@
+table_name,column_name,data_type,Business Domain,Table Business Meaning,Potential Variables for Credit Risk,Current,C,F
+apple_pay_applepaycard,bincode_id,integer,Payments ,Details of payments through Apple pay,"Paid_through_apple_pay,Card_Expiry",No,Yes,Yes
+apple_pay_applepaycard,issuer_country_id,character varying,,,,No,Yes,Yes
+apple_pay_applepaycard,expires,date,,,,No,Yes,Yes
+apple_pay_applepaycard,first_six_digits,character varying,,,,No,Yes,Yes
+apple_pay_applepaycard,id,integer,,,,No,Yes,Yes
+apple_pay_applepaycard,last_four_digits,character varying,,,,No,Yes,Yes
+apple_pay_applepaycard,name,character varying,,,,No,Yes,Yes
+cards_bincode,bank,character varying,Payment,"This card reference table which contain the details of card issuer entity , i.e. bank as well as card gateway,bin code ( Bank identification number)","Yes this can be used to create important variables for transaction such card issuer bank, card level (prepaid,classic,gold,infinite,standard),card type(whether credit or debit),validity,country, blacklisted etc.",Yes,Yes,Yes
+cards_bincode,bin,character varying,,,,Yes,Yes,Yes
+cards_bincode,blacklisted,timestamp without time zone,,,,Yes,Yes,Yes
+cards_bincode,brand,character varying,,,,Yes,Yes,Yes
+cards_bincode,country_id,character varying,,,,Yes,Yes,Yes
+cards_bincode,created,timestamp without time zone,,,,Yes,Yes,Yes
+cards_bincode,id,integer,,,,Yes,Yes,Yes
+cards_bincode,level,character varying,,,,Yes,Yes,Yes
+cards_bincode,modified,timestamp without time zone,,,,Yes,Yes,Yes
+cards_bincode,phone,character varying,,,,Yes,Yes,Yes
+cards_bincode,type,character varying,,,,Yes,Yes,Yes
+cards_bincode,valid,character varying,,,,Yes,Yes,Yes
+cards_bincode,website,character varying,,,,Yes,Yes,Yes
+cards_card,bincode_id,integer,Payment,This table contains the mapping between customer and card details,"Card Expiry date,Customer First name and last name mapping, Card mapping with Cards Bincode table",Yes,Yes,No
+cards_card,expires,date,,,,Yes,Yes,No
+cards_card,first_six_digits,character varying,,,,Yes,Yes,No
+cards_card,id,integer,,,,Yes,Yes,No
+cards_card,last_four_digits,character varying,,,,Yes,Yes,No
+cards_card,name,character varying,,,,Yes,Yes,No
+checkouts_checkout,customer_id,integer,Payment/Checkout,"This table contains end to details of customer checkout and contains all the details related to checkout, such as customer details,lending decision,order details,completion of order, throttling_details,id","Number of Transaction per customer,Days Since last transaction,Transaction frequency, ID verified or not,Type of OS used for checkout , Rules Applied (CRP,Graph DB),Denied Throttling reason,ID verification,",Yes,Yes,Yes
+checkouts_checkout,decision_id,character varying,,,,Yes,Yes,Yes
+checkouts_checkout,checkout_type,character varying,,,,Yes,Yes,Yes
+checkouts_checkout,lender_payment_option_id,integer,,,,Yes,Yes,Yes
+checkouts_checkout,completed,timestamp without time zone,,,,Yes,Yes,Yes
+checkouts_checkout,configurable,character varying,,,,Yes,Yes,Yes
+checkouts_checkout,order_id,integer,,,,Yes,Yes,Yes
+checkouts_checkout,payment_method_id,integer,,,,Yes,Yes,Yes
+checkouts_checkout,throttling_order_ids,character varying,,,,Yes,Yes,Yes
+checkouts_checkout,created,timestamp without time zone,,,,Yes,Yes,Yes
+checkouts_checkout,denied_throttling_reasons,character varying,,,,Yes,Yes,Yes
+checkouts_checkout,fingerprint,character varying,,,,Yes,Yes,Yes
+checkouts_checkout,id,integer,,,,Yes,Yes,Yes
+checkouts_checkout,id_verification_level,character varying,,,,Yes,Yes,Yes
+checkouts_checkout,ip_address,character varying,,,,Yes,Yes,Yes
+checkouts_checkout,language,character varying,,,,Yes,Yes,Yes
+checkouts_checkout,metadata,character varying,,,,Yes,Yes,Yes
+checkouts_checkout,modified,timestamp without time zone,,,,Yes,Yes,Yes
+checkouts_checkout,num_instalments,smallint,,,,Yes,Yes,Yes
+checkouts_checkout,payment_interval,smallint,,,,Yes,Yes,Yes
+checkouts_checkout,pre_approved,timestamp without time zone,,,,Yes,Yes,Yes
+checkouts_checkout,rules,character varying,,,,Yes,Yes,Yes
+checkouts_checkout,secure,character varying,,,,Yes,Yes,Yes
+checkouts_checkout,settings,character varying,,,,Yes,Yes,Yes

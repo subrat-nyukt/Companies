@@ -1,0 +1,27 @@
+[
+  {
+    "question": "What is the difference between SDD and EDD?",
+    "chunks_used": 5,
+    "answer": "The difference between Standard Due Diligence (SDD) and Enhanced Due Diligence (EDD) is primarily in the level of scrutiny and the frequency of monitoring applied to customers based on their risk profile.\n\n- **Standard Due Diligence (SDD)** is applied to low-risk customers and requires basic identity verification (Customer Identification Program - CIP), understanding the purpose and intended nature of the relationship, and ongoing monitoring at a reduced frequency, typically an annual review. (Page ?)\n\n- **Enhanced Due Diligence (EDD)** is applied to high-risk customers, including Politically Exposed Persons (PEPs), customers from high-risk jurisdictions, those with unusual transaction patterns, and customers in high-risk industries. EDD requires senior management approval for onboarding, source of funds verification, source of wealth documentation, quarterly or semi-annual reviews, adverse media screening, and sanctions list screening (OFAC, UN, EU, HMT). (Page 1.0)"
+  },
+  {
+    "question": "Who qualifies as a PEP and what extra steps are required?",
+    "chunks_used": 5,
+    "answer": "A Politically Exposed Person (PEP) is an individual who holds or has held a prominent public function domestically or in a foreign country. The categories include heads of state and government, senior politicians and party officials, senior judicial officers, senior military officers, and senior executives of state-owned enterprises. Foreign PEPs are the same categories but in a foreign country and are generally considered higher risk. International Organization PEPs include senior management of international organizations like the UN, IMF, and World Bank (Page 3.0).\n\nExtra steps required for PEPs include:\n1. Screening all customers against PEP databases at onboarding.\n2. Applying Enhanced Due Diligence (EDD) to all identified PEPs regardless of risk score.\n3. Obtaining senior management sign-off.\n4. Verifying the source of funds and wealth.\n5. Conducting ongoing monitoring with quarterly reviews.\n6. Screening associated family members and close associates (Page 3.0)."
+  },
+  {
+    "question": "What are SAR filing thresholds in the US and UK?",
+    "chunks_used": 5,
+    "answer": "In the US, the SAR filing threshold is transactions greater than or equal to $5,000. In the UK, there is no minimum threshold for SAR filing. (Page 4.0)"
+  },
+  {
+    "question": "How is the KYC risk score calculated?",
+    "chunks_used": 5,
+    "answer": "The KYC risk score is calculated using a weighted model with the following factors and weights:\n\n- Customer type (individual/corporate): 20%\n- Geographic risk: 25%\n- Industry/sector risk: 20%\n- Transaction behavior: 20%\n- Adverse media / sanctions: 15%\n\nThe total score ranges are:\n- 0-40: Low Risk -> Standard CDD + Annual Review\n- 41-70: Medium Risk -> Enhanced monitoring + Semi-annual Review\n- 71-100: High Risk -> EDD required + Quarterly Review\n\n(Page 5.0)"
+  },
+  {
+    "question": "What are the penalties for KYC non-compliance?",
+    "chunks_used": 5,
+    "answer": "Financial institutions face severe consequences for KYC/AML failures, including:\n\n- **Fines**: Billions of dollars (e.g., HSBC $1.9B, Deutsche Bank $630M)\n- **Reputational damage**: Loss of correspondent banking relationships\n- **Criminal prosecution**: Officers and directors can face imprisonment\n- **License revocation**: Loss of banking license in severe cases\n- **Deferred Prosecution Agreements (DPAs)**: Enhanced regulatory oversight\n\nNotable enforcement actions include fines against HSBC, Standard Chartered, Goldman Sachs, and Westpac for various violations. (Page 7.0)"
+  }
+]

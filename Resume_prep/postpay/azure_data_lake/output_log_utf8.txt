@@ -1,0 +1,37 @@
+﻿Generating synthetic dataset...
+Dataset generated with 5000 rows and 18 columns.
+Saved to 'moove_synthetic_driver_data.csv'.
+
+Preprocessing data...
+Training XGBoost Classifier...
+
+--- Model Evaluation ---
+Accuracy: 0.8740
+ROC-AUC Score: 0.9519
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.86      0.90      0.88       500
+           1       0.89      0.85      0.87       500
+
+    accuracy                           0.87      1000
+   macro avg       0.87      0.87      0.87      1000
+weighted avg       0.87      0.87      0.87      1000
+
+
+--- Top Feature Importances ---
+| Feature                     |   Importance |
+|:----------------------------|-------------:|
+| Past_loan_defaults_count    |    0.436276  |
+| Hard_braking_events_1m      |    0.178229  |
+| Speeding_violations_1m      |    0.0967244 |
+| Cancellation_rate_1m        |    0.0332571 |
+| Gender                      |    0.0247005 |
+| Passenger_rating            |    0.0236834 |
+| Age_of_driver               |    0.0219017 |
+| Acceptance_rate_1m          |    0.021854  |
+| Bureau_credit_score         |    0.0216152 |
+| Years_of_driving_experience |    0.0211063 |
+
+Feature importances saved to 'moove_xgboost_feature_importance.csv'.

@@ -1,0 +1,125 @@
+Business Domain,Potential Variable,Description of Variable
+Customer Detail,Age_of_driver,Age of the driver applying for the loan
+,Registration_with_Moove_days,Number of days since the driver registered with Moove
+,Registration_with_Moove_months,Number of months since the driver registered with Moove
+,Years_of_driving_experience,Total years the driver has held a valid driving license
+,Gender,"Gender of the driver (e.g., 1 for male, 0 for female)"
+,Marital_status,"Marital status of the driver (Single, Married, etc.)"
+,Number_of_dependents,Number of financial dependents the driver has
+,Education_level,Highest educational qualification attained by the driver
+,Current_address_tenure_months,Number of months the driver has lived at their current address
+,City_of_residence,City where the driver currently resides
+,Distance_from_moove_hub_km,Distance in kilometers from the driver's home to the nearest Moove hub
+,Nationality,Country of citizenship of the driver
+,Expat_local,"Whether the driver is an expat or a local citizen (1 if expat, 0 if local)"
+,Id_card_expiry_days,Days left until the driver's national ID card expires
+,Driving_license_expiry_days,Days left until the driver's driving license expires
+,Previous_occupation,The industry or role the driver worked in before ride-hailing
+,Guarantor_availability,"Whether the driver has provided a valid guarantor (1 for Yes, 0 for No)"
+,Guarantor_relationship,"Relationship of the guarantor to the driver (e.g., Parent, Sibling, Friend)"
+,Guarantor_financial_score,Estimated financial stability score of the driver's guarantor
+,Social_media_presence_flag,Whether the driver has verifiable social media accounts linked for KYC
+,Residential_status,"Housing status of the driver (e.g., Renting, Homeowner, Living with parents)"
+Platform Earnings,Tenure_on_platform_months,Number of months the driver has been active on ride-hailing platforms (Uber/Bolt)
+,Total_trips_completed_lifetime,Total number of trips completed since joining the platform
+,Avg_daily_trips_1m,Average number of daily trips completed in the last 1 month
+,Avg_daily_trips_3m,Average number of daily trips completed in the last 3 months
+,Avg_daily_trips_6m,Average number of daily trips completed in the last 6 months
+,Avg_weekly_earnings_1m,Average weekly earnings from the ride-hailing platform in the last 1 month
+,Avg_weekly_earnings_3m,Average weekly earnings from the ride-hailing platform in the last 3 months
+,Avg_weekly_earnings_6m,Average weekly earnings from the ride-hailing platform in the last 6 months
+,Earnings_volatility_3m,Standard deviation of weekly earnings over the last 3 months (measures income stability)
+,Acceptance_rate_1m,Percentage of ride requests accepted by the driver in the last 1 month
+,Acceptance_rate_3m,Percentage of ride requests accepted by the driver in the last 3 months
+,Cancellation_rate_1m,Percentage of accepted rides cancelled by the driver in the last 1 month
+,Cancellation_rate_3m,Percentage of accepted rides cancelled by the driver in the last 3 months
+,Passenger_rating,"Current average passenger rating on the platform (e.g., out of 5.0)"
+,Low_ratings_count_3m,Number of 1-star or 2-star ratings received in the last 3 months
+,Total_hours_online_1m,Total hours spent online on the ride-hailing app in the last 1 month
+,Total_hours_online_3m,Total hours spent online on the ride-hailing app in the last 3 months
+,Avg_hours_online_per_day,Average duration spent online per operational day
+,Peak_hour_driving_ratio,Percentage of total trips completed during high-demand peak hours
+,Weekend_driving_ratio,Percentage of total trips completed during weekends
+,Night_shift_driving_ratio,Percentage of trips completed between 10 PM and 5 AM
+,Airport_trip_ratio,Percentage of trips originating from or destined to the airport
+,Platform_complaints_6m,Number of formal complaints lodged by passengers against the driver in the last 6 months
+,Platform_tier_status,"The driver's loyalty tier on the platform (e.g., Uber Pro Gold/Platinum equivalent)"
+,Multi_platform_user_flag,"Indicates if the driver actively uses multiple platforms (e.g., both Uber and Bolt)"
+,Cash_trip_ratio,Percentage of trips paid for in cash versus digital payments
+Telematics Behavior,Avg_daily_mileage_1m,Average distance covered by the vehicle per day in the last 1 month
+,Avg_daily_mileage_3m,Average distance covered by the vehicle per day in the last 3 months
+,Hard_braking_events_1m,Number of harsh braking incidents recorded by telematics in the last 1 month
+,Hard_braking_events_3m,Number of harsh braking incidents recorded by telematics in the last 3 months
+,Harsh_acceleration_1m,Number of sudden acceleration events in the last 1 month
+,Harsh_acceleration_3m,Number of sudden acceleration events in the last 3 months
+,Speeding_violations_1m,Number of times the vehicle exceeded the local speed limit in the last 1 month
+,Speeding_violations_3m,Number of times the vehicle exceeded the local speed limit in the last 3 months
+,Avg_speed_over_limit_pct,Average percentage by which the speed limit was exceeded during violation events
+,Sharp_cornering_events_1m,Number of aggressive turning or cornering events in the last 1 month
+,Tailgating_warnings_1m,Number of proximity or tailgating alerts triggered in the last 1 month
+,Late_night_driving_hours_1m,Total hours driven during extreme late night (midnight to 4 AM) in the last month
+,Geo_fence_violations_1m,Number of times the vehicle entered prohibited or high-risk geographical zones
+,Engine_idle_time_ratio,Percentage of operational time spent with the engine idling
+,Fuel_efficiency_score,"Estimated fuel economy based on driving patterns, relative to the vehicle baseline"
+,Battery_drain_incidents,Number of times the vehicle battery dropped below critical levels
+,Maintenance_alerts_ignored,Number of dashboard warning lights or maintenance reminders ignored for > 48 hours
+,Avg_trip_distance_km,Average distance driven per individual passenger trip
+,Long_distance_trip_ratio,"Percentage of trips exceeding a predefined long-distance threshold (e.g., > 30km)"
+,Device_tampering_alerts,Number of alerts indicating the telematics tracking device may have been tampered with
+,Accident_detection_events,Number of severe impact events detected by telematics accelerometers
+Financial History,Bureau_credit_score,Traditional credit score retrieved from the national credit bureau
+,Active_credit_facilities,Number of current active loans or credit lines the driver has
+,Total_outstanding_debt,Total monetary value of all outstanding debt obligations
+,Past_loan_defaults_count,Total number of historically defaulted loans recorded on the driver's credit profile
+,Late_payments_12m,Number of debt repayment installments made past the due date in the last 12 months
+,Avg_bank_balance_3m,Average daily closing balance in the driver's primary bank account over the last 3 months
+,Min_bank_balance_3m,The lowest recorded balance in the driver's bank account over the last 3 months
+,Bank_inflow_turnover_3m,Total monetary value of all deposits into the driver's bank account in the last 3 months
+,Mobile_money_tx_volume_3m,Total transaction volume (send/receive) via mobile money wallets in the last 3 months
+,Bounced_cheques_failed_txns,Number of failed transactions due to insufficient funds in the last 6 months
+,Estimated_debt_to_income,Ratio of calculated monthly debt obligations to estimated monthly earnings
+,Existing_auto_loan_flag,"Indicates if the driver already has an active vehicle financing loan (1 for Yes, 0 for No)"
+,Savings_deposit_frequency,Frequency of transfers to savings accounts or investment wallets per month
+,Utility_bill_regularity,"Consistency of on-time utility bill payments (electricity, water, etc.)"
+,Overdraft_utilization_rate,Percentage of available bank overdraft limits currently utilized
+,Gambling_betting_tx_ratio,Percentage of banking outflow volume directed towards betting or gambling merchants
+Loan Origination,Requested_loan_principal,The total principal amount requested for the vehicle financing
+,Vehicle_make,"The manufacturer of the requested vehicle (e.g., Toyota, Suzuki)"
+,Vehicle_model,"The specific model of the requested vehicle (e.g., Swift, Corolla)"
+,Vehicle_manufacturing_year,The year the requested vehicle was assembled
+,Vehicle_body_type,"The body style of the vehicle (e.g., Sedan, Hatchback, SUV)"
+,Vehicle_energy_type,"The powertrain type (e.g., ICE, EV, Hybrid, CNG)"
+,Downpayment_amount,The initial upfront cash deposit provided by the driver
+,Downpayment_percentage,The downpayment amount expressed as a percentage of the total vehicle value
+,Loan_term_weeks,The total duration of the loan agreement in weeks
+,Weekly_remittance_target,The prescribed weekly payment amount the driver must meet
+,Implied_interest_rate,The effective annual interest rate or markup applied to the financing
+,Payment_interval,"The frequency of required payments (e.g., Daily, Weekly)"
+,Vehicle_insurance_tier,"The level of insurance coverage applied to the vehicle (e.g., Comprehensive, Third-Party)"
+,Asset_depreciation_class,Categorical risk class of the vehicle model based on historical depreciation rates
+,Loan_to_value_ratio,The ratio of the requested loan amount to the market value of the vehicle
+App Usage Status,Device_os,"Operating system of the driver's primary smartphone (e.g., Android, iOS)"
+,Device_age_months,Estimated age of the smartphone used to operate the Moove app
+,App_login_frequency_weekly,Average number of times the driver logs into the Moove driver app per week
+,Days_since_app_installation,Number of days since the Moove application was first installed on the device
+,Support_tickets_raised_3m,Number of customer support tickets or in-app queries submitted in the last 3 months
+,Avg_ticket_resolution_time,Average time taken for the driver's support issues to be resolved
+,Location_services_enabled,Flag indicating if continuous background location tracking is permitted on the device
+,Push_notifications_enabled,Flag indicating if the driver has opted-in to receive push notifications
+,Avg_battery_level_active,The average battery percentage of the device while the app is active and online
+,Primary_network_provider,The mobile network carrier predominantly used by the driver's device
+,App_version_updated,"Flag indicating if the driver is using the latest version of the Moove app (1 for Yes, 0 for No)"
+Location Risk,Primary_driving_zone_risk,A calculated risk score based on the crime rate/accident rate of the driver's most frequent zone
+,Home_address_risk_score,A socio-economic or security risk score associated with the driver's registered home postal code
+,High_risk_area_trip_ratio,Percentage of trips originating or ending in historically high-risk or unsafe neighborhoods
+,Cross_border_travel_flag,Indicates if the vehicle frequently travels close to or across national/state borders
+,Home_to_work_distance_km,The distance from the driver's home to their primary driving operational hub
+Previous Interactions,Days_since_first_moove_loan,Number of days since the driver first took a vehicle loan from Moove
+,Previous_moove_loan_count,Total number of financing agreements the driver has previously completed with Moove
+,Avg_historical_delay_days,The historical average delay in days for weekly remittances across past Moove loans
+,Missed_remittances_pct,The historical percentage of weekly remittances that were missed entirely
+,Early_payout_flag,"Indicates if the driver successfully paid off a previous Moove loan earlier than the term (1 for Yes, 0 for No)"
+,Previous_repossession_flag,"Indicates if a vehicle was ever repossessed from the driver in the past (1 for Yes, 0 for No)"
+,Loyalty_tier,Internal Moove driver loyalty ranking based on historical performance
+,Total_historical_revenue,Total lifetime revenue generated by the driver for Moove
+,Accident_claims_count_hist,Number of historical insurance claims filed by the driver during past Moove loans

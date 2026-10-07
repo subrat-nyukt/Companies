@@ -1,0 +1,37 @@
+table_name,column_name,data_type,Business Domain,Table Business Meaning,Potential Variables for Credit Risk,Current,C,F
+drivers_profile,driver_id,integer,Driver Demographics,Basic profile details of the driver applying for the vehicle loan,"Driver Tenure, Age, Marital Status",Yes,Yes,Yes
+drivers_profile,age,integer,Driver Demographics,,,No,Yes,No
+drivers_profile,years_of_driving_experience,integer,Driver Demographics,,Years of driving experience,No,Yes,Yes
+drivers_profile,city,character varying,Driver Demographics,,Location-based risk,Yes,Yes,Yes
+drivers_profile,marital_status,character varying,Driver Demographics,,,No,Yes,No
+drivers_profile,license_validity,date,Driver Demographics,,"Is license valid, Time to expiry",Yes,Yes,Yes
+drivers_profile,background_check_status,character varying,Driver Demographics,,Pass/Fail background check,Yes,Yes,Yes
+platform_earnings,earnings_id,integer,Platform Operations,Driver's performance and earnings data from ride-hailing platforms like Uber/Bolt,"Average daily earnings, Earnings consistency, Total trips, Acceptance rate",Yes,Yes,Yes
+platform_earnings,driver_id,integer,Platform Operations,,,Yes,Yes,Yes
+platform_earnings,platform_name,character varying,Platform Operations,,,Yes,Yes,Yes
+platform_earnings,total_trips_completed,integer,Platform Operations,,Driver experience on platform,Yes,Yes,Yes
+platform_earnings,average_daily_earnings,numeric,Platform Operations,,Income stability and affordability,Yes,Yes,Yes
+platform_earnings,acceptance_rate,numeric,Platform Operations,,Driver engagement and platform dedication,Yes,Yes,Yes
+platform_earnings,cancellation_rate,numeric,Platform Operations,,Driver reliability and churn risk,Yes,Yes,Yes
+platform_earnings,passenger_rating,numeric,Platform Operations,,"Quality of service, correlated with responsible behavior",Yes,Yes,Yes
+platform_earnings,hours_online_per_week,numeric,Platform Operations,,Dedication and physical fatigue risk,Yes,Yes,Yes
+telematics_behavior,telematics_id,integer,Vehicle Telematics,"Driving behavior data tracked via vehicle IoT devices, critical for asset protection","Harsh braking frequency, Speeding events, Night driving hours",Yes,Yes,Yes
+telematics_behavior,driver_id,integer,Vehicle Telematics,,,Yes,Yes,Yes
+telematics_behavior,hard_braking_events,integer,Vehicle Telematics,,"Indicator of aggressive driving, higher crash risk",Yes,Yes,Yes
+telematics_behavior,harsh_acceleration_events,integer,Vehicle Telematics,,"Aggressive driving, correlated with loan default",Yes,Yes,Yes
+telematics_behavior,speeding_violations,integer,Vehicle Telematics,,"Disregard for rules, high risk of impoundment/accident",Yes,Yes,Yes
+telematics_behavior,late_night_driving_hours,numeric,Vehicle Telematics,,"Fatigue driving, higher accident probability",Yes,Yes,Yes
+telematics_behavior,geo_fence_violations,integer,Vehicle Telematics,,Driving in unauthorized/high-risk areas,Yes,Yes,Yes
+financial_history,financial_id,integer,Financial Risk,Traditional external financial data including mobile money and bank statements,"Previous defaults, Bounced transactions, Average wallet balance",Yes,Yes,Yes
+financial_history,driver_id,integer,Financial Risk,,,Yes,Yes,Yes
+financial_history,avg_monthly_balance,numeric,Financial Risk,,Financial buffer available,Yes,Yes,Yes
+financial_history,previous_loan_defaults,integer,Financial Risk,,Direct predictor of future defaults,Yes,Yes,Yes
+financial_history,mobile_money_tx_volume,numeric,Financial Risk,,Volume of transactions handling,Yes,Yes,Yes
+financial_history,active_debt_obligations,numeric,Financial Risk,,Debt-to-income ratio estimator,Yes,Yes,Yes
+loan_application,application_id,integer,Loan Origination,Details regarding the specific Moove vehicle financing application,"Downpayment ratio, Loan-to-value, Requested model",Yes,Yes,Yes
+loan_application,driver_id,integer,Loan Origination,,,Yes,Yes,Yes
+loan_application,vehicle_model,character varying,Loan Origination,,Asset depreciation profile,Yes,Yes,Yes
+loan_application,requested_loan_amount,numeric,Loan Origination,,Total exposure,Yes,Yes,Yes
+loan_application,downpayment_amount,numeric,Loan Origination,,"Skin in the game, upfront commitment",Yes,Yes,Yes
+loan_application,loan_term_weeks,integer,Loan Origination,,Duration of the risk exposure,Yes,Yes,Yes
+loan_application,application_status,character varying,Loan Origination,,,No,Yes,No

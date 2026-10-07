@@ -1,0 +1,6 @@
+[
+  {"user_id": 1001, "kyc_status": "VERIFIED", "country": "UK", "campaign_id": "CMP_01"},
+  {"user_id": 1002, "kyc_status": "PENDING", "country": "UAE", "campaign_id": "CMP_02"},
+  {"user_id": 1003, "kyc_status": "VERIFIED", "country": "USA", "campaign_id": "CMP_01"},
+  {"user_id": 1004, "kyc_status": "REJECTED", "country": "GER", "campaign_id": "CMP_03"}
+]

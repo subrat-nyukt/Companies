@@ -1,0 +1,25 @@
+flowchart LR
+    subgraph Registry [Model Registry]
+        M1[Postpay_Risk_Engine (Production)]
+        M2[Version 1]
+    end
+
+    subgraph Data [Data Lake]
+        T1[(gold_customer_risk_profile)]
+        T2[(daily_risk_scores)]
+    end
+
+    subgraph Job [Batch Scoring Job (Scheduled 2 AM)]
+        Step1[Load Model: mlflow.pyfunc.load_model]
+        Step2[Load Data: spark.table]
+        Step3[Predict: model.predict(df)]
+        Step4[Save: write.saveAsTable]
+    end
+
+    M1 -->|1. Fetch Production Model| Step1
+    M2 --- M1
+    T1 -->|2. Read Latest Features| Step2
+    Step1 --> Step3
+    Step2 --> Step3
+    Step3 -->|3. Generate Scores| Step4
+    Step4 -->|4. Store Results| T2

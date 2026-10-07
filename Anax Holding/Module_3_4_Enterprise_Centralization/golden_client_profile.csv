@@ -1,0 +1,5 @@
+user_id,kyc_status,platform,ad_click_cost,total_trading_profit,client_net_value
+1002,PENDING,Meta Ads,1.25,500.0,498.75
+1001,VERIFIED,Google Ads,2.5,400.5,398.0
+1004,REJECTED,LinkedIn,5.0,0.0,-5.0
+1003,VERIFIED,Google Ads,2.5,-20.0,-22.5

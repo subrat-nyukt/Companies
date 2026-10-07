@@ -1,0 +1,7 @@
+Project Objective
+The goal of this project is to build an Automated Credit Risk System for a "Buy Now, Pay Later" (BNPL) company.
+
+Why are we doing this? We want to stop losing money.
+
+Problem: Bad borrowers take loans and never pay them back.
+Solution: We will use Machine Learning to predict who will default before we lend them money.

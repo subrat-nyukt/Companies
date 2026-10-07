@@ -1,0 +1,501 @@
+customer_id,order_id,created,status,total_amount,currency,num_instalments,card_first_six_digits,card_last_four_digits,is_apple_pay,payment_method_type,payment_method_brand,payment_method_bank,payment_method_expires,user_agent,merchant_id
+CUST_0079,ORD_00000,2025-02-28 17:54:01,captured,4305.96,AED,3,123456,7890,false,debit,visa,ADCB,2027-01-29,iPhone,Carrefour
+CUST_0032,ORD_00001,2025-10-07 17:54:01,captured,2636.98,AED,3,123456,7890,true,credit,mastercard,Emirates NBD,2027-09-07,Windows,Noon
+CUST_0098,ORD_00002,2025-05-25 17:54:01,captured,3333.92,AED,3,123456,7890,true,credit,mastercard,HSBC,2027-04-25,Windows,Carrefour
+CUST_0068,ORD_00003,2026-01-06 17:54:01,captured,4424.92,AED,3,123456,7890,false,debit,visa,Mashreq,2027-12-07,Android,Amazon
+CUST_0023,ORD_00004,2025-10-19 17:54:01,captured,512.29,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-09-19,iPhone,Amazon
+CUST_0098,ORD_00005,2025-09-12 17:54:01,captured,124.8,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-08-13,iPhone,Amazon
+CUST_0067,ORD_00006,2025-04-29 17:54:01,captured,2520.08,AED,3,123456,7890,false,debit,visa,Mashreq,2027-03-30,Android,Carrefour
+CUST_0058,ORD_00007,2026-01-21 17:54:01,captured,1295.55,AED,3,123456,7890,false,credit,visa,Mashreq,2027-12-22,iPhone,Amazon
+CUST_0027,ORD_00008,2025-04-01 17:54:01,captured,2546.05,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-03-02,iPhone,IKEA
+CUST_0005,ORD_00009,2025-11-05 17:54:01,captured,3763.82,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-10-06,Windows,Carrefour
+CUST_0062,ORD_00010,2025-06-04 17:54:01,captured,1986.98,AED,3,123456,7890,false,credit,visa,ADCB,2027-05-05,Windows,Noon
+CUST_0066,ORD_00011,2025-02-17 17:54:01,captured,445.04,AED,3,123456,7890,true,debit,mastercard,ADCB,2027-01-18,iPhone,Noon
+CUST_0016,ORD_00012,2025-10-31 17:54:01,captured,3515.38,AED,3,123456,7890,true,credit,visa,Citi Bank,2027-10-01,iPhone,Noon
+CUST_0024,ORD_00013,2026-01-30 17:54:01,captured,499.81,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-12-31,Android,Carrefour
+CUST_0086,ORD_00014,2025-09-22 17:54:01,captured,1940.36,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-08-23,Android,IKEA
+CUST_0021,ORD_00015,2025-04-04 17:54:01,captured,4315.98,AED,3,123456,7890,true,debit,visa,Mashreq,2027-03-05,Android,IKEA
+CUST_0059,ORD_00016,2025-10-27 17:54:01,captured,3152.16,AED,3,123456,7890,false,debit,visa,HSBC,2027-09-27,Android,Carrefour
+CUST_0015,ORD_00017,2025-05-19 17:54:01,captured,4850.73,AED,3,123456,7890,false,credit,visa,Mashreq,2027-04-19,iPhone,IKEA
+CUST_0089,ORD_00018,2025-10-18 17:54:01,captured,496.28,AED,3,123456,7890,true,debit,mastercard,Emirates NBD,2027-09-18,iPhone,Noon
+CUST_0095,ORD_00019,2025-10-09 17:54:01,captured,559.98,AED,3,123456,7890,false,debit,amex,Emirates NBD,2027-09-09,Android,IKEA
+CUST_0021,ORD_00020,2025-02-28 17:54:01,captured,2156.04,AED,3,123456,7890,true,debit,visa,Citi Bank,2027-01-29,iPhone,Carrefour
+CUST_0068,ORD_00021,2025-12-27 17:54:01,captured,299.57,AED,3,123456,7890,true,credit,mastercard,HSBC,2027-11-27,Android,IKEA
+CUST_0038,ORD_00022,2025-11-04 17:54:01,captured,948.69,AED,3,123456,7890,false,debit,visa,ADCB,2027-10-05,Android,Carrefour
+CUST_0094,ORD_00023,2025-06-07 17:54:01,captured,4673.84,AED,3,123456,7890,true,debit,mastercard,Citi Bank,2027-05-08,iPhone,Noon
+CUST_0091,ORD_00024,2025-09-05 17:54:01,captured,4707.13,AED,3,123456,7890,true,debit,visa,HSBC,2027-08-06,Android,Namshi
+CUST_0011,ORD_00025,2025-03-26 17:54:01,captured,4120.09,AED,3,123456,7890,true,credit,visa,Citi Bank,2027-02-24,iPhone,Noon
+CUST_0034,ORD_00026,2025-07-12 17:54:01,captured,448.82,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-06-12,iPhone,Carrefour
+CUST_0057,ORD_00027,2025-10-21 17:54:01,captured,3181.82,AED,3,123456,7890,false,credit,mastercard,Citi Bank,2027-09-21,Android,IKEA
+CUST_0072,ORD_00028,2025-08-04 17:54:01,captured,2922.03,AED,3,123456,7890,false,credit,visa,Emirates NBD,2027-07-05,iPhone,IKEA
+CUST_0011,ORD_00029,2025-08-13 17:54:01,captured,3779.27,AED,3,123456,7890,false,credit,visa,Emirates NBD,2027-07-14,iPhone,Amazon
+CUST_0085,ORD_00030,2025-08-09 17:54:01,captured,589.93,AED,3,123456,7890,true,debit,amex,Mashreq,2027-07-10,iPhone,Carrefour
+CUST_0082,ORD_00031,2025-09-21 17:54:01,captured,2297.38,AED,3,123456,7890,true,debit,visa,Mashreq,2027-08-22,Windows,Amazon
+CUST_0038,ORD_00032,2025-10-26 17:54:01,captured,4661.55,AED,3,123456,7890,false,credit,amex,ADCB,2027-09-26,Android,Namshi
+CUST_0074,ORD_00033,2025-09-19 17:54:01,captured,4846.39,AED,3,123456,7890,true,credit,mastercard,Emirates NBD,2027-08-20,iPhone,IKEA
+CUST_0039,ORD_00034,2025-08-26 17:54:01,captured,2043.59,AED,3,123456,7890,true,credit,visa,Citi Bank,2027-07-27,Windows,IKEA
+CUST_0064,ORD_00035,2025-03-07 17:54:01,captured,4082.72,AED,3,123456,7890,false,credit,amex,HSBC,2027-02-05,Android,Namshi
+CUST_0060,ORD_00036,2025-02-13 17:54:01,captured,2836.18,AED,3,123456,7890,true,debit,amex,Mashreq,2027-01-14,iPhone,Noon
+CUST_0019,ORD_00037,2025-04-01 17:54:01,captured,4131.67,AED,3,123456,7890,false,credit,mastercard,HSBC,2027-03-02,iPhone,Amazon
+CUST_0024,ORD_00038,2025-04-06 17:54:01,captured,2689.01,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-03-07,iPhone,IKEA
+CUST_0079,ORD_00039,2025-07-14 17:54:01,captured,4965.53,AED,3,123456,7890,true,debit,mastercard,HSBC,2027-06-14,iPhone,Amazon
+CUST_0013,ORD_00040,2025-09-22 17:54:01,captured,2327.25,AED,3,123456,7890,false,credit,mastercard,Emirates NBD,2027-08-23,Windows,Carrefour
+CUST_0023,ORD_00041,2025-09-09 17:54:01,captured,1744.73,AED,3,123456,7890,true,debit,mastercard,ADCB,2027-08-10,iPhone,IKEA
+CUST_0040,ORD_00042,2025-06-29 17:54:01,captured,4932.43,AED,3,123456,7890,false,credit,mastercard,Emirates NBD,2027-05-30,Android,IKEA
+CUST_0012,ORD_00043,2025-12-28 17:54:01,captured,473.38,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-11-28,iPhone,Noon
+CUST_0004,ORD_00044,2025-10-16 17:54:01,captured,2115.15,AED,3,123456,7890,false,credit,visa,Emirates NBD,2027-09-16,Android,Amazon
+CUST_0085,ORD_00045,2025-04-03 17:54:01,captured,4226.38,AED,3,123456,7890,true,credit,visa,Mashreq,2027-03-04,iPhone,Carrefour
+CUST_0080,ORD_00046,2025-07-30 17:54:01,captured,4998.62,AED,3,123456,7890,false,credit,mastercard,Citi Bank,2027-06-30,Android,Namshi
+CUST_0016,ORD_00047,2025-11-19 17:54:01,captured,2307.67,AED,3,123456,7890,true,debit,amex,Citi Bank,2027-10-20,Android,Noon
+CUST_0091,ORD_00048,2025-11-09 17:54:01,captured,656.43,AED,3,123456,7890,false,credit,mastercard,Mashreq,2027-10-10,Android,Carrefour
+CUST_0004,ORD_00049,2025-07-05 17:54:01,captured,3979.91,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-06-05,Android,Namshi
+CUST_0037,ORD_00050,2025-08-04 17:54:01,captured,171.27,AED,3,123456,7890,true,debit,mastercard,Mashreq,2027-07-05,Android,Amazon
+CUST_0037,ORD_00051,2025-03-14 17:54:01,captured,2043.06,AED,3,123456,7890,false,credit,mastercard,Citi Bank,2027-02-12,iPhone,Amazon
+CUST_0073,ORD_00052,2025-05-15 17:54:01,captured,1365.4,AED,3,123456,7890,false,debit,amex,Citi Bank,2027-04-15,iPhone,Namshi
+CUST_0074,ORD_00053,2025-10-24 17:54:01,captured,731.51,AED,3,123456,7890,true,debit,visa,HSBC,2027-09-24,iPhone,Namshi
+CUST_0095,ORD_00054,2025-08-01 17:54:01,captured,2624.66,AED,3,123456,7890,true,credit,mastercard,Mashreq,2027-07-02,iPhone,Carrefour
+CUST_0041,ORD_00055,2025-04-01 17:54:01,captured,255.84,AED,3,123456,7890,true,debit,mastercard,HSBC,2027-03-02,iPhone,Noon
+CUST_0044,ORD_00056,2025-12-01 17:54:01,captured,552.22,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-11-01,iPhone,Noon
+CUST_0035,ORD_00057,2025-05-31 17:54:01,captured,514.13,AED,3,123456,7890,false,debit,amex,ADCB,2027-05-01,Android,Noon
+CUST_0025,ORD_00058,2026-01-29 17:54:01,captured,823.92,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-12-30,iPhone,Noon
+CUST_0037,ORD_00059,2025-06-30 17:54:01,captured,2046.1,AED,3,123456,7890,true,debit,mastercard,HSBC,2027-05-31,iPhone,Noon
+CUST_0043,ORD_00060,2026-01-18 17:54:01,captured,4463.58,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-12-19,iPhone,Carrefour
+CUST_0085,ORD_00061,2026-01-09 17:54:01,captured,2832.94,AED,3,123456,7890,true,debit,mastercard,ADCB,2027-12-10,iPhone,Noon
+CUST_0063,ORD_00062,2025-07-01 17:54:01,captured,1297.33,AED,3,123456,7890,true,debit,visa,Emirates NBD,2027-06-01,iPhone,Carrefour
+CUST_0093,ORD_00063,2025-03-18 17:54:01,captured,530.65,AED,3,123456,7890,true,credit,visa,Emirates NBD,2027-02-16,Android,IKEA
+CUST_0035,ORD_00064,2025-07-04 17:54:01,captured,4493.39,AED,3,123456,7890,false,debit,amex,Emirates NBD,2027-06-04,Android,Amazon
+CUST_0065,ORD_00065,2025-03-14 17:54:01,captured,2721.68,AED,3,123456,7890,true,debit,mastercard,Citi Bank,2027-02-12,iPhone,Namshi
+CUST_0083,ORD_00066,2025-07-02 17:54:01,captured,3707.61,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-06-02,Windows,IKEA
+CUST_0002,ORD_00067,2025-09-04 17:54:01,captured,1909.23,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-08-05,iPhone,Noon
+CUST_0083,ORD_00068,2025-03-28 17:54:01,captured,780.24,AED,3,123456,7890,false,debit,visa,Mashreq,2027-02-26,Windows,Carrefour
+CUST_0049,ORD_00069,2025-03-15 17:54:01,captured,4671.4,AED,3,123456,7890,true,credit,visa,Mashreq,2027-02-13,Android,Carrefour
+CUST_0063,ORD_00070,2025-02-28 17:54:01,captured,784.88,AED,3,123456,7890,true,credit,visa,Mashreq,2027-01-29,Android,Namshi
+CUST_0077,ORD_00071,2025-12-12 17:54:01,captured,1858.27,AED,3,123456,7890,false,credit,visa,Mashreq,2027-11-12,Android,Amazon
+CUST_0024,ORD_00072,2025-09-20 17:54:01,captured,4507.92,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-08-21,iPhone,Namshi
+CUST_0006,ORD_00073,2025-08-17 17:54:01,captured,1741.04,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-07-18,Android,Namshi
+CUST_0035,ORD_00074,2025-09-08 17:54:01,captured,843.21,AED,3,123456,7890,true,debit,visa,Emirates NBD,2027-08-09,Android,Noon
+CUST_0004,ORD_00075,2025-10-12 17:54:01,captured,3797.71,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-09-12,Android,IKEA
+CUST_0007,ORD_00076,2025-05-27 17:54:01,captured,2483.15,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-04-27,Android,Carrefour
+CUST_0025,ORD_00077,2025-04-19 17:54:01,captured,3035.24,AED,3,123456,7890,false,credit,amex,ADCB,2027-03-20,iPhone,IKEA
+CUST_0061,ORD_00078,2025-07-17 17:54:01,captured,3096.13,AED,3,123456,7890,true,debit,mastercard,HSBC,2027-06-17,Windows,IKEA
+CUST_0036,ORD_00079,2025-03-21 17:54:01,captured,3291.7,AED,3,123456,7890,false,credit,visa,Emirates NBD,2027-02-19,Android,Amazon
+CUST_0085,ORD_00080,2025-05-21 17:54:01,captured,2309.11,AED,3,123456,7890,true,debit,amex,HSBC,2027-04-21,Windows,Namshi
+CUST_0039,ORD_00081,2025-09-16 17:54:01,captured,1958.6,AED,3,123456,7890,true,credit,visa,Emirates NBD,2027-08-17,iPhone,Carrefour
+CUST_0024,ORD_00082,2025-11-14 17:54:01,captured,4607.29,AED,3,123456,7890,false,debit,visa,ADCB,2027-10-15,Android,Namshi
+CUST_0050,ORD_00083,2025-08-14 17:54:01,captured,964.3,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-07-15,Android,Noon
+CUST_0027,ORD_00084,2025-12-25 17:54:01,captured,972.38,AED,3,123456,7890,false,credit,visa,HSBC,2027-11-25,iPhone,Amazon
+CUST_0095,ORD_00085,2025-09-24 17:54:01,captured,2046.86,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-08-25,iPhone,Namshi
+CUST_0017,ORD_00086,2025-05-31 17:54:01,captured,3900.09,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-05-01,iPhone,Namshi
+CUST_0062,ORD_00087,2025-10-03 17:54:01,captured,991.45,AED,3,123456,7890,true,credit,amex,ADCB,2027-09-03,Android,Carrefour
+CUST_0096,ORD_00088,2025-11-17 17:54:01,captured,4896.76,AED,3,123456,7890,false,credit,mastercard,Emirates NBD,2027-10-18,iPhone,Namshi
+CUST_0071,ORD_00089,2025-12-20 17:54:01,captured,1762.43,AED,3,123456,7890,true,debit,mastercard,HSBC,2027-11-20,iPhone,Namshi
+CUST_0015,ORD_00090,2025-08-31 17:54:01,captured,791.3,AED,3,123456,7890,true,debit,visa,ADCB,2027-08-01,iPhone,IKEA
+CUST_0018,ORD_00091,2025-10-23 17:54:01,captured,989.03,AED,3,123456,7890,false,debit,visa,ADCB,2027-09-23,Android,Namshi
+CUST_0001,ORD_00092,2025-08-01 17:54:01,captured,2992.45,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-07-02,iPhone,Carrefour
+CUST_0085,ORD_00093,2025-02-13 17:54:01,captured,786.55,AED,3,123456,7890,false,credit,visa,Emirates NBD,2027-01-14,Android,Amazon
+CUST_0039,ORD_00094,2025-06-20 17:54:01,captured,2072.5,AED,3,123456,7890,true,debit,mastercard,HSBC,2027-05-21,Windows,Noon
+CUST_0086,ORD_00095,2025-04-25 17:54:01,captured,190.11,AED,3,123456,7890,false,credit,visa,HSBC,2027-03-26,iPhone,IKEA
+CUST_0024,ORD_00096,2025-11-28 17:54:01,captured,1111.46,AED,3,123456,7890,true,debit,visa,Emirates NBD,2027-10-29,Android,Noon
+CUST_0011,ORD_00097,2025-06-20 17:54:01,captured,3358.68,AED,3,123456,7890,false,debit,amex,ADCB,2027-05-21,Android,Noon
+CUST_0053,ORD_00098,2025-02-14 17:54:01,captured,1003.42,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-01-15,iPhone,Carrefour
+CUST_0058,ORD_00099,2025-04-23 17:54:01,captured,3090.98,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-03-24,iPhone,Carrefour
+CUST_0082,ORD_00100,2025-06-30 17:54:01,captured,4223.5,AED,3,123456,7890,false,credit,amex,Mashreq,2027-05-31,Android,IKEA
+CUST_0072,ORD_00101,2025-07-26 17:54:01,captured,1822.55,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-06-26,iPhone,Noon
+CUST_0043,ORD_00102,2025-11-02 17:54:01,captured,2992.13,AED,3,123456,7890,false,debit,visa,Mashreq,2027-10-03,Android,Amazon
+CUST_0054,ORD_00103,2025-04-15 17:54:01,captured,524.86,AED,3,123456,7890,false,credit,mastercard,Citi Bank,2027-03-16,Android,Amazon
+CUST_0081,ORD_00104,2025-11-15 17:54:01,captured,3268.66,AED,3,123456,7890,true,credit,visa,ADCB,2027-10-16,Android,Amazon
+CUST_0022,ORD_00105,2025-05-06 17:54:01,captured,2882.93,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-04-06,iPhone,Noon
+CUST_0058,ORD_00106,2025-07-12 17:54:01,captured,3997.18,AED,3,123456,7890,false,credit,visa,Mashreq,2027-06-12,Android,Amazon
+CUST_0013,ORD_00107,2025-09-06 17:54:01,captured,1887.02,AED,3,123456,7890,false,debit,visa,Mashreq,2027-08-07,iPhone,Carrefour
+CUST_0038,ORD_00108,2026-01-28 17:54:01,captured,4039.49,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-12-29,Android,Noon
+CUST_0065,ORD_00109,2025-04-07 17:54:01,captured,2363.52,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-03-08,Windows,Namshi
+CUST_0038,ORD_00110,2025-04-16 17:54:01,captured,1818.49,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-03-17,Android,Carrefour
+CUST_0009,ORD_00111,2025-02-18 17:54:01,captured,2660.34,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-01-19,iPhone,Carrefour
+CUST_0017,ORD_00112,2025-04-25 17:54:01,captured,306.26,AED,3,123456,7890,true,debit,amex,Emirates NBD,2027-03-26,iPhone,Carrefour
+CUST_0011,ORD_00113,2025-08-09 17:54:01,captured,4754.81,AED,3,123456,7890,false,credit,visa,Mashreq,2027-07-10,Windows,Carrefour
+CUST_0003,ORD_00114,2025-12-15 17:54:01,captured,2067.74,AED,3,123456,7890,false,credit,visa,Mashreq,2027-11-15,iPhone,Noon
+CUST_0056,ORD_00115,2025-07-09 17:54:01,captured,279.99,AED,3,123456,7890,true,credit,mastercard,Citi Bank,2027-06-09,Windows,Amazon
+CUST_0008,ORD_00116,2025-11-05 17:54:01,captured,3026.64,AED,3,123456,7890,false,debit,visa,Mashreq,2027-10-06,Android,Namshi
+CUST_0031,ORD_00117,2025-06-30 17:54:01,captured,1199.76,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-05-31,Android,Namshi
+CUST_0055,ORD_00118,2025-03-26 17:54:01,captured,1437.5,AED,3,123456,7890,false,debit,visa,ADCB,2027-02-24,Android,Amazon
+CUST_0004,ORD_00119,2025-07-01 17:54:01,captured,2101.42,AED,3,123456,7890,true,debit,visa,Citi Bank,2027-06-01,Android,IKEA
+CUST_0059,ORD_00120,2025-08-20 17:54:01,captured,3447.97,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-07-21,Android,Noon
+CUST_0066,ORD_00121,2025-12-18 17:54:01,captured,3344.35,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-11-18,Android,Carrefour
+CUST_0096,ORD_00122,2025-12-15 17:54:01,captured,4349.74,AED,3,123456,7890,false,credit,mastercard,Emirates NBD,2027-11-15,iPhone,Namshi
+CUST_0037,ORD_00123,2025-08-08 17:54:01,captured,877.17,AED,3,123456,7890,false,credit,mastercard,Mashreq,2027-07-09,iPhone,Namshi
+CUST_0052,ORD_00124,2025-09-07 17:54:01,captured,4552.64,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-08-08,iPhone,IKEA
+CUST_0045,ORD_00125,2025-09-10 17:54:01,captured,4907.81,AED,3,123456,7890,true,credit,visa,HSBC,2027-08-11,Android,Namshi
+CUST_0029,ORD_00126,2025-11-30 17:54:01,captured,2217.98,AED,3,123456,7890,true,credit,visa,Citi Bank,2027-10-31,Windows,Carrefour
+CUST_0067,ORD_00127,2025-07-08 17:54:01,captured,915.25,AED,3,123456,7890,true,credit,mastercard,Emirates NBD,2027-06-08,iPhone,Noon
+CUST_0049,ORD_00128,2025-05-18 17:54:01,captured,4870.1,AED,3,123456,7890,false,credit,mastercard,Mashreq,2027-04-18,iPhone,IKEA
+CUST_0010,ORD_00129,2026-01-10 17:54:01,captured,1685.69,AED,3,123456,7890,true,debit,mastercard,ADCB,2027-12-11,iPhone,Noon
+CUST_0028,ORD_00130,2026-02-08 17:54:01,captured,2188.29,AED,3,123456,7890,false,debit,visa,Citi Bank,2028-01-09,iPhone,Noon
+CUST_0046,ORD_00131,2025-11-20 17:54:01,captured,3307.1,AED,3,123456,7890,true,debit,amex,HSBC,2027-10-21,Android,IKEA
+CUST_0058,ORD_00132,2025-11-20 17:54:01,captured,2048.21,AED,3,123456,7890,false,debit,amex,Emirates NBD,2027-10-21,Android,Noon
+CUST_0060,ORD_00133,2025-09-02 17:54:01,captured,252.56,AED,3,123456,7890,false,credit,visa,HSBC,2027-08-03,Windows,Amazon
+CUST_0016,ORD_00134,2025-11-11 17:54:01,captured,3905.32,AED,3,123456,7890,true,credit,mastercard,HSBC,2027-10-12,Android,Carrefour
+CUST_0052,ORD_00135,2026-01-19 17:54:01,captured,4612.15,AED,3,123456,7890,true,credit,mastercard,Emirates NBD,2027-12-20,Android,Carrefour
+CUST_0083,ORD_00136,2025-06-29 17:54:01,captured,2836.22,AED,3,123456,7890,true,debit,visa,Citi Bank,2027-05-30,Android,Namshi
+CUST_0063,ORD_00137,2025-07-22 17:54:01,captured,832.95,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-06-22,Android,Namshi
+CUST_0044,ORD_00138,2025-07-10 17:54:01,captured,4314.6,AED,3,123456,7890,true,credit,visa,Mashreq,2027-06-10,iPhone,Amazon
+CUST_0045,ORD_00139,2025-09-05 17:54:01,captured,190.0,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-08-06,iPhone,Carrefour
+CUST_0096,ORD_00140,2026-02-10 17:54:01,captured,2717.79,AED,3,123456,7890,true,credit,visa,Citi Bank,2028-01-11,iPhone,Noon
+CUST_0037,ORD_00141,2025-02-18 17:54:01,captured,1084.21,AED,3,123456,7890,true,credit,mastercard,ADCB,2027-01-19,iPhone,Namshi
+CUST_0060,ORD_00142,2025-10-12 17:54:01,captured,254.77,AED,3,123456,7890,false,credit,visa,Emirates NBD,2027-09-12,Android,Noon
+CUST_0091,ORD_00143,2025-03-31 17:54:01,captured,3938.77,AED,3,123456,7890,false,credit,visa,Mashreq,2027-03-01,Android,Noon
+CUST_0021,ORD_00144,2026-02-09 17:54:01,captured,299.7,AED,3,123456,7890,true,debit,visa,ADCB,2028-01-10,iPhone,IKEA
+CUST_0024,ORD_00145,2025-04-17 17:54:01,captured,3117.14,AED,3,123456,7890,true,debit,visa,Citi Bank,2027-03-18,Android,Namshi
+CUST_0043,ORD_00146,2025-11-22 17:54:01,captured,202.22,AED,3,123456,7890,false,credit,visa,Emirates NBD,2027-10-23,iPhone,Namshi
+CUST_0034,ORD_00147,2025-11-11 17:54:01,captured,2150.16,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-10-12,Android,IKEA
+CUST_0023,ORD_00148,2025-04-25 17:54:01,captured,1795.08,AED,3,123456,7890,false,debit,amex,ADCB,2027-03-26,Android,Carrefour
+CUST_0097,ORD_00149,2025-06-29 17:54:01,captured,4379.77,AED,3,123456,7890,false,credit,visa,ADCB,2027-05-30,iPhone,IKEA
+CUST_0011,ORD_00150,2025-10-04 17:54:01,captured,3152.54,AED,3,123456,7890,false,credit,mastercard,Mashreq,2027-09-04,iPhone,Noon
+CUST_0043,ORD_00151,2026-01-29 17:54:01,captured,4859.84,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-12-30,iPhone,IKEA
+CUST_0013,ORD_00152,2025-06-26 17:54:01,captured,1860.24,AED,3,123456,7890,false,debit,visa,Mashreq,2027-05-27,iPhone,Namshi
+CUST_0004,ORD_00153,2025-09-01 17:54:01,captured,4852.12,AED,3,123456,7890,false,debit,visa,Mashreq,2027-08-02,iPhone,IKEA
+CUST_0009,ORD_00154,2025-03-17 17:54:01,captured,4161.53,AED,3,123456,7890,false,debit,visa,Mashreq,2027-02-15,iPhone,Carrefour
+CUST_0027,ORD_00155,2025-10-14 17:54:01,captured,3067.14,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-09-14,Android,Carrefour
+CUST_0078,ORD_00156,2025-10-27 17:54:01,captured,2745.54,AED,3,123456,7890,false,debit,amex,Emirates NBD,2027-09-27,Windows,IKEA
+CUST_0000,ORD_00157,2025-10-16 17:54:01,captured,1201.04,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-09-16,iPhone,Noon
+CUST_0019,ORD_00158,2025-08-15 17:54:01,captured,2451.5,AED,3,123456,7890,false,credit,visa,Emirates NBD,2027-07-16,Android,Namshi
+CUST_0049,ORD_00159,2025-04-24 17:54:01,captured,784.29,AED,3,123456,7890,true,debit,visa,ADCB,2027-03-25,Android,Noon
+CUST_0084,ORD_00160,2025-10-06 17:54:01,captured,3681.06,AED,3,123456,7890,false,debit,visa,ADCB,2027-09-06,Windows,Namshi
+CUST_0073,ORD_00161,2025-10-21 17:54:01,captured,1296.32,AED,3,123456,7890,true,credit,mastercard,Emirates NBD,2027-09-21,Windows,Carrefour
+CUST_0032,ORD_00162,2026-02-11 17:54:01,captured,1156.81,AED,3,123456,7890,false,credit,visa,Citi Bank,2028-01-12,iPhone,Noon
+CUST_0063,ORD_00163,2025-12-11 17:54:01,captured,4888.15,AED,3,123456,7890,true,debit,mastercard,Emirates NBD,2027-11-11,iPhone,Namshi
+CUST_0067,ORD_00164,2025-11-06 17:54:01,captured,2080.29,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-10-07,Android,Namshi
+CUST_0074,ORD_00165,2025-10-06 17:54:01,captured,689.02,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-09-06,iPhone,IKEA
+CUST_0018,ORD_00166,2025-04-02 17:54:01,captured,2787.65,AED,3,123456,7890,true,debit,mastercard,Mashreq,2027-03-03,iPhone,Namshi
+CUST_0071,ORD_00167,2025-10-25 17:54:01,captured,3248.62,AED,3,123456,7890,false,credit,mastercard,Citi Bank,2027-09-25,Android,Carrefour
+CUST_0092,ORD_00168,2025-09-11 17:54:01,captured,633.7,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-08-12,iPhone,Noon
+CUST_0042,ORD_00169,2026-01-22 17:54:01,captured,1059.31,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-12-23,Android,Namshi
+CUST_0014,ORD_00170,2025-03-25 17:54:01,captured,4678.74,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-02-23,Android,Namshi
+CUST_0028,ORD_00171,2025-06-18 17:54:01,captured,2708.08,AED,3,123456,7890,false,debit,visa,ADCB,2027-05-19,Windows,Noon
+CUST_0088,ORD_00172,2025-02-27 17:54:01,captured,987.63,AED,3,123456,7890,true,credit,visa,Citi Bank,2027-01-28,iPhone,Amazon
+CUST_0041,ORD_00173,2025-04-20 17:54:01,captured,4596.99,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-03-21,Android,Namshi
+CUST_0012,ORD_00174,2025-10-17 17:54:01,captured,2624.36,AED,3,123456,7890,true,debit,mastercard,ADCB,2027-09-17,iPhone,Noon
+CUST_0071,ORD_00175,2025-09-13 17:54:01,captured,1831.76,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-08-14,Android,Noon
+CUST_0088,ORD_00176,2025-09-19 17:54:01,captured,3856.62,AED,3,123456,7890,true,debit,visa,Citi Bank,2027-08-20,Android,Noon
+CUST_0032,ORD_00177,2025-10-16 17:54:01,captured,2723.25,AED,3,123456,7890,false,debit,visa,Mashreq,2027-09-16,Android,Noon
+CUST_0072,ORD_00178,2025-11-26 17:54:01,captured,3196.88,AED,3,123456,7890,false,debit,visa,Mashreq,2027-10-27,Android,Noon
+CUST_0038,ORD_00179,2025-06-16 17:54:01,captured,177.52,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-05-17,Android,IKEA
+CUST_0035,ORD_00180,2025-06-25 17:54:01,captured,3261.92,AED,3,123456,7890,true,debit,visa,Emirates NBD,2027-05-26,iPhone,Carrefour
+CUST_0012,ORD_00181,2025-12-25 17:54:01,captured,4176.13,AED,3,123456,7890,true,credit,visa,Citi Bank,2027-11-25,Android,Namshi
+CUST_0043,ORD_00182,2025-12-16 17:54:01,captured,1731.71,AED,3,123456,7890,false,credit,amex,ADCB,2027-11-16,Windows,Carrefour
+CUST_0007,ORD_00183,2025-09-15 17:54:01,captured,2855.25,AED,3,123456,7890,true,credit,visa,Emirates NBD,2027-08-16,iPhone,Amazon
+CUST_0054,ORD_00184,2026-01-31 17:54:01,captured,1803.1,AED,3,123456,7890,true,credit,mastercard,Citi Bank,2028-01-01,Windows,IKEA
+CUST_0083,ORD_00185,2025-02-17 17:54:01,captured,3866.14,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-01-18,iPhone,Amazon
+CUST_0015,ORD_00186,2026-01-05 17:54:01,captured,880.59,AED,3,123456,7890,false,debit,visa,ADCB,2027-12-06,iPhone,Noon
+CUST_0090,ORD_00187,2025-06-08 17:54:01,captured,2813.63,AED,3,123456,7890,false,debit,visa,ADCB,2027-05-09,Android,Namshi
+CUST_0021,ORD_00188,2025-09-22 17:54:01,captured,4961.57,AED,3,123456,7890,true,credit,visa,Emirates NBD,2027-08-23,Android,Namshi
+CUST_0029,ORD_00189,2025-07-11 17:54:01,captured,2709.16,AED,3,123456,7890,false,credit,visa,HSBC,2027-06-11,iPhone,Namshi
+CUST_0065,ORD_00190,2025-03-02 17:54:01,captured,3505.26,AED,3,123456,7890,false,debit,amex,ADCB,2027-01-31,iPhone,Amazon
+CUST_0035,ORD_00191,2025-11-09 17:54:01,captured,2486.6,AED,3,123456,7890,false,credit,mastercard,Citi Bank,2027-10-10,Windows,Amazon
+CUST_0012,ORD_00192,2025-10-18 17:54:01,captured,696.63,AED,3,123456,7890,true,debit,mastercard,HSBC,2027-09-18,Android,Carrefour
+CUST_0012,ORD_00193,2026-01-12 17:54:01,captured,2580.1,AED,3,123456,7890,true,debit,visa,Citi Bank,2027-12-13,Android,Namshi
+CUST_0030,ORD_00194,2026-02-07 17:54:01,captured,3925.73,AED,3,123456,7890,false,debit,visa,Mashreq,2028-01-08,Android,Amazon
+CUST_0086,ORD_00195,2025-11-21 17:54:01,captured,936.26,AED,3,123456,7890,true,debit,mastercard,Mashreq,2027-10-22,Android,Amazon
+CUST_0003,ORD_00196,2025-05-28 17:54:01,captured,4983.81,AED,3,123456,7890,true,credit,mastercard,HSBC,2027-04-28,Android,Noon
+CUST_0062,ORD_00197,2025-10-19 17:54:01,captured,2083.51,AED,3,123456,7890,false,credit,visa,Mashreq,2027-09-19,Android,IKEA
+CUST_0085,ORD_00198,2025-10-02 17:54:01,captured,154.05,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-09-02,iPhone,IKEA
+CUST_0064,ORD_00199,2026-01-30 17:54:01,captured,159.39,AED,3,123456,7890,true,debit,amex,ADCB,2027-12-31,iPhone,Amazon
+CUST_0098,ORD_00200,2025-08-08 17:54:01,captured,3265.84,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-07-09,iPhone,Carrefour
+CUST_0081,ORD_00201,2025-06-25 17:54:01,captured,4072.36,AED,3,123456,7890,false,credit,mastercard,ADCB,2027-05-26,Android,Amazon
+CUST_0063,ORD_00202,2026-01-26 17:54:01,captured,3327.59,AED,3,123456,7890,true,credit,mastercard,Citi Bank,2027-12-27,Windows,Carrefour
+CUST_0020,ORD_00203,2025-05-04 17:54:01,captured,3222.29,AED,3,123456,7890,false,credit,mastercard,Emirates NBD,2027-04-04,iPhone,IKEA
+CUST_0082,ORD_00204,2025-12-05 17:54:01,captured,3713.43,AED,3,123456,7890,true,debit,mastercard,Citi Bank,2027-11-05,Android,Amazon
+CUST_0050,ORD_00205,2025-09-13 17:54:01,captured,274.3,AED,3,123456,7890,false,debit,visa,HSBC,2027-08-14,Android,Namshi
+CUST_0027,ORD_00206,2025-12-23 17:54:01,captured,953.14,AED,3,123456,7890,true,debit,mastercard,ADCB,2027-11-23,iPhone,Carrefour
+CUST_0080,ORD_00207,2025-07-04 17:54:01,captured,3934.18,AED,3,123456,7890,true,debit,amex,ADCB,2027-06-04,iPhone,Carrefour
+CUST_0077,ORD_00208,2025-10-30 17:54:01,captured,3255.13,AED,3,123456,7890,false,debit,visa,ADCB,2027-09-30,iPhone,Namshi
+CUST_0001,ORD_00209,2025-05-19 17:54:01,captured,2953.87,AED,3,123456,7890,true,credit,mastercard,HSBC,2027-04-19,iPhone,Amazon
+CUST_0039,ORD_00210,2025-08-13 17:54:01,captured,565.56,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-07-14,Windows,Carrefour
+CUST_0084,ORD_00211,2025-08-24 17:54:01,captured,1067.61,AED,3,123456,7890,false,credit,mastercard,Mashreq,2027-07-25,iPhone,Amazon
+CUST_0011,ORD_00212,2025-06-24 17:54:01,captured,2765.68,AED,3,123456,7890,true,credit,visa,HSBC,2027-05-25,iPhone,Namshi
+CUST_0088,ORD_00213,2026-01-21 17:54:01,captured,2743.83,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-12-22,Android,Namshi
+CUST_0022,ORD_00214,2025-11-16 17:54:01,captured,1777.68,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-10-17,iPhone,Namshi
+CUST_0022,ORD_00215,2026-01-13 17:54:01,captured,4379.28,AED,3,123456,7890,false,credit,mastercard,ADCB,2027-12-14,Android,Carrefour
+CUST_0004,ORD_00216,2026-02-09 17:54:01,captured,4959.87,AED,3,123456,7890,false,debit,visa,ADCB,2028-01-10,iPhone,IKEA
+CUST_0045,ORD_00217,2025-06-26 17:54:01,captured,3113.39,AED,3,123456,7890,false,credit,visa,Emirates NBD,2027-05-27,iPhone,Noon
+CUST_0057,ORD_00218,2025-12-20 17:54:01,captured,4180.13,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-11-20,iPhone,Namshi
+CUST_0094,ORD_00219,2025-12-04 17:54:01,captured,4395.59,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-11-04,Android,Namshi
+CUST_0025,ORD_00220,2025-04-25 17:54:01,captured,3348.91,AED,3,123456,7890,false,debit,visa,ADCB,2027-03-26,iPhone,Amazon
+CUST_0044,ORD_00221,2026-01-23 17:54:01,captured,2071.4,AED,3,123456,7890,true,credit,mastercard,Mashreq,2027-12-24,Android,Carrefour
+CUST_0003,ORD_00222,2025-06-03 17:54:01,captured,2484.33,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-05-04,iPhone,Namshi
+CUST_0021,ORD_00223,2025-09-13 17:54:01,captured,1737.77,AED,3,123456,7890,false,credit,mastercard,HSBC,2027-08-14,iPhone,Carrefour
+CUST_0093,ORD_00224,2025-08-13 17:54:01,captured,3703.98,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-07-14,Android,Namshi
+CUST_0056,ORD_00225,2025-10-17 17:54:01,captured,3248.57,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-09-17,Windows,Carrefour
+CUST_0074,ORD_00226,2025-02-18 17:54:01,captured,2902.17,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-01-19,iPhone,Namshi
+CUST_0093,ORD_00227,2025-06-03 17:54:01,captured,2973.75,AED,3,123456,7890,false,credit,amex,Mashreq,2027-05-04,iPhone,Noon
+CUST_0068,ORD_00228,2025-02-28 17:54:01,captured,2362.49,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-01-29,Android,Noon
+CUST_0034,ORD_00229,2025-10-06 17:54:01,captured,3923.04,AED,3,123456,7890,true,debit,visa,HSBC,2027-09-06,iPhone,Carrefour
+CUST_0023,ORD_00230,2026-01-07 17:54:01,captured,165.67,AED,3,123456,7890,true,debit,visa,HSBC,2027-12-08,iPhone,Noon
+CUST_0079,ORD_00231,2025-08-14 17:54:01,captured,2201.55,AED,3,123456,7890,false,credit,visa,Emirates NBD,2027-07-15,iPhone,Carrefour
+CUST_0081,ORD_00232,2025-06-07 17:54:01,captured,2853.76,AED,3,123456,7890,false,debit,visa,Mashreq,2027-05-08,Android,Noon
+CUST_0031,ORD_00233,2025-06-09 17:54:01,captured,2786.77,AED,3,123456,7890,true,debit,mastercard,Citi Bank,2027-05-10,iPhone,Amazon
+CUST_0036,ORD_00234,2025-04-04 17:54:01,captured,4899.8,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-03-05,iPhone,Amazon
+CUST_0084,ORD_00235,2025-09-04 17:54:01,captured,841.11,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-08-05,iPhone,Noon
+CUST_0027,ORD_00236,2025-12-31 17:54:01,captured,431.57,AED,3,123456,7890,false,credit,mastercard,ADCB,2027-12-01,iPhone,Noon
+CUST_0021,ORD_00237,2025-10-23 17:54:01,captured,1158.84,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-09-23,Android,Carrefour
+CUST_0058,ORD_00238,2025-09-27 17:54:01,captured,4892.5,AED,3,123456,7890,true,credit,visa,Citi Bank,2027-08-28,iPhone,Carrefour
+CUST_0085,ORD_00239,2025-09-22 17:54:01,captured,1103.92,AED,3,123456,7890,true,credit,mastercard,HSBC,2027-08-23,Windows,Noon
+CUST_0027,ORD_00240,2026-01-17 17:54:01,captured,2834.11,AED,3,123456,7890,false,debit,visa,Mashreq,2027-12-18,Android,Carrefour
+CUST_0098,ORD_00241,2025-05-26 17:54:01,captured,1922.47,AED,3,123456,7890,false,debit,visa,Mashreq,2027-04-26,Windows,Carrefour
+CUST_0073,ORD_00242,2026-02-04 17:54:01,captured,1506.98,AED,3,123456,7890,false,credit,mastercard,Citi Bank,2028-01-05,Android,Noon
+CUST_0041,ORD_00243,2025-04-02 17:54:01,captured,3509.91,AED,3,123456,7890,false,credit,visa,Mashreq,2027-03-03,Android,Namshi
+CUST_0039,ORD_00244,2025-07-07 17:54:01,captured,1089.88,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-06-07,iPhone,Namshi
+CUST_0031,ORD_00245,2025-09-28 17:54:01,captured,4037.66,AED,3,123456,7890,false,debit,amex,Citi Bank,2027-08-29,Android,IKEA
+CUST_0033,ORD_00246,2025-05-28 17:54:01,captured,4985.68,AED,3,123456,7890,false,credit,mastercard,Mashreq,2027-04-28,iPhone,Carrefour
+CUST_0024,ORD_00247,2025-09-11 17:54:01,captured,489.09,AED,3,123456,7890,true,credit,visa,Citi Bank,2027-08-12,Windows,Namshi
+CUST_0059,ORD_00248,2025-02-13 17:54:01,captured,2350.4,AED,3,123456,7890,false,debit,visa,Mashreq,2027-01-14,Android,IKEA
+CUST_0027,ORD_00249,2025-06-09 17:54:01,captured,527.18,AED,3,123456,7890,false,credit,visa,ADCB,2027-05-10,iPhone,Noon
+CUST_0074,ORD_00250,2025-05-09 17:54:01,captured,3142.55,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-04-09,iPhone,Amazon
+CUST_0083,ORD_00251,2025-05-16 17:54:01,captured,621.08,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-04-16,Windows,Namshi
+CUST_0003,ORD_00252,2025-04-15 17:54:01,captured,1596.02,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-03-16,Android,Carrefour
+CUST_0075,ORD_00253,2026-01-04 17:54:01,captured,4056.24,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-12-05,Android,Namshi
+CUST_0090,ORD_00254,2025-02-23 17:54:01,captured,2290.57,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-01-24,Android,Namshi
+CUST_0083,ORD_00255,2025-05-07 17:54:01,captured,2165.08,AED,3,123456,7890,true,debit,amex,Emirates NBD,2027-04-07,Windows,Noon
+CUST_0018,ORD_00256,2025-07-26 17:54:01,captured,4213.36,AED,3,123456,7890,false,credit,mastercard,Emirates NBD,2027-06-26,Android,Carrefour
+CUST_0018,ORD_00257,2025-10-15 17:54:01,captured,3548.06,AED,3,123456,7890,true,debit,visa,Emirates NBD,2027-09-15,iPhone,Amazon
+CUST_0013,ORD_00258,2025-07-24 17:54:01,captured,463.78,AED,3,123456,7890,true,debit,mastercard,Emirates NBD,2027-06-24,Windows,Noon
+CUST_0085,ORD_00259,2025-10-15 17:54:01,captured,1008.12,AED,3,123456,7890,true,debit,visa,Emirates NBD,2027-09-15,iPhone,Namshi
+CUST_0063,ORD_00260,2025-12-24 17:54:01,captured,2909.41,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-11-24,iPhone,IKEA
+CUST_0072,ORD_00261,2025-03-25 17:54:01,captured,4355.9,AED,3,123456,7890,false,debit,amex,Citi Bank,2027-02-23,iPhone,Carrefour
+CUST_0045,ORD_00262,2025-12-27 17:54:01,captured,773.87,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-11-27,Android,IKEA
+CUST_0050,ORD_00263,2025-10-03 17:54:01,captured,3414.49,AED,3,123456,7890,false,debit,visa,HSBC,2027-09-03,Android,Noon
+CUST_0087,ORD_00264,2025-09-03 17:54:01,captured,2417.2,AED,3,123456,7890,true,credit,visa,Emirates NBD,2027-08-04,iPhone,Noon
+CUST_0026,ORD_00265,2025-09-29 17:54:01,captured,1270.4,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-08-30,iPhone,Namshi
+CUST_0047,ORD_00266,2025-06-20 17:54:01,captured,2424.01,AED,3,123456,7890,true,debit,mastercard,Emirates NBD,2027-05-21,iPhone,Namshi
+CUST_0019,ORD_00267,2025-02-24 17:54:01,captured,1760.42,AED,3,123456,7890,true,credit,mastercard,ADCB,2027-01-25,Windows,Amazon
+CUST_0087,ORD_00268,2026-01-06 17:54:01,captured,1494.36,AED,3,123456,7890,false,credit,mastercard,Mashreq,2027-12-07,Android,IKEA
+CUST_0063,ORD_00269,2025-05-21 17:54:01,captured,319.78,AED,3,123456,7890,false,debit,amex,Citi Bank,2027-04-21,iPhone,Carrefour
+CUST_0071,ORD_00270,2025-10-26 17:54:01,captured,3078.74,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-09-26,iPhone,Namshi
+CUST_0045,ORD_00271,2025-03-06 17:54:01,captured,3616.1,AED,3,123456,7890,false,credit,visa,HSBC,2027-02-04,iPhone,Amazon
+CUST_0035,ORD_00272,2025-11-22 17:54:01,captured,552.2,AED,3,123456,7890,true,debit,mastercard,Emirates NBD,2027-10-23,iPhone,Amazon
+CUST_0038,ORD_00273,2025-05-30 17:54:01,captured,3376.01,AED,3,123456,7890,false,credit,visa,Mashreq,2027-04-30,Android,Namshi
+CUST_0072,ORD_00274,2026-01-04 17:54:01,captured,4381.12,AED,3,123456,7890,false,credit,visa,ADCB,2027-12-05,Android,Noon
+CUST_0080,ORD_00275,2025-05-20 17:54:01,captured,1545.7,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-04-20,Android,Amazon
+CUST_0022,ORD_00276,2025-04-24 17:54:01,captured,4243.46,AED,3,123456,7890,true,credit,visa,Mashreq,2027-03-25,Android,Noon
+CUST_0029,ORD_00277,2025-08-08 17:54:01,captured,1208.77,AED,3,123456,7890,false,debit,visa,HSBC,2027-07-09,iPhone,Namshi
+CUST_0047,ORD_00278,2025-09-05 17:54:01,captured,1918.74,AED,3,123456,7890,false,credit,mastercard,Emirates NBD,2027-08-06,Android,Carrefour
+CUST_0036,ORD_00279,2026-02-05 17:54:01,captured,798.71,AED,3,123456,7890,false,credit,visa,HSBC,2028-01-06,Android,Noon
+CUST_0091,ORD_00280,2025-10-09 17:54:01,captured,3020.35,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-09-09,Android,Amazon
+CUST_0030,ORD_00281,2025-10-22 17:54:01,captured,788.71,AED,3,123456,7890,false,debit,visa,Mashreq,2027-09-22,iPhone,Noon
+CUST_0026,ORD_00282,2025-02-14 17:54:01,captured,2001.14,AED,3,123456,7890,true,debit,visa,Mashreq,2027-01-15,iPhone,Noon
+CUST_0036,ORD_00283,2025-08-26 17:54:01,captured,1936.54,AED,3,123456,7890,false,debit,visa,ADCB,2027-07-27,Windows,IKEA
+CUST_0058,ORD_00284,2025-10-09 17:54:01,captured,2008.46,AED,3,123456,7890,false,debit,visa,HSBC,2027-09-09,iPhone,IKEA
+CUST_0033,ORD_00285,2025-02-12 17:54:01,captured,3833.32,AED,3,123456,7890,false,credit,visa,ADCB,2027-01-13,Android,Noon
+CUST_0084,ORD_00286,2026-01-22 17:54:01,captured,4835.45,AED,3,123456,7890,false,debit,visa,HSBC,2027-12-23,Windows,IKEA
+CUST_0097,ORD_00287,2025-09-26 17:54:01,captured,1115.81,AED,3,123456,7890,false,credit,mastercard,ADCB,2027-08-27,Android,Noon
+CUST_0018,ORD_00288,2025-08-31 17:54:01,captured,3681.01,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-08-01,iPhone,Namshi
+CUST_0097,ORD_00289,2025-05-21 17:54:01,captured,1831.96,AED,3,123456,7890,false,debit,visa,Mashreq,2027-04-21,iPhone,Carrefour
+CUST_0040,ORD_00290,2025-12-28 17:54:01,captured,268.86,AED,3,123456,7890,false,credit,amex,ADCB,2027-11-28,iPhone,Noon
+CUST_0099,ORD_00291,2025-11-02 17:54:01,captured,2659.98,AED,3,123456,7890,false,debit,visa,Mashreq,2027-10-03,iPhone,Noon
+CUST_0080,ORD_00292,2025-08-17 17:54:01,captured,4482.82,AED,3,123456,7890,false,debit,visa,HSBC,2027-07-18,iPhone,Amazon
+CUST_0071,ORD_00293,2025-10-19 17:54:01,captured,115.52,AED,3,123456,7890,false,credit,visa,Mashreq,2027-09-19,iPhone,IKEA
+CUST_0012,ORD_00294,2025-08-07 17:54:01,captured,4639.27,AED,3,123456,7890,true,debit,visa,Citi Bank,2027-07-08,Android,Noon
+CUST_0041,ORD_00295,2025-03-29 17:54:01,captured,1567.04,AED,3,123456,7890,true,debit,mastercard,Mashreq,2027-02-27,Windows,Namshi
+CUST_0018,ORD_00296,2025-05-24 17:54:01,captured,4973.78,AED,3,123456,7890,false,debit,visa,Mashreq,2027-04-24,Android,Amazon
+CUST_0014,ORD_00297,2026-01-06 17:54:01,captured,127.76,AED,3,123456,7890,false,credit,mastercard,Emirates NBD,2027-12-07,Android,Noon
+CUST_0062,ORD_00298,2025-10-31 17:54:01,captured,2055.59,AED,3,123456,7890,false,credit,visa,HSBC,2027-10-01,iPhone,Namshi
+CUST_0071,ORD_00299,2025-05-29 17:54:01,captured,3197.24,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-04-29,Android,Noon
+CUST_0039,ORD_00300,2025-09-20 17:54:01,captured,2553.06,AED,3,123456,7890,true,credit,mastercard,HSBC,2027-08-21,Android,Carrefour
+CUST_0033,ORD_00301,2025-04-23 17:54:01,captured,2066.4,AED,3,123456,7890,true,debit,visa,Mashreq,2027-03-24,Android,Amazon
+CUST_0016,ORD_00302,2025-06-24 17:54:01,captured,1174.44,AED,3,123456,7890,false,debit,visa,Mashreq,2027-05-25,iPhone,Amazon
+CUST_0054,ORD_00303,2026-01-20 17:54:01,captured,4347.97,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-12-21,Android,Noon
+CUST_0027,ORD_00304,2025-12-21 17:54:01,captured,4039.4,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-11-21,Android,Carrefour
+CUST_0030,ORD_00305,2025-04-28 17:54:01,captured,755.76,AED,3,123456,7890,false,credit,visa,HSBC,2027-03-29,iPhone,Amazon
+CUST_0092,ORD_00306,2025-09-11 17:54:01,captured,3603.69,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-08-12,iPhone,Carrefour
+CUST_0063,ORD_00307,2025-09-08 17:54:01,captured,4661.35,AED,3,123456,7890,false,credit,visa,Emirates NBD,2027-08-09,iPhone,Carrefour
+CUST_0081,ORD_00308,2025-04-11 17:54:01,captured,2225.71,AED,3,123456,7890,false,credit,visa,HSBC,2027-03-12,iPhone,Noon
+CUST_0028,ORD_00309,2025-04-02 17:54:01,captured,3200.29,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-03-03,Android,Amazon
+CUST_0023,ORD_00310,2025-02-13 17:54:01,captured,735.04,AED,3,123456,7890,true,credit,amex,Emirates NBD,2027-01-14,Android,Carrefour
+CUST_0036,ORD_00311,2025-04-20 17:54:01,captured,613.56,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-03-21,iPhone,Namshi
+CUST_0070,ORD_00312,2026-01-30 17:54:01,captured,2140.87,AED,3,123456,7890,false,credit,mastercard,Emirates NBD,2027-12-31,iPhone,Amazon
+CUST_0099,ORD_00313,2025-10-26 17:54:01,captured,3794.71,AED,3,123456,7890,false,debit,visa,HSBC,2027-09-26,iPhone,Carrefour
+CUST_0043,ORD_00314,2025-09-16 17:54:01,captured,3442.75,AED,3,123456,7890,true,debit,mastercard,Citi Bank,2027-08-17,iPhone,Amazon
+CUST_0048,ORD_00315,2025-10-17 17:54:01,captured,3931.88,AED,3,123456,7890,true,debit,visa,ADCB,2027-09-17,iPhone,Noon
+CUST_0085,ORD_00316,2025-03-12 17:54:01,captured,709.41,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-02-10,iPhone,IKEA
+CUST_0042,ORD_00317,2025-06-29 17:54:01,captured,304.12,AED,3,123456,7890,true,debit,mastercard,HSBC,2027-05-30,iPhone,Carrefour
+CUST_0057,ORD_00318,2025-05-05 17:54:01,captured,2919.24,AED,3,123456,7890,true,debit,visa,Emirates NBD,2027-04-05,iPhone,IKEA
+CUST_0024,ORD_00319,2026-01-10 17:54:01,captured,3721.23,AED,3,123456,7890,true,debit,mastercard,HSBC,2027-12-11,iPhone,Carrefour
+CUST_0076,ORD_00320,2025-09-30 17:54:01,captured,4408.35,AED,3,123456,7890,false,credit,mastercard,Emirates NBD,2027-08-31,iPhone,IKEA
+CUST_0085,ORD_00321,2025-12-15 17:54:01,captured,1584.29,AED,3,123456,7890,false,debit,visa,ADCB,2027-11-15,iPhone,Carrefour
+CUST_0086,ORD_00322,2025-07-09 17:54:01,captured,2952.82,AED,3,123456,7890,false,credit,visa,HSBC,2027-06-09,Windows,Carrefour
+CUST_0021,ORD_00323,2025-06-24 17:54:01,captured,1104.41,AED,3,123456,7890,false,credit,mastercard,Emirates NBD,2027-05-25,Android,IKEA
+CUST_0082,ORD_00324,2025-05-21 17:54:01,captured,4910.1,AED,3,123456,7890,false,debit,amex,HSBC,2027-04-21,Android,Carrefour
+CUST_0087,ORD_00325,2025-08-08 17:54:01,captured,2740.18,AED,3,123456,7890,true,debit,mastercard,ADCB,2027-07-09,iPhone,Carrefour
+CUST_0074,ORD_00326,2025-06-09 17:54:01,captured,757.95,AED,3,123456,7890,false,credit,mastercard,Citi Bank,2027-05-10,Windows,Noon
+CUST_0077,ORD_00327,2025-07-25 17:54:01,captured,983.51,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-06-25,Android,Carrefour
+CUST_0032,ORD_00328,2025-07-18 17:54:01,captured,4907.84,AED,3,123456,7890,false,credit,mastercard,HSBC,2027-06-18,iPhone,Carrefour
+CUST_0098,ORD_00329,2025-06-05 17:54:01,captured,4974.61,AED,3,123456,7890,true,credit,amex,Emirates NBD,2027-05-06,iPhone,Noon
+CUST_0018,ORD_00330,2025-04-07 17:54:01,captured,1148.39,AED,3,123456,7890,false,debit,visa,HSBC,2027-03-08,Windows,Noon
+CUST_0016,ORD_00331,2025-10-28 17:54:01,captured,2036.51,AED,3,123456,7890,false,credit,amex,Citi Bank,2027-09-28,Android,Carrefour
+CUST_0093,ORD_00332,2025-03-28 17:54:01,captured,2345.35,AED,3,123456,7890,false,credit,amex,ADCB,2027-02-26,iPhone,Amazon
+CUST_0036,ORD_00333,2025-11-30 17:54:01,captured,3943.66,AED,3,123456,7890,true,debit,mastercard,Mashreq,2027-10-31,Android,Noon
+CUST_0054,ORD_00334,2025-11-13 17:54:01,captured,1343.72,AED,3,123456,7890,false,debit,visa,HSBC,2027-10-14,iPhone,Amazon
+CUST_0053,ORD_00335,2025-06-09 17:54:01,captured,4951.42,AED,3,123456,7890,false,credit,visa,Emirates NBD,2027-05-10,iPhone,Carrefour
+CUST_0019,ORD_00336,2025-10-18 17:54:01,captured,259.83,AED,3,123456,7890,false,debit,visa,ADCB,2027-09-18,Android,Carrefour
+CUST_0092,ORD_00337,2025-08-15 17:54:01,captured,1857.03,AED,3,123456,7890,false,credit,visa,ADCB,2027-07-16,Windows,Noon
+CUST_0058,ORD_00338,2025-07-24 17:54:01,captured,3783.68,AED,3,123456,7890,false,debit,amex,ADCB,2027-06-24,iPhone,Carrefour
+CUST_0068,ORD_00339,2025-06-01 17:54:01,captured,2239.41,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-05-02,iPhone,Noon
+CUST_0039,ORD_00340,2025-10-02 17:54:01,captured,2155.3,AED,3,123456,7890,true,credit,visa,ADCB,2027-09-02,Android,Amazon
+CUST_0018,ORD_00341,2025-10-23 17:54:01,captured,4289.65,AED,3,123456,7890,true,debit,visa,HSBC,2027-09-23,Android,Amazon
+CUST_0066,ORD_00342,2025-05-08 17:54:01,captured,4151.06,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-04-08,Android,Namshi
+CUST_0033,ORD_00343,2025-08-15 17:54:01,captured,1484.11,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-07-16,iPhone,Amazon
+CUST_0059,ORD_00344,2025-12-20 17:54:01,captured,1874.66,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-11-20,iPhone,Namshi
+CUST_0085,ORD_00345,2025-04-15 17:54:01,captured,1036.48,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-03-16,Android,Noon
+CUST_0049,ORD_00346,2026-01-13 17:54:01,captured,1693.95,AED,3,123456,7890,false,credit,mastercard,Emirates NBD,2027-12-14,Windows,Carrefour
+CUST_0038,ORD_00347,2026-01-27 17:54:01,captured,3795.82,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-12-28,iPhone,Noon
+CUST_0073,ORD_00348,2026-01-11 17:54:01,captured,919.87,AED,3,123456,7890,false,credit,mastercard,Mashreq,2027-12-12,iPhone,Amazon
+CUST_0067,ORD_00349,2025-12-26 17:54:01,captured,1553.14,AED,3,123456,7890,false,credit,mastercard,Emirates NBD,2027-11-26,Android,Carrefour
+CUST_0080,ORD_00350,2025-11-16 17:54:01,captured,879.22,AED,3,123456,7890,true,debit,visa,Emirates NBD,2027-10-17,iPhone,IKEA
+CUST_0056,ORD_00351,2025-11-23 17:54:01,captured,251.2,AED,3,123456,7890,false,debit,visa,HSBC,2027-10-24,Android,Amazon
+CUST_0075,ORD_00352,2025-08-21 17:54:01,captured,2233.09,AED,3,123456,7890,true,debit,visa,ADCB,2027-07-22,Android,Carrefour
+CUST_0017,ORD_00353,2025-03-10 17:54:01,captured,3932.64,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-02-08,iPhone,Carrefour
+CUST_0087,ORD_00354,2025-04-03 17:54:01,captured,2555.33,AED,3,123456,7890,false,credit,mastercard,Mashreq,2027-03-04,iPhone,IKEA
+CUST_0063,ORD_00355,2025-09-18 17:54:01,captured,2043.11,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-08-19,Android,Noon
+CUST_0021,ORD_00356,2025-04-05 17:54:01,captured,4003.74,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-03-06,Windows,Namshi
+CUST_0081,ORD_00357,2025-03-21 17:54:01,captured,354.0,AED,3,123456,7890,true,debit,visa,Mashreq,2027-02-19,iPhone,Amazon
+CUST_0004,ORD_00358,2025-12-17 17:54:01,captured,4402.12,AED,3,123456,7890,true,credit,visa,Emirates NBD,2027-11-17,iPhone,Namshi
+CUST_0085,ORD_00359,2025-07-30 17:54:01,captured,453.34,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-06-30,Android,Namshi
+CUST_0053,ORD_00360,2025-06-09 17:54:01,captured,4952.77,AED,3,123456,7890,false,debit,amex,Emirates NBD,2027-05-10,iPhone,IKEA
+CUST_0073,ORD_00361,2026-01-26 17:54:01,captured,605.29,AED,3,123456,7890,false,debit,amex,Emirates NBD,2027-12-27,Android,Amazon
+CUST_0048,ORD_00362,2025-07-08 17:54:01,captured,2646.55,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-06-08,iPhone,Carrefour
+CUST_0023,ORD_00363,2025-11-30 17:54:01,captured,3479.92,AED,3,123456,7890,true,debit,mastercard,Mashreq,2027-10-31,Windows,Namshi
+CUST_0040,ORD_00364,2025-09-17 17:54:01,captured,3035.32,AED,3,123456,7890,true,credit,mastercard,Citi Bank,2027-08-18,Windows,Namshi
+CUST_0009,ORD_00365,2025-12-01 17:54:01,captured,3562.49,AED,3,123456,7890,true,credit,visa,HSBC,2027-11-01,iPhone,Carrefour
+CUST_0064,ORD_00366,2025-11-21 17:54:01,captured,618.94,AED,3,123456,7890,false,debit,amex,Mashreq,2027-10-22,iPhone,Carrefour
+CUST_0097,ORD_00367,2026-01-18 17:54:01,captured,347.4,AED,3,123456,7890,false,credit,visa,Emirates NBD,2027-12-19,Windows,Noon
+CUST_0035,ORD_00368,2025-12-01 17:54:01,captured,4215.03,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-11-01,Android,Noon
+CUST_0034,ORD_00369,2025-06-13 17:54:01,captured,3767.08,AED,3,123456,7890,false,credit,visa,HSBC,2027-05-14,Android,Noon
+CUST_0018,ORD_00370,2025-06-09 17:54:01,captured,1222.94,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-05-10,iPhone,Amazon
+CUST_0022,ORD_00371,2025-10-24 17:54:01,captured,3719.74,AED,3,123456,7890,true,debit,visa,Emirates NBD,2027-09-24,iPhone,Noon
+CUST_0039,ORD_00372,2025-07-24 17:54:01,captured,2348.81,AED,3,123456,7890,false,credit,mastercard,Mashreq,2027-06-24,iPhone,Noon
+CUST_0081,ORD_00373,2026-01-05 17:54:01,captured,1978.09,AED,3,123456,7890,false,debit,visa,Mashreq,2027-12-06,Android,Namshi
+CUST_0007,ORD_00374,2025-08-17 17:54:01,captured,3876.64,AED,3,123456,7890,false,debit,visa,Mashreq,2027-07-18,iPhone,Carrefour
+CUST_0096,ORD_00375,2025-08-14 17:54:01,captured,4313.14,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-07-15,iPhone,Carrefour
+CUST_0039,ORD_00376,2025-10-21 17:54:01,captured,3281.68,AED,3,123456,7890,false,credit,visa,ADCB,2027-09-21,Android,Noon
+CUST_0056,ORD_00377,2025-07-22 17:54:01,captured,1575.13,AED,3,123456,7890,true,debit,visa,HSBC,2027-06-22,iPhone,Namshi
+CUST_0077,ORD_00378,2025-06-15 17:54:01,captured,2103.01,AED,3,123456,7890,true,credit,visa,Citi Bank,2027-05-16,iPhone,IKEA
+CUST_0070,ORD_00379,2025-10-26 17:54:01,captured,4149.79,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-09-26,iPhone,Noon
+CUST_0022,ORD_00380,2025-09-12 17:54:01,captured,1848.74,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-08-13,iPhone,IKEA
+CUST_0035,ORD_00381,2025-10-25 17:54:01,captured,1836.68,AED,3,123456,7890,false,debit,amex,Emirates NBD,2027-09-25,Windows,Namshi
+CUST_0034,ORD_00382,2026-01-04 17:54:01,captured,1049.93,AED,3,123456,7890,false,credit,mastercard,Emirates NBD,2027-12-05,iPhone,Amazon
+CUST_0085,ORD_00383,2025-05-03 17:54:01,captured,2350.03,AED,3,123456,7890,true,debit,mastercard,HSBC,2027-04-03,iPhone,Amazon
+CUST_0084,ORD_00384,2025-10-01 17:54:01,captured,3968.22,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-09-01,Android,Namshi
+CUST_0077,ORD_00385,2025-10-13 17:54:01,captured,1835.93,AED,3,123456,7890,true,debit,visa,Emirates NBD,2027-09-13,iPhone,Namshi
+CUST_0014,ORD_00386,2025-09-13 17:54:01,captured,3119.87,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-08-14,Android,Noon
+CUST_0064,ORD_00387,2025-02-23 17:54:01,captured,2118.59,AED,3,123456,7890,false,credit,mastercard,Citi Bank,2027-01-24,iPhone,IKEA
+CUST_0028,ORD_00388,2025-04-23 17:54:01,captured,799.93,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-03-24,Android,Noon
+CUST_0048,ORD_00389,2025-11-01 17:54:01,captured,2154.43,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-10-02,iPhone,IKEA
+CUST_0031,ORD_00390,2025-05-06 17:54:01,captured,1341.03,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-04-06,Android,Amazon
+CUST_0050,ORD_00391,2025-10-17 17:54:01,captured,3978.64,AED,3,123456,7890,false,debit,visa,ADCB,2027-09-17,iPhone,Namshi
+CUST_0052,ORD_00392,2026-01-13 17:54:01,captured,3274.09,AED,3,123456,7890,true,debit,visa,ADCB,2027-12-14,Android,Carrefour
+CUST_0056,ORD_00393,2025-02-17 17:54:01,captured,4843.52,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-01-18,Android,Carrefour
+CUST_0063,ORD_00394,2025-07-06 17:54:01,captured,2839.39,AED,3,123456,7890,false,debit,visa,Mashreq,2027-06-06,iPhone,Carrefour
+CUST_0074,ORD_00395,2025-10-13 17:54:01,captured,1814.73,AED,3,123456,7890,false,credit,visa,ADCB,2027-09-13,iPhone,Carrefour
+CUST_0030,ORD_00396,2025-10-11 17:54:01,captured,567.32,AED,3,123456,7890,false,debit,visa,HSBC,2027-09-11,Android,IKEA
+CUST_0044,ORD_00397,2025-03-31 17:54:01,captured,4034.71,AED,3,123456,7890,true,debit,visa,Citi Bank,2027-03-01,Android,Namshi
+CUST_0070,ORD_00398,2025-11-12 17:54:01,captured,1055.38,AED,3,123456,7890,true,credit,mastercard,Emirates NBD,2027-10-13,Android,IKEA
+CUST_0063,ORD_00399,2025-03-03 17:54:01,captured,4456.73,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-02-01,iPhone,Namshi
+CUST_0053,ORD_00400,2026-01-27 17:54:01,captured,1091.05,AED,3,123456,7890,false,debit,visa,Mashreq,2027-12-28,Android,Noon
+CUST_0043,ORD_00401,2025-07-20 17:54:01,captured,2833.84,AED,3,123456,7890,false,debit,visa,Mashreq,2027-06-20,Android,Amazon
+CUST_0061,ORD_00402,2025-04-24 17:54:01,captured,2712.93,AED,3,123456,7890,false,credit,mastercard,Citi Bank,2027-03-25,iPhone,Carrefour
+CUST_0020,ORD_00403,2025-10-25 17:54:01,captured,1171.71,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-09-25,Android,Carrefour
+CUST_0083,ORD_00404,2025-07-23 17:54:01,captured,837.98,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-06-23,iPhone,IKEA
+CUST_0059,ORD_00405,2025-10-15 17:54:01,captured,4304.79,AED,3,123456,7890,false,credit,visa,Mashreq,2027-09-15,Android,IKEA
+CUST_0017,ORD_00406,2025-05-30 17:54:01,captured,3765.22,AED,3,123456,7890,false,credit,mastercard,Mashreq,2027-04-30,iPhone,Namshi
+CUST_0095,ORD_00407,2025-12-13 17:54:01,captured,4304.31,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-11-13,Windows,Namshi
+CUST_0058,ORD_00408,2025-04-14 17:54:01,captured,1629.76,AED,3,123456,7890,false,debit,visa,ADCB,2027-03-15,iPhone,Namshi
+CUST_0057,ORD_00409,2025-02-22 17:54:01,captured,4698.23,AED,3,123456,7890,false,debit,visa,Mashreq,2027-01-23,Windows,Namshi
+CUST_0042,ORD_00410,2025-11-30 17:54:01,captured,778.33,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-10-31,iPhone,IKEA
+CUST_0062,ORD_00411,2025-04-03 17:54:01,captured,2399.5,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-03-04,Windows,Namshi
+CUST_0031,ORD_00412,2025-08-07 17:54:01,captured,3406.45,AED,3,123456,7890,true,credit,visa,Mashreq,2027-07-08,Android,Amazon
+CUST_0058,ORD_00413,2025-03-04 17:54:01,captured,3278.33,AED,3,123456,7890,false,debit,visa,HSBC,2027-02-02,iPhone,Noon
+CUST_0046,ORD_00414,2025-07-18 17:54:01,captured,4203.1,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-06-18,Android,Carrefour
+CUST_0039,ORD_00415,2025-10-17 17:54:01,captured,3459.93,AED,3,123456,7890,false,credit,mastercard,ADCB,2027-09-17,iPhone,IKEA
+CUST_0048,ORD_00416,2025-06-27 17:54:01,captured,3248.63,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-05-28,iPhone,IKEA
+CUST_0039,ORD_00417,2025-07-18 17:54:01,captured,3073.55,AED,3,123456,7890,true,credit,mastercard,Mashreq,2027-06-18,Android,Namshi
+CUST_0052,ORD_00418,2025-07-12 17:54:01,captured,1503.95,AED,3,123456,7890,true,credit,amex,HSBC,2027-06-12,Android,Amazon
+CUST_0007,ORD_00419,2025-07-20 17:54:01,captured,4252.2,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-06-20,Android,Noon
+CUST_0093,ORD_00420,2026-02-01 17:54:01,captured,3968.11,AED,3,123456,7890,false,debit,visa,Mashreq,2028-01-02,iPhone,Noon
+CUST_0031,ORD_00421,2025-12-22 17:54:01,captured,2248.44,AED,3,123456,7890,false,debit,amex,Emirates NBD,2027-11-22,iPhone,Namshi
+CUST_0063,ORD_00422,2025-11-11 17:54:01,captured,1239.28,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-10-12,iPhone,Carrefour
+CUST_0025,ORD_00423,2025-11-18 17:54:01,captured,4501.37,AED,3,123456,7890,false,credit,visa,ADCB,2027-10-19,Android,IKEA
+CUST_0063,ORD_00424,2025-05-22 17:54:01,captured,2576.99,AED,3,123456,7890,false,debit,mastercard,HSBC,2027-04-22,iPhone,Noon
+CUST_0056,ORD_00425,2025-10-29 17:54:01,captured,1481.4,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-09-29,Android,Amazon
+CUST_0014,ORD_00426,2025-10-29 17:54:01,captured,1637.99,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-09-29,Windows,Noon
+CUST_0090,ORD_00427,2025-11-22 17:54:01,captured,2407.25,AED,3,123456,7890,false,credit,mastercard,Mashreq,2027-10-23,iPhone,Noon
+CUST_0015,ORD_00428,2025-04-23 17:54:01,captured,2324.55,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-03-24,Android,Namshi
+CUST_0076,ORD_00429,2025-08-08 17:54:01,captured,2499.16,AED,3,123456,7890,false,credit,visa,Emirates NBD,2027-07-09,iPhone,Carrefour
+CUST_0052,ORD_00430,2025-07-05 17:54:01,captured,4285.88,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-06-05,Android,Amazon
+CUST_0005,ORD_00431,2025-07-21 17:54:01,captured,1338.71,AED,3,123456,7890,false,credit,mastercard,HSBC,2027-06-21,Android,IKEA
+CUST_0061,ORD_00432,2025-04-10 17:54:01,captured,3396.55,AED,3,123456,7890,false,debit,visa,ADCB,2027-03-11,Android,Carrefour
+CUST_0012,ORD_00433,2025-12-29 17:54:01,captured,4366.28,AED,3,123456,7890,true,credit,mastercard,Citi Bank,2027-11-29,iPhone,Amazon
+CUST_0014,ORD_00434,2025-05-15 17:54:01,captured,1540.35,AED,3,123456,7890,true,debit,amex,Mashreq,2027-04-15,Windows,IKEA
+CUST_0027,ORD_00435,2025-08-07 17:54:01,captured,857.01,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-07-08,Windows,Noon
+CUST_0092,ORD_00436,2025-06-19 17:54:01,captured,4155.01,AED,3,123456,7890,true,debit,visa,Citi Bank,2027-05-20,Android,Namshi
+CUST_0014,ORD_00437,2025-07-26 17:54:01,captured,2394.82,AED,3,123456,7890,true,credit,visa,HSBC,2027-06-26,Android,Amazon
+CUST_0053,ORD_00438,2026-02-11 17:54:01,captured,4000.44,AED,3,123456,7890,false,credit,visa,HSBC,2028-01-12,iPhone,Amazon
+CUST_0007,ORD_00439,2025-12-02 17:54:01,captured,4619.6,AED,3,123456,7890,false,credit,mastercard,ADCB,2027-11-02,Android,Namshi
+CUST_0094,ORD_00440,2025-05-15 17:54:01,captured,1132.83,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-04-15,Android,Namshi
+CUST_0053,ORD_00441,2025-07-27 17:54:01,captured,3898.7,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-06-27,iPhone,Namshi
+CUST_0027,ORD_00442,2025-05-15 17:54:01,captured,3301.58,AED,3,123456,7890,false,debit,visa,Citi Bank,2027-04-15,Android,Noon
+CUST_0048,ORD_00443,2025-04-19 17:54:01,captured,1764.87,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-03-20,Android,Namshi
+CUST_0057,ORD_00444,2025-06-05 17:54:01,captured,1765.86,AED,3,123456,7890,true,debit,visa,Emirates NBD,2027-05-06,Windows,Amazon
+CUST_0062,ORD_00445,2025-07-19 17:54:01,captured,2318.79,AED,3,123456,7890,true,debit,visa,HSBC,2027-06-19,iPhone,IKEA
+CUST_0024,ORD_00446,2025-04-28 17:54:01,captured,1028.03,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-03-29,Android,Noon
+CUST_0082,ORD_00447,2025-03-26 17:54:01,captured,1541.91,AED,3,123456,7890,true,debit,amex,Emirates NBD,2027-02-24,iPhone,IKEA
+CUST_0043,ORD_00448,2025-05-06 17:54:01,captured,3613.89,AED,3,123456,7890,false,credit,visa,HSBC,2027-04-06,iPhone,Amazon
+CUST_0088,ORD_00449,2025-12-08 17:54:01,captured,1004.7,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-11-08,iPhone,IKEA
+CUST_0096,ORD_00450,2025-04-24 17:54:01,captured,3442.55,AED,3,123456,7890,true,credit,visa,Emirates NBD,2027-03-25,iPhone,IKEA
+CUST_0069,ORD_00451,2025-10-22 17:54:01,captured,321.72,AED,3,123456,7890,false,debit,visa,Mashreq,2027-09-22,Android,Namshi
+CUST_0039,ORD_00452,2025-06-15 17:54:01,captured,2846.84,AED,3,123456,7890,false,credit,visa,Mashreq,2027-05-16,iPhone,IKEA
+CUST_0052,ORD_00453,2025-04-07 17:54:01,captured,1871.55,AED,3,123456,7890,true,debit,mastercard,Citi Bank,2027-03-08,Android,Amazon
+CUST_0059,ORD_00454,2025-04-11 17:54:01,captured,3327.72,AED,3,123456,7890,false,debit,visa,ADCB,2027-03-12,Android,IKEA
+CUST_0053,ORD_00455,2025-07-07 17:54:01,captured,4919.48,AED,3,123456,7890,true,debit,amex,Citi Bank,2027-06-07,iPhone,Carrefour
+CUST_0088,ORD_00456,2025-11-28 17:54:01,captured,2665.57,AED,3,123456,7890,true,debit,amex,Emirates NBD,2027-10-29,Android,Noon
+CUST_0020,ORD_00457,2025-03-14 17:54:01,captured,4121.41,AED,3,123456,7890,false,debit,visa,Emirates NBD,2027-02-12,iPhone,Amazon
+CUST_0037,ORD_00458,2025-03-12 17:54:01,captured,1855.84,AED,3,123456,7890,false,credit,mastercard,Citi Bank,2027-02-10,Android,IKEA
+CUST_0030,ORD_00459,2025-06-12 17:54:01,captured,1100.81,AED,3,123456,7890,false,debit,mastercard,ADCB,2027-05-13,Android,Noon
+CUST_0046,ORD_00460,2026-02-07 17:54:01,captured,1627.83,AED,3,123456,7890,false,debit,mastercard,ADCB,2028-01-08,Android,IKEA
+CUST_0006,ORD_00461,2025-12-30 17:54:01,captured,670.16,AED,3,123456,7890,false,credit,amex,HSBC,2027-11-30,Android,Carrefour
+CUST_0099,ORD_00462,2025-09-02 17:54:01,captured,2075.72,AED,3,123456,7890,false,credit,mastercard,Citi Bank,2027-08-03,Android,Noon
+CUST_0064,ORD_00463,2025-02-22 17:54:01,captured,1839.0,AED,3,123456,7890,true,debit,mastercard,Citi Bank,2027-01-23,iPhone,Carrefour
+CUST_0039,ORD_00464,2025-08-09 17:54:01,captured,242.86,AED,3,123456,7890,true,credit,visa,ADCB,2027-07-10,Android,Namshi
+CUST_0007,ORD_00465,2025-05-08 17:54:01,captured,4846.51,AED,3,123456,7890,false,debit,visa,ADCB,2027-04-08,Windows,Namshi
+CUST_0056,ORD_00466,2025-05-02 17:54:01,captured,3786.75,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-04-02,iPhone,IKEA
+CUST_0022,ORD_00467,2025-02-27 17:54:01,captured,2747.45,AED,3,123456,7890,false,credit,visa,HSBC,2027-01-28,Android,Noon
+CUST_0017,ORD_00468,2025-05-17 17:54:01,captured,2471.7,AED,3,123456,7890,true,debit,visa,HSBC,2027-04-17,Android,Namshi
+CUST_0010,ORD_00469,2025-04-19 17:54:01,captured,4893.94,AED,3,123456,7890,true,credit,visa,Emirates NBD,2027-03-20,Android,Namshi
+CUST_0021,ORD_00470,2025-08-03 17:54:01,captured,2061.04,AED,3,123456,7890,false,credit,visa,Mashreq,2027-07-04,Windows,Carrefour
+CUST_0086,ORD_00471,2025-05-18 17:54:01,captured,3471.42,AED,3,123456,7890,false,debit,amex,ADCB,2027-04-18,iPhone,Carrefour
+CUST_0086,ORD_00472,2026-01-13 17:54:01,captured,3903.82,AED,3,123456,7890,false,debit,mastercard,Emirates NBD,2027-12-14,Android,Noon
+CUST_0093,ORD_00473,2025-10-08 17:54:01,captured,181.3,AED,3,123456,7890,true,credit,mastercard,ADCB,2027-09-08,iPhone,IKEA
+CUST_0020,ORD_00474,2025-07-13 17:54:01,captured,4875.98,AED,3,123456,7890,false,debit,visa,ADCB,2027-06-13,iPhone,Namshi
+CUST_0074,ORD_00475,2025-05-16 17:54:01,captured,2912.35,AED,3,123456,7890,false,debit,visa,ADCB,2027-04-16,Android,Namshi
+CUST_0046,ORD_00476,2025-06-18 17:54:01,captured,297.26,AED,3,123456,7890,true,debit,visa,ADCB,2027-05-19,Android,Carrefour
+CUST_0011,ORD_00477,2025-09-24 17:54:01,captured,4178.58,AED,3,123456,7890,false,credit,visa,HSBC,2027-08-25,Windows,Carrefour
+CUST_0027,ORD_00478,2025-10-17 17:54:01,captured,1753.53,AED,3,123456,7890,false,credit,visa,ADCB,2027-09-17,Android,IKEA
+CUST_0036,ORD_00479,2025-05-03 17:54:01,captured,1738.57,AED,3,123456,7890,true,debit,mastercard,Mashreq,2027-04-03,iPhone,IKEA
+CUST_0026,ORD_00480,2025-04-07 17:54:01,captured,854.11,AED,3,123456,7890,false,debit,visa,HSBC,2027-03-08,iPhone,Noon
+CUST_0068,ORD_00481,2025-02-21 17:54:01,captured,2965.71,AED,3,123456,7890,false,debit,mastercard,Mashreq,2027-01-22,iPhone,Carrefour
+CUST_0051,ORD_00482,2025-03-20 17:54:01,captured,1226.97,AED,3,123456,7890,true,debit,visa,Emirates NBD,2027-02-18,Android,Noon
+CUST_0081,ORD_00483,2026-02-07 17:54:01,captured,865.95,AED,3,123456,7890,true,credit,visa,ADCB,2028-01-08,Windows,IKEA
+CUST_0041,ORD_00484,2025-09-28 17:54:01,captured,865.39,AED,3,123456,7890,false,credit,amex,Mashreq,2027-08-29,Android,Namshi
+CUST_0094,ORD_00485,2025-08-15 17:54:01,captured,3863.23,AED,3,123456,7890,false,debit,visa,ADCB,2027-07-16,Android,IKEA
+CUST_0030,ORD_00486,2025-10-28 17:54:01,captured,1466.8,AED,3,123456,7890,false,debit,visa,ADCB,2027-09-28,iPhone,Amazon
+CUST_0096,ORD_00487,2025-03-01 17:54:01,captured,1055.54,AED,3,123456,7890,false,credit,mastercard,ADCB,2027-01-30,Android,Namshi
+CUST_0025,ORD_00488,2025-04-22 17:54:01,captured,557.03,AED,3,123456,7890,false,credit,visa,Mashreq,2027-03-23,Android,Noon
+CUST_0048,ORD_00489,2025-09-21 17:54:01,captured,126.48,AED,3,123456,7890,false,debit,visa,HSBC,2027-08-22,iPhone,Carrefour
+CUST_0041,ORD_00490,2025-04-22 17:54:01,captured,1686.72,AED,3,123456,7890,false,credit,mastercard,Citi Bank,2027-03-23,iPhone,Amazon
+CUST_0083,ORD_00491,2025-06-15 17:54:01,captured,320.48,AED,3,123456,7890,false,credit,visa,ADCB,2027-05-16,iPhone,Amazon
+CUST_0075,ORD_00492,2025-03-03 17:54:01,captured,167.04,AED,3,123456,7890,false,debit,visa,HSBC,2027-02-01,Android,Namshi
+CUST_0035,ORD_00493,2025-09-06 17:54:01,captured,4047.08,AED,3,123456,7890,false,debit,mastercard,Citi Bank,2027-08-07,Android,IKEA
+CUST_0009,ORD_00494,2025-10-25 17:54:01,captured,540.4,AED,3,123456,7890,false,credit,visa,ADCB,2027-09-25,iPhone,Carrefour
+CUST_0044,ORD_00495,2026-01-21 17:54:01,captured,2674.8,AED,3,123456,7890,false,credit,amex,Emirates NBD,2027-12-22,Android,Carrefour
+CUST_0017,ORD_00496,2025-04-24 17:54:01,captured,1549.54,AED,3,123456,7890,false,debit,visa,Mashreq,2027-03-25,iPhone,Namshi
+CUST_0077,ORD_00497,2025-06-26 17:54:01,captured,179.59,AED,3,123456,7890,false,credit,visa,Citi Bank,2027-05-27,iPhone,Carrefour
+CUST_0016,ORD_00498,2025-08-27 17:54:01,captured,2357.28,AED,3,123456,7890,false,debit,visa,Mashreq,2027-07-28,Android,Namshi
+CUST_0077,ORD_00499,2025-03-14 17:54:01,captured,4466.88,AED,3,123456,7890,true,debit,visa,HSBC,2027-02-12,iPhone,IKEA

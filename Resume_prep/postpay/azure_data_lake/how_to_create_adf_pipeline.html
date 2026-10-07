@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Create ADF Pipeline - Step by Step</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .steps-nav {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .step-btn {
+            padding: 12px 24px;
+            border: 2px solid #e1dfdd;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .step-btn:hover {
+            background: #f8f9fa;
+        }
+
+        .step-btn.active {
+            background: #0078d4;
+            color: white;
+            border-color: #0078d4;
+        }
+
+        .step-btn.completed {
+            background: #107c10;
+            color: white;
+            border-color: #107c10;
+        }
+
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .step-content {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e1dfdd;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #0078d4;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .step-title {
+            flex: 1;
+        }
+
+        .step-title h2 {
+            color: #323130;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .step-title p {
+            color: #605e5c;
+            font-size: 14px;
+        }
+
+        .screenshot {
+            background: #f8f9fa;
+            border: 2px solid #e1dfdd;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .screenshot-placeholder {
+            background: white;
+            border: 2px dashed #0078d4;
+            border-radius: 8px;
+            padding: 60px;
+            font-size: 48px;
+            color: #0078d4;
+        }
+
+        .instruction-box {
+            background: #e3f2fd;
+            border-left: 4px solid #0078d4;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .instruction-box h3 {
+            color: #323130;
+            margin-bottom: 15px;
+        }
+
+        .instruction-box ol,
+        .instruction-box ul {
+            margin-left: 20px;
+        }
+
+        .instruction-box li {
+            margin: 10px 0;
+            color: #323130;
+        }
+
+        .warning-box {
+            background: #fff4ce;
+            border-left: 4px solid #ffb900;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #dff6dd;
+            border-left: 4px solid #107c10;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .config-panel {
+            background: #f8f9fa;
+            border: 1px solid #e1dfdd;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #323130;
+            font-size: 14px;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #8a8886;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .activity-card {
+            background: white;
+            border: 2px solid #0078d4;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px;
+            display: inline-block;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .activity-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .activity-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .activity-name {
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #0078d4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #005a9e;
+        }
+
+        .btn-success {
+            background: #107c10;
+            color: white;
+        }
+
+        .btn-next {
+            float: right;
+        }
+
+        .btn-prev {
+            float: left;
+        }
+
+        .navigation {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e1dfdd;
+            clear: both;
+            overflow: hidden;
+        }
+
+        .pipeline-canvas {
+            background: #f8f9fa;
+            border: 2px dashed #e1dfdd;
+            border-radius: 8px;
+            padding: 40px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .flow-box {
+            background: white;
+            border: 2px solid #0078d4;
+            border-radius: 8px;
+            padding: 20px;
+            min-width: 150px;
+        }
+
+        .flow-arrow {
+            font-size: 32px;
+            color: #0078d4;
+        }
+
+        .tip-box {
+            background: #f3f2f1;
+            border-left: 4px solid #605e5c;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>🏭 How to Create an ADF Pipeline</h1>
+        <p>Step-by-step guide to build your SAP to Data Lake pipeline</p>
+    </div>
+
+    <div class="steps-nav">
+        <button class="step-btn active" onclick="goToStep(0)">1. Click New Pipeline</button>
+        <button class="step-btn" onclick="goToStep(1)">2. Add Copy Activity</button>
+        <button class="step-btn" onclick="goToStep(2)">3. Configure Source (SAP)</button>
+        <button class="step-btn" onclick="goToStep(3)">4. Configure Sink (Data Lake)</button>
+        <button class="step-btn" onclick="goToStep(4)">5. Add Parameters</button>
+        <button class="step-btn" onclick="goToStep(5)">6. Test & Debug</button>
+        <button class="step-btn" onclick="goToStep(6)">7. Publish Pipeline</button>
+        <button class="step-btn" onclick="goToStep(7)">8. Add Trigger/Schedule</button>
+    </div>
+
+    <div class="content">
+        <!-- Step 0 -->
+        <div class="step-content active" id="step-0">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <div class="step-title">
+                    <h2>Click "+ New Pipeline"</h2>
+                    <p>Start by creating a new pipeline from the Pipelines tab</p>
+                </div>
+            </div>
+
+            <div class="instruction-box">
+                <h3>📍 Where to Find It:</h3>
+                <ol>
+                    <li>Open <strong>Azure Data Factory Studio</strong></li>
+                    <li>Click <strong>"Author"</strong> tab (pencil icon) on the left sidebar</li>
+                    <li>Click <strong>"Pipelines"</strong> in the Factory Resources panel</li>
+                    <li>Click the <strong>"+ New Pipeline"</strong> green button</li>
+                </ol>
+            </div>
+
+            <div class="screenshot">
+                <div class="screenshot-placeholder">
+                    🖱️ Click "+ New Pipeline" Button
+                </div>
+                <p style="margin-top: 15px; color: #605e5c;">This button is at the top of your Pipelines section (as
+                    shown in your screenshot)</p>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ What Happens:</strong>
+                <p style="margin-top: 10px;">A blank pipeline canvas opens where you can drag and drop activities to
+                    design your data workflow.</p>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-primary btn-next" onclick="goToStep(1)">Next: Add Copy Activity →</button>
+            </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="step-content" id="step-1">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <div class="step-title">
+                    <h2>Add Copy Data Activity</h2>
+                    <p>Drag the Copy Data activity to your pipeline canvas</p>
+                </div>
+            </div>
+
+            <div class="instruction-box">
+                <h3>🎯 How to Add Copy Activity:</h3>
+                <ol>
+                    <li>Look at the <strong>Activities</strong> panel on the left side of the canvas</li>
+                    <li>Expand <strong>"Move & transform"</strong> section</li>
+                    <li>Find <strong>"Copy data"</strong> activity</li>
+                    <li><strong>Drag and drop</strong> it onto the canvas</li>
+                    <li>Rename it to something meaningful (e.g., "Copy_SAP_KNA1")</li>
+                </ol>
+            </div>
+
+            <div class="pipeline-canvas">
+                <h3 style="margin-bottom: 20px;">Available Activities:</h3>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <div class="activity-card">
+                        <div class="activity-icon">📥</div>
+                        <div class="activity-name">Copy Data</div>
+                        <div style="font-size: 12px; color: #605e5c; margin-top: 5px;">Most common!</div>
+                    </div>
+                    <div class="activity-card" style="opacity: 0.5;">
+                        <div class="activity-icon">🔄</div>
+                        <div class="activity-name">Data Flow</div>
+                    </div>
+                    <div class="activity-card" style="opacity: 0.5;">
+                        <div class="activity-icon">📊</div>
+                        <div class="activity-name">Lookup</div>
+                    </div>
+                    <div class="activity-card" style="opacity: 0.5;">
+                        <div class="activity-icon">🔀</div>
+                        <div class="activity-name">If Condition</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                💡 <strong>Tip:</strong> Name your activity descriptively like "Copy_SAP_KNA1_to_Bronze" so you can
+                easily identify it later in monitoring.
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-primary btn-prev" onclick="goToStep(0)">← Previous</button>
+                <button class="btn btn-primary btn-next" onclick="goToStep(2)">Next: Configure Source →</button>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-content" id="step-2">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <div class="step-title">
+                    <h2>Configure Source (SAP)</h2>
+                    <p>Tell ADF where to get the data from</p>
+                </div>
+            </div>
+
+            <div class="instruction-box">
+                <h3>📂 Source Configuration Steps:</h3>
+                <ol>
+                    <li>Click on the <strong>Copy Data activity</strong> you just added</li>
+                    <li>At the bottom, click the <strong>"Source"</strong> tab</li>
+                    <li>Click <strong>"+ New"</strong> next to "Source dataset"</li>
+                    <li>Search for and select <strong>"SAP Table"</strong></li>
+                    <li>Select your <strong>SAP Linked Service</strong> (e.g., "SAP_S4HANA_Production")</li>
+                    <li>Enter the <strong>table name</strong> (e.g., "KNA1")</li>
+                    <li>Click <strong>"OK"</strong></li>
+                </ol>
+            </div>
+
+            <div class="config-panel">
+                <h3 style="margin-bottom: 20px;">Source Dataset Configuration:</h3>
+
+                <div class="form-group">
+                    <label class="form-label">Dataset Name</label>
+                    <input type="text" class="form-input" value="SAP_KNA1_Table" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Linked Service</label>
+                    <select class="form-select">
+                        <option>SAP_S4HANA_Production (via SelfHostedIR-SAP)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Table Name</label>
+                    <input type="text" class="form-input" value="KNA1"
+                        placeholder="Enter SAP table name (e.g., KNA1, VBAK)">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Integration Runtime</label>
+                    <input type="text" class="form-input" value="SelfHostedIR-SAP" readonly>
+                    <small style="color: #605e5c;">Required because SAP is on-premise</small>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Important:</strong> Make sure your Self-Hosted Integration Runtime is running! Without it,
+                ADF cannot connect to SAP.
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-primary btn-prev" onclick="goToStep(1)">← Previous</button>
+                <button class="btn btn-primary btn-next" onclick="goToStep(3)">Next: Configure Sink →</button>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-content" id="step-3">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <div class="step-title">
+                    <h2>Configure Sink (Data Lake)</h2>
+                    <p>Tell ADF where to write the data</p>
+                </div>
+            </div>
+
+            <div class="instruction-box">
+                <h3>📍 Sink Configuration Steps:</h3>
+                <ol>
+                    <li>Still on the Copy Data activity, click the <strong>"Sink"</strong> tab</li>
+                    <li>Click <strong>"+ New"</strong> next to "Sink dataset"</li>
+                    <li>Search for and select <strong>"Azure Data Lake Storage Gen2"</strong></li>
+                    <li>Choose format: <strong>"Parquet"</strong> (recommended for big data)</li>
+                    <li>Select your <strong>Data Lake Linked Service</strong> (e.g., "DataLake_Gen2")</li>
+                    <li>Browse and select container: <strong>"bronze"</strong></li>
+                    <li>Enter folder path: <strong>"sap/kna1/"</strong></li>
+                    <li>Click <strong>"OK"</strong></li>
+                </ol>
+            </div>
+
+            <div class="config-panel">
+                <h3 style="margin-bottom: 20px;">Sink Dataset Configuration:</h3>
+
+                <div class="form-group">
+                    <label class="form-label">Dataset Name</label>
+                    <input type="text" class="form-input" value="DataLake_Bronze_KNA1" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Linked Service</label>
+                    <select class="form-select">
+                        <option>DataLake_Gen2 (adlspostpaydev)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Container</label>
+                    <select class="form-select">
+                        <option>bronze</option>
+                        <option>silver</option>
+                        <option>gold</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Folder Path</label>
+                    <input type="text" class="form-input" value="sap/kna1/" placeholder="sap/tablename/">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">File Format</label>
+                    <select class="form-select">
+                        <option>Parquet (Recommended)</option>
+                        <option>CSV</option>
+                        <option>JSON</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">File Name (Optional)</label>
+                    <input type="text" class="form-input"
+                        value="KNA1_@{formatDateTime(utcnow(), 'yyyyMMdd_HHmmss')}.parquet"
+                        placeholder="Leave blank for auto-generated">
+                    <small style="color: #605e5c;">Example: KNA1_20260214_020000.parquet</small>
+                </div>
+            </div>
+
+            <div class="flow-diagram">
+                <div class="flow-box">
+                    <div style="font-size: 32px; margin-bottom: 10px;">🏢</div>
+                    <strong>SAP KNA1</strong><br>
+                    <small>Source</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">
+                    <div style="font-size: 32px; margin-bottom: 10px;">📥</div>
+                    <strong>Copy Activity</strong><br>
+                    <small>ADF Pipeline</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">
+                    <div style="font-size: 32px; margin-bottom: 10px;">💾</div>
+                    <strong>bronze/sap/kna1/</strong><br>
+                    <small>Data Lake Gen2</small>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                💡 <strong>Why Parquet?</strong> Parquet is a columnar format that's faster to read and takes up less
+                space than CSV. Perfect for big data!
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-primary btn-prev" onclick="goToStep(2)">← Previous</button>
+                <button class="btn btn-primary btn-next" onclick="goToStep(4)">Next: Add Parameters →</button>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-content" id="step-4">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <div class="step-title">
+                    <h2>Add Parameters (Optional but Recommended)</h2>
+                    <p>Make your pipeline flexible with parameters</p>
+                </div>
+            </div>
+
+            <div class="instruction-box">
+                <h3>🔧 Why Use Parameters?</h3>
+                <p>Parameters let you reuse the same pipeline for different tables without creating multiple pipelines.
+                </p>
+                <br>
+                <h3>How to Add Parameters:</h3>
+                <ol>
+                    <li>Click on empty area of canvas (to select the pipeline itself)</li>
+                    <li>Click <strong>"Parameters"</strong> tab at the bottom</li>
+                    <li>Click <strong>"+ New"</strong></li>
+                    <li>Add parameter name: <strong>"TableName"</strong></li>
+                    <li>Type: <strong>String</strong></li>
+                    <li>Default value: <strong>"KNA1"</strong></li>
+                </ol>
+            </div>
+
+            <div class="config-panel">
+                <h3 style="margin-bottom: 20px;">Example Parameters:</h3>
+
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #f8f9fa;">
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #e1dfdd;">Parameter
+                                Name</th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #e1dfdd;">Type</th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #e1dfdd;">Default Value
+                            </th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #e1dfdd;">Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #e1dfdd;"><strong>TableName</strong></td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e1dfdd;">String</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e1dfdd;">KNA1</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e1dfdd;">SAP table to extract</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #e1dfdd;"><strong>TargetFolder</strong>
+                            </td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e1dfdd;">String</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e1dfdd;">sap/kna1/</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e1dfdd;">Data Lake folder path</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #e1dfdd;">
+                                <strong>FilterCondition</strong></td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e1dfdd;">String</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e1dfdd;">LAND1 = 'AE'</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e1dfdd;">Optional WHERE clause</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Using Parameters in Your Dataset:</strong>
+                <p style="margin-top: 10px;">In your source dataset, instead of hardcoding "KNA1", use:</p>
+                <div class="code-block" style="margin-top: 10px;">
+                    @pipeline().parameters.TableName
+                </div>
+                <p style="margin-top: 10px;">Now you can run the same pipeline for KNA1, VBAK, MARA, etc. by just
+                    changing the parameter!</p>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-primary btn-prev" onclick="goToStep(3)">← Previous</button>
+                <button class="btn btn-primary btn-next" onclick="goToStep(5)">Next: Test & Debug →</button>
+            </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="step-content" id="step-5">
+            <div class="step-header">
+                <div class="step-number">6</div>
+                <div class="step-title">
+                    <h2>Test & Debug Your Pipeline</h2>
+                    <p>Run your pipeline to make sure it works</p>
+                </div>
+            </div>
+
+            <div class="instruction-box">
+                <h3>🧪 How to Test:</h3>
+                <ol>
+                    <li>Click <strong>"Debug"</strong> button at the top of the pipeline canvas</li>
+                    <li>If you have parameters, enter test values in the popup</li>
+                    <li>Click <strong>"OK"</strong> to start the debug run</li>
+                    <li>Watch the <strong>"Output"</strong> tab at the bottom to see progress</li>
+                    <li>Wait for the activity to show a ✅ green checkmark (success) or ❌ red X (failed)</li>
+                </ol>
+            </div>
+
+            <div class="pipeline-canvas">
+                <h3 style="margin-bottom: 20px;">Debug Output:</h3>
+                <div style="background: white; padding: 20px; border-radius: 8px; text-align: left;">
+                    <div style="padding: 10px; border-bottom: 1px solid #e1dfdd;">
+                        <strong>Copy_SAP_KNA1</strong>
+                        <span style="float: right; color: #107c10;">✓ Succeeded</span>
+                    </div>
+                    <div
+                        style="padding: 15px; background: #f8f9fa; margin-top: 10px; border-radius: 4px; font-family: monospace; font-size: 12px;">
+                        <div>Status: Succeeded</div>
+                        <div>Duration: 42 seconds</div>
+                        <div>Rows read: 250</div>
+                        <div>Rows written: 250</div>
+                        <div>Data read: 125 KB</div>
+                        <div>Data written: 98 KB (Parquet compression)</div>
+                        <div>Throughput: 2.97 KB/s</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Success! What to Check:</strong>
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>✓ Activity shows green checkmark</li>
+                    <li>✓ Row count looks correct</li>
+                    <li>✓ File appeared in Data Lake (check Storage Explorer)</li>
+                    <li>✓ No error messages in output</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>❌ If It Failed:</strong>
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>Click the ❌ red X to see error details</li>
+                    <li>Common issues: IR not running, wrong credentials, table doesn't exist</li>
+                    <li>Check "Details" link for full error message</li>
+                </ul>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-primary btn-prev" onclick="goToStep(4)">← Previous</button>
+                <button class="btn btn-primary btn-next" onclick="goToStep(6)">Next: Publish Pipeline →</button>
+            </div>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="step-content" id="step-6">
+            <div class="step-header">
+                <div class="step-number">7</div>
+                <div class="step-title">
+                    <h2>Publish Your Pipeline</h2>
+                    <p>Save your pipeline to the ADF service</p>
+                </div>
+            </div>
+
+            <div class="instruction-box">
+                <h3>📤 Publishing Steps:</h3>
+                <ol>
+                    <li>Click <strong>"Validate"</strong> button to check for errors</li>
+                    <li>Fix any validation errors if they appear</li>
+                    <li>Click <strong>"Publish All"</strong> button at the top</li>
+                    <li>Review the changes in the popup</li>
+                    <li>Click <strong>"Publish"</strong> to confirm</li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Important Notes:</strong>
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li><strong>Debug runs don't require publishing</strong> - they run your draft</li>
+                    <li><strong>Triggers require publishing</strong> - scheduled runs only work on published pipelines
+                    </li>
+                    <li><strong>Publishing is like "saving to production"</strong> - it makes your pipeline available
+                        for real use</li>
+                </ul>
+            </div>
+
+            <div class="pipeline-canvas">
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 64px; margin-bottom: 20px;">📤</div>
+                    <h3>Publishing...</h3>
+                    <p style="color: #605e5c; margin-top: 10px;">This saves your pipeline to Azure Data Factory</p>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Pipeline Published Successfully!</strong>
+                <p style="margin-top: 10px;">Your pipeline is now saved and ready to be triggered manually or on a
+                    schedule.</p>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-primary btn-prev" onclick="goToStep(5)">← Previous</button>
+                <button class="btn btn-primary btn-next" onclick="goToStep(7)">Next: Add Schedule →</button>
+            </div>
+        </div>
+
+        <!-- Step 7 -->
+        <div class="step-content" id="step-7">
+            <div class="step-header">
+                <div class="step-number">8</div>
+                <div class="step-title">
+                    <h2>Add Trigger / Schedule</h2>
+                    <p>Make your pipeline run automatically</p>
+                </div>
+            </div>
+
+            <div class="instruction-box">
+                <h3>⏰ Create a Schedule Trigger:</h3>
+                <ol>
+                    <li>Click <strong>"Add trigger"</strong> button at the top of pipeline canvas</li>
+                    <li>Select <strong>"New/Edit"</strong></li>
+                    <li>Click <strong>"+ New"</strong> in the popup</li>
+                    <li>Name your trigger: <strong>"Daily-SAP-Extract-2AM"</strong></li>
+                    <li>Type: Select <strong>"Schedule"</strong></li>
+                    <li>Start date: Choose today or tomorrow</li>
+                    <li>Recurrence: Select <strong>"Daily"</strong></li>
+                    <li>Time: Set to <strong>"02:00 AM"</strong></li>
+                    <li>Time zone: <strong>"(UTC+04:00) Abu Dhabi"</strong></li>
+                    <li>Click <strong>"OK"</strong></li>
+                    <li>Click <strong>"Publish All"</strong> to activate</li>
+                </ol>
+            </div>
+
+            <div class="config-panel">
+                <h3 style="margin-bottom: 20px;">Trigger Configuration:</h3>
+
+                <div class="form-group">
+                    <label class="form-label">Trigger Name</label>
+                    <input type="text" class="form-input" value="Daily-SAP-Extract-2AM">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Type</label>
+                    <select class="form-select">
+                        <option>Schedule</option>
+                        <option>Event (File arrival)</option>
+                        <option>Tumbling window</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Recurrence</label>
+                    <select class="form-select">
+                        <option>Daily</option>
+                        <option>Weekly</option>
+                        <option>Monthly</option>
+                        <option>Hourly</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Run Time</label>
+                    <input type="time" class="form-input" value="02:00">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Time Zone</label>
+                    <select class="form-select">
+                        <option>(UTC+04:00) Abu Dhabi, Muscat</option>
+                        <option>(UTC) Coordinated Universal Time</option>
+                        <option>(UTC-05:00) Eastern Time (US)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select class="form-select">
+                        <option>Started (Active)</option>
+                        <option>Stopped (Inactive)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Trigger Created!</strong>
+                <p style="margin-top: 10px;">Your pipeline will now run automatically every day at 2:00 AM (UAE time).
+                </p>
+                <p style="margin-top: 10px;"><strong>Next Run:</strong> Tomorrow at 02:00 AM</p>
+            </div>
+
+            <div class="tip-box">
+                💡 <strong>Best Practice:</strong> Schedule SAP extracts during off-peak hours (like 2 AM) to minimize
+                impact on SAP system performance.
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-primary btn-prev" onclick="goToStep(6)">← Previous</button>
+                <button class="btn btn-success"
+                    onclick="alert('Congratulations! You have completed the pipeline creation!')">🎉 Finish!</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+
+        function goToStep(step) {
+            // Update step buttons
+            document.querySelectorAll('.step-btn').forEach((btn, index) => {
+                btn.classList.remove('active', 'completed');
+                if (index === step) {
+                    btn.classList.add('active');
+                } else if (index < step) {
+                    btn.classList.add('completed');
+                }
+            });
+
+            // Update content
+            document.querySelectorAll('.step-content').forEach((content, index) => {
+                content.classList.toggle('active', index === step);
+            });
+
+            currentStep = step;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>

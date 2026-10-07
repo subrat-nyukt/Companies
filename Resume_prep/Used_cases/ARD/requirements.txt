@@ -1,0 +1,26 @@
+# ──────────────────────────────────────────────────────────────
+# ARD (Agentic Research Desk) — Market Securities
+# Python Dependencies
+# ──────────────────────────────────────────────────────────────
+
+# Core Agent Orchestration
+langgraph>=0.2.0
+langchain>=0.2.0
+
+# LLM & Embeddings
+openai>=1.40.0
+
+# Vector Database
+pinecone>=4.0.0
+
+# Data Validation & Settings
+pydantic>=2.7.0
+pydantic-settings>=2.0.0
+
+# Data Fetching (News & Financial Data)
+requests>=2.31.0
+feedparser>=6.0.0       # RSS feed parsing for news
+
+# Utilities
+python-dotenv>=1.0.0
+tiktoken>=0.7.0

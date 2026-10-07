@@ -1,0 +1,61 @@
+# Banking Agent Implementation Plan
+
+## Overview
+This plan outlines the structure for building a banking agent capable of processing insurance documents (Health, Motor, LIC) and extracting structured data into Excel using an LLM.
+
+## 1. Document Processor (`document_processor.py`)
+This module handles the orchestration of document loading and template matching.
+
+### Steps:
+1.  **Document Intake**: Function to fetch documents from the database (simulated) or paths.
+2.  **Classification Engine**:
+    *   Extract first page/sample text from PDF.
+    *   Use a small LLM call or keyword matching to classify the document type: `Health`, `Motor`, or `LIC`.
+3.  **Template Loader**:
+    *   Based on classification, load the corresponding template from the `templates/` folder (e.g., `HealthIndividual_Template.csv`).
+4.  **Field Definition**:
+    *   Parse the CSV template to get the list of "metrics" (column headers) that need to be extracted.
+
+## 2. LLM Engine (`llm.py`)
+This module manages the interaction with OpenAI (or via a router) to perform high-accuracy extraction.
+
+### Steps:
+1.  **PDF Text Extraction**:
+    *   Use `PyPDF2` or `PdfPlumber` for native PDFs.
+    *   Use `Tesseract` or `Azure Computer Vision` if OCR is needed for scans.
+2.  **Prompt Engineering**:
+    *   Construct a prompt containing the full PDF text and the list of metrics from the template.
+    *   Request a JSON or structured output format to ensure reliable parsing.
+3.  **Data Extraction**:
+    *   Call the LLM (OpenAI/Router) to extract all fields.
+4.  **Post-Processing**:
+    *   Validate data types (dates, amounts).
+    *   Handle missing or "N/A" values.
+
+## 3. Data Storage & Output
+1.  **Excel Exporter**:
+    *   Take the structured data from the LLM.
+    *   Match it to the template headers.
+    *   Append/Write to an Excel file in the `Output_folder`.
+
+## Workflow Visualization
+```mermaid
+graph TD
+    A[DB/PDF File] --> B[Document Processor]
+    B --> C{Classifier}
+    C -->|Health| D[Load Health Template]
+    C -->|Motor| E[Load Motor Template]
+    C -->|LIC| F[Load LIC Template]
+    D & E & F --> G[Extract Metrics List]
+    G --> H[LLM Extraction Agent]
+    H --> I[PDF Text/Image Input]
+    I --> J[OpenAI Router]
+    J --> K[Extracted Data JSON]
+    K --> L[Excel Writer]
+    L --> M[Output_folder/Extracted_Data.xlsx]
+```
+
+## Questions for User:
+1.  **OCR Requirements**: Access to scanned documents or native PDFs?
+2.  **Volume**: How many pages do these documents usually have? (Affects context window limits)
+3.  **Validation**: Should we add a verification step where a confidence score is generated?

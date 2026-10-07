@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Databricks ↔ Data Lake Connection Setup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .step-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .step-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .step-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 15px;
+        }
+
+        .step-content {
+            color: #605e5c;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        .code-block .string {
+            color: #ce9178;
+        }
+
+        .code-block .keyword {
+            color: #569cd6;
+        }
+
+        .warning-box {
+            background: #fff4ce;
+            border-left: 4px solid #ffb900;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #0078d4;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .success-box {
+            background: #dff6dd;
+            border-left: 4px solid #107c10;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .flow-diagram {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .flow-icon {
+            font-size: 48px;
+            margin-right: 20px;
+        }
+
+        .flow-arrow {
+            text-align: center;
+            font-size: 32px;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .interactive-demo {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .demo-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #323130;
+        }
+
+        .notebook-cell {
+            background: #f8f9fa;
+            border: 1px solid #e1e1e1;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .cell-header {
+            background: #e3f2fd;
+            padding: 8px 15px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #0078d4;
+        }
+
+        .cell-content {
+            padding: 15px;
+        }
+
+        .cell-output {
+            background: #1e1e1e;
+            color: #4ec9b0;
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            border-top: 1px solid #e1e1e1;
+        }
+
+        .method-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .method-card {
+            background: white;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .method-card.recommended {
+            border-color: #107c10;
+            background: #dff6dd;
+        }
+
+        .method-card h3 {
+            margin-bottom: 10px;
+            color: #323130;
+        }
+
+        .rating {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔗 Connect Databricks to Data Lake</h1>
+            <p>Step-by-step interactive guide</p>
+        </div>
+
+        <!-- Connection Methods Comparison -->
+        <div class="interactive-demo">
+            <div class="demo-title">Choose Your Authentication Method</div>
+
+            <div class="method-comparison">
+                <div class="method-card">
+                    <h3>🔑 Access Keys</h3>
+                    <div class="rating">⭐⭐</div>
+                    <p style="font-size: 13px; color: #605e5c; margin: 10px 0;">Simple but NOT secure</p>
+                    <button class="btn btn-primary" onclick="showMethod('access-key')">Quick Setup</button>
+                </div>
+
+                <div class="method-card recommended">
+                    <h3>🎫 Service Principal</h3>
+                    <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <p style="font-size: 13px; color: #605e5c; margin: 10px 0;"><strong>RECOMMENDED</strong> for
+                        production</p>
+                    <button class="btn btn-primary" onclick="showMethod('service-principal')">Recommended Setup</button>
+                </div>
+
+                <div class="method-card">
+                    <h3>🆔 Managed Identity</h3>
+                    <div class="rating">⭐⭐⭐⭐⭐</div>
+                    <p style="font-size: 13px; color: #605e5c; margin: 10px 0;">Best but needs Premium</p>
+                    <button class="btn btn-primary" onclick="showMethod('managed-identity')">Premium Setup</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Access Key Method -->
+        <div id="access-key-steps" style="display: none;">
+            <div class="step-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Get Access Key from Data Lake</div>
+                    <div class="step-content">
+                        <p><strong>Azure Portal Path:</strong></p>
+                        <p style="margin-top: 10px;">Storage Accounts → adlspostpaydev → Access keys</p>
+
+                        <div class="info-box">
+                            Click <strong>Show</strong> then <strong>Copy</strong> key1
+                        </div>
+
+                        <div class="warning-box">
+                            ⚠️ This key gives FULL ACCESS to your storage! Keep it secret!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Configure in Databricks</div>
+                    <div class="step-content">
+                        <div class="code-block">
+                            <span class="comment"># Set configuration</span>
+                            spark.conf.<span class="keyword">set</span>(
+                            <span class="string">"fs.azure.account.key.adlspostpaydev.dfs.core.windows.net"</span>,
+                            <span class="string">"YOUR_ACCESS_KEY_HERE"</span>
+                            )
+
+                            <span class="comment"># Read data</span>
+                            df = spark.read.parquet(
+                            <span class="string">"abfss://bronze@adlspostpaydev.dfs.core.windows.net/sap/kna1/"</span>
+                            )
+                            df.show()
+                        </div>
+
+                        <div class="success-box">
+                            ✅ Quick and easy for testing!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Service Principal Method -->
+        <div id="service-principal-steps" style="display: none;">
+            <div class="step-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Create Service Principal</div>
+                    <div class="step-content">
+                        <p><strong>Azure Portal:</strong></p>
+                        <p style="margin: 10px 0;">Azure Active Directory → App registrations → + New registration</p>
+
+                        <div class="info-box">
+                            <strong>Name:</strong> databricks-datalake-sp<br>
+                            <strong>Type:</strong> Single tenant
+                        </div>
+
+                        <div class="success-box">
+                            <strong>Save these values:</strong><br>
+                            • Application (client) ID<br>
+                            • Directory (tenant) ID
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Create Client Secret</div>
+                    <div class="step-content">
+                        <p><strong>In your App Registration:</strong></p>
+                        <p style="margin: 10px 0;">Certificates & secrets → + New client secret</p>
+
+                        <div class="warning-box">
+                            ⚠️ Copy the secret VALUE immediately! It won't be shown again!
+                        </div>
+
+                        <div class="info-box">
+                            <strong>Example secret:</strong><br>
+                            AbC123_~xYz789-pQr456
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Grant Permissions to Data Lake</div>
+                    <div class="step-content">
+                        <p><strong>Storage Account:</strong></p>
+                        <p style="margin: 10px 0;">adlspostpaydev → Access Control (IAM) → + Add role assignment</p>
+
+                        <div class="info-box">
+                            <strong>Role:</strong> Storage Blob Data Contributor<br>
+                            <strong>Assign to:</strong> databricks-datalake-sp
+                        </div>
+
+                        <div class="success-box">
+                            ✅ This gives read/write access to your service principal
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Store Secrets in Databricks</div>
+                    <div class="step-content">
+                        <p><strong>Create Secret Scope:</strong></p>
+
+                        <div class="code-block">
+                            <span class="comment"># Create scope</span>
+                            databricks secrets create-scope \
+                            --scope data-lake-scope
+
+                            <span class="comment"># Add secrets</span>
+                            databricks secrets put \
+                            --scope data-lake-scope \
+                            --key client-id
+
+                            databricks secrets put \
+                            --scope data-lake-scope \
+                            --key tenant-id
+
+                            databricks secrets put \
+                            --scope data-lake-scope \
+                            --key client-secret
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <div class="step-title">Configure Spark Connection</div>
+                    <div class="step-content">
+                        <div class="code-block">
+                            <span class="comment"># Get secrets securely</span>
+                            client_id = dbutils.secrets.get(
+                            scope=<span class="string">"data-lake-scope"</span>,
+                            key=<span class="string">"client-id"</span>
+                            )
+                            tenant_id = dbutils.secrets.get(
+                            scope=<span class="string">"data-lake-scope"</span>,
+                            key=<span class="string">"tenant-id"</span>
+                            )
+                            client_secret = dbutils.secrets.get(
+                            scope=<span class="string">"data-lake-scope"</span>,
+                            key=<span class="string">"client-secret"</span>
+                            )
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <div class="step-title">Read/Write Data</div>
+                    <div class="step-content">
+                        <div class="code-block">
+                            <span class="comment"># Read from Bronze</span>
+                            df = spark.read.parquet(
+                            <span class="string">"abfss://bronze@adlspostpaydev.dfs.core.windows.net/sap/kna1/"</span>
+                            )
+
+                            <span class="comment"># Transform</span>
+                            df_clean = df.dropna().dropDuplicates()
+
+                            <span class="comment"># Write to Silver</span>
+                            df_clean.write.mode(<span class="string">"overwrite"</span>).parquet(
+                            <span class="string">"abfss://silver@adlspostpaydev.dfs.core.windows.net/customers/"</span>
+                            )
+                        </div>
+
+                        <div class="success-box">
+                            ✅ Secure, production-ready connection!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Managed Identity Method -->
+        <div id="managed-identity-steps" style="display: none;">
+            <div class="step-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Enable Managed Identity</div>
+                    <div class="step-content">
+                        <p><strong>Databricks Workspace:</strong></p>
+                        <p style="margin: 10px 0;">Your Workspace → Identity → System assigned: ON</p>
+
+                        <div class="info-box">
+                            Note the Object (principal) ID
+                        </div>
+
+                        <div class="warning-box">
+                            ⚠️ Requires Databricks Premium tier
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Grant Permissions</div>
+                    <div class="step-content">
+                        <p><strong>Storage Account:</strong></p>
+                        <p style="margin: 10px 0;">adlspostpaydev → IAM → + Add role assignment</p>
+
+                        <div class="info-box">
+                            <strong>Role:</strong> Storage Blob Data Contributor<br>
+                            <strong>Assign to:</strong> Managed Identity (Databricks workspace)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Use in Databricks - No Secrets!</div>
+                    <div class="step-content">
+                        <div class="code-block">
+                            <span class="comment"># Configure for Managed Identity</span>
+                            spark.conf.set(
+                            <span class="string">"fs.azure.account.auth.type"</span>,
+                            <span class="string">"OAuth"</span>
+                            )
+                            spark.conf.set(
+                            <span class="string">"fs.azure.account.oauth.provider.type"</span>,
+                            <span class="string">"org.apache.hadoop.fs.azurebfs.oauth2.MsiTokenProvider"</span>
+                            )
+
+                            <span class="comment"># Read - No credentials needed!</span>
+                            df = spark.read.parquet(
+                            <span class="string">"abfss://bronze@adlspostpaydev.dfs.core.windows.net/"</span>
+                            )
+                        </div>
+
+                        <div class="success-box">
+                            ✅ Most secure - Azure manages everything!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Flow Diagram -->
+        <div class="flow-diagram">
+            <div class="demo-title">Complete Data Flow</div>
+
+            <div class="flow-step">
+                <div class="flow-icon">🏢</div>
+                <div>
+                    <strong>SAP S/4HANA</strong><br>
+                    <span style="font-size: 12px; color: #605e5c;">Source system with KNA1, VBAK tables</span>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <div class="flow-step">
+                <div class="flow-icon">🏭</div>
+                <div>
+                    <strong>Azure Data Factory</strong><br>
+                    <span style="font-size: 12px; color: #605e5c;">Extracts data via Self-Hosted IR</span>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <div class="flow-step">
+                <div class="flow-icon">💾</div>
+                <div>
+                    <strong>Data Lake Bronze Layer</strong><br>
+                    <span style="font-size: 12px; color: #605e5c;">Raw data: bronze/sap/kna1/</span>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <div class="flow-step" style="background: #e3f2fd; border-left: 4px solid #0078d4;">
+                <div class="flow-icon">🔗</div>
+                <div>
+                    <strong>CONNECTION CONFIGURED HERE!</strong><br>
+                    <span style="font-size: 12px; color: #605e5c;">Databricks authenticates to Data Lake using Service
+                        Principal</span>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <div class="flow-step">
+                <div class="flow-icon">🧱</div>
+                <div>
+                    <strong>Azure Databricks</strong><br>
+                    <span style="font-size: 12px; color: #605e5c;">Reads, transforms, writes data using PySpark</span>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <div class="flow-step">
+                <div class="flow-icon">✨</div>
+                <div>
+                    <strong>Data Lake Silver/Gold Layers</strong><br>
+                    <span style="font-size: 12px; color: #605e5c;">Cleaned and aggregated data</span>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <div class="flow-step">
+                <div class="flow-icon">📊</div>
+                <div>
+                    <strong>Power BI</strong><br>
+                    <span style="font-size: 12px; color: #605e5c;">Dashboards and reports</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Notebook Example -->
+        <div class="interactive-demo">
+            <div class="demo-title">Example Databricks Notebook</div>
+
+            <div class="notebook-cell">
+                <div class="cell-header">[ 1 ] Configure Connection</div>
+                <div class="cell-content">
+                    <div class="code-block">
+                        <span class="comment"># Get credentials from secret scope</span>
+                        client_id = dbutils.secrets.get(scope=<span class="string">"data-lake-scope"</span>, key=<span
+                            class="string">"client-id"</span>)
+                        tenant_id = dbutils.secrets.get(scope=<span class="string">"data-lake-scope"</span>, key=<span
+                            class="string">"tenant-id"</span>)
+                        client_secret = dbutils.secrets.get(scope=<span class="string">"data-lake-scope"</span>,
+                        key=<span class="string">"client-secret"</span>)
+
+                        <span class="comment"># Configure Spark</span>
+                        spark.conf.set(<span
+                            class="string">"fs.azure.account.auth.type.adlspostpaydev.dfs.core.windows.net"</span>,
+                        <span class="string">"OAuth"</span>)
+                        spark.conf.set(<span
+                            class="string">"fs.azure.account.oauth.provider.type.adlspostpaydev.dfs.core.windows.net"</span>,
+                        <span class="string">"org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider"</span>)
+                        spark.conf.set(<span
+                            class="string">"fs.azure.account.oauth2.client.id.adlspostpaydev.dfs.core.windows.net"</span>,
+                        client_id)
+                        spark.conf.set(<span
+                            class="string">"fs.azure.account.oauth2.client.secret.adlspostpaydev.dfs.core.windows.net"</span>,
+                        client_secret)
+                        spark.conf.set(<span
+                            class="string">"fs.azure.account.oauth2.client.endpoint.adlspostpaydev.dfs.core[.windows.net"</span>,
+                        <span class="keyword">f</span><span
+                            class="string">"https://login.microsoftonline.com/{tenant_id}/oauth2/token"</span>)
+
+                        <span class="keyword">print</span>(<span class="string">"✅ Connected to Data Lake!"</span>)
+                    </div>
+                </div>
+                <div class="cell-output">✅ Connected to Data Lake!</div>
+            </div>
+
+            <div class="notebook-cell">
+                <div class="cell-header">[ 2 ] Read from Bronze</div>
+                <div class="cell-content">
+                    <div class="code-block">
+                        df = spark.read.parquet(<span
+                            class="string">"abfss://bronze@adlspostpaydev.dfs.core.windows.net/sap/kna1/"</span>)
+                        <span class="keyword">print</span>(<span class="keyword">f</span><span class="string">"Loaded
+                            {df.count()} rows"</span>)
+                        df.show(<span class="keyword">5</span>)
+                    </div>
+                </div>
+                <div class="cell-output">
+                    Loaded 250 rows
+                    +------+------------------+------+
+                    |KUNNR |NAME1 |LAND1 |
+                    +------+------------------+------+
+                    |100001|ABC Company |AE |
+                    |100002|XYZ Corporation |SA |
+                    |100003|Global Trading |US |
+                    +------+------------------+------+
+                </div>
+            </div>
+
+            <div class="notebook-cell">
+                <div class="cell-header">[ 3 ] Transform & Write to Silver</div>
+                <div class="cell-content">
+                    <div class="code-block">
+                        df_clean = df.dropna().dropDuplicates()
+                        df_clean.write.mode(<span class="string">"overwrite"</span>).parquet(
+                        <span class="string">"abfss://silver@adlspostpaydev.dfs.core.windows.net/customers/"</span>
+                        )
+                        <span class="keyword">print</span>(<span class="keyword">f</span><span class="string">"✅ Wrote
+                            {df_clean.count()} rows to Silver"</span>)
+                    </div>
+                </div>
+                <div class="cell-output">✅ Wrote 248 rows to Silver</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showMethod(method) {
+            // Hide all methods
+            document.getElementById('access-key-steps').style.display = 'none';
+            document.getElementById('service-principal-steps').style.display = 'none';
+            document.getElementById('managed-identity-steps').style.display = 'none';
+
+            // Show selected method
+            document.getElementById(method + '-steps').style.display = 'block';
+
+            // Scroll to steps
+            document.getElementById(method + '-steps').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Show Service Principal by default (recommended)
+        window.onload = function () {
+            showMethod('service-principal');
+        };
+    </script>
+</body>
+
+</html>

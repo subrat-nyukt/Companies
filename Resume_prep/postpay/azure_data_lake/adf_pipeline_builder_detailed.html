@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADF Pipeline Builder - Detailed Step-by-Step</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #003366 0%, #0050ad 100%);
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 50px);
+        }
+
+        /* Activities Palette */
+        .activities-panel {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e1e1e1;
+            overflow-y: auto;
+        }
+
+        .panel-header {
+            padding: 15px;
+            background: #fafafa;
+            border-bottom: 1px solid #e1e1e1;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .activity-category {
+            margin: 15px 0;
+        }
+
+        .category-title {
+            padding: 8px 15px;
+            font-size: 12px;
+            color: #605e5c;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .activity-item {
+            padding: 12px 15px;
+            margin: 5px 10px;
+            background: #f8f9fa;
+            border: 1px solid #e1e1e1;
+            border-radius: 4px;
+            cursor: move;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .activity-item:hover {
+            background: #e3f2fd;
+            border-color: #0078d4;
+            transform: translateX(4px);
+        }
+
+        .activity-icon {
+            font-size: 24px;
+        }
+
+        .activity-label {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Canvas Area */
+        .canvas-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .canvas-toolbar {
+            background: white;
+            padding: 10px 20px;
+            border-bottom: 1px solid #e1e1e1;
+            display: flex;
+            gap: 10px;
+        }
+
+        .canvas {
+            flex: 1;
+            background: #fafafa;
+            position: relative;
+            overflow: auto;
+        }
+
+        .canvas-drop-zone {
+            min-height: 100%;
+            padding: 40px;
+            background-image:
+                repeating-linear-gradient(0deg, transparent, transparent 19px, #e1e1e1 19px, #e1e1e1 20px),
+                repeating-linear-gradient(90deg, transparent, transparent 19px, #e1e1e1 19px, #e1e1e1 20px);
+        }
+
+        .canvas-empty {
+            text-align: center;
+            color: #999;
+            padding: 100px 20px;
+        }
+
+        .canvas-empty-icon {
+            font-size: 64px;
+            margin-bottom: 15px;
+            opacity: 0.3;
+        }
+
+        /* Activity on Canvas */
+        .canvas-activity {
+            background: white;
+            border: 2px solid #0078d4;
+            border-radius: 8px;
+            padding: 20px;
+            width: 200px;
+            margin: 20px auto;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .canvas-activity:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .canvas-activity.selected {
+            border-color: #107c10;
+            border-width: 3px;
+        }
+
+        .canvas-activity-icon {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .canvas-activity-name {
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .canvas-activity-type {
+            text-align: center;
+            font-size: 11px;
+            color: #605e5c;
+        }
+
+        .canvas-activity-status {
+            margin-top: 10px;
+            padding: 5px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        /* Properties Panel */
+        .properties-panel {
+            width: 400px;
+            background: white;
+            border-left: 1px solid #e1e1e1;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .properties-panel.show {
+            display: block;
+        }
+
+        .properties-tabs {
+            display: flex;
+            border-bottom: 2px solid #e1e1e1;
+            background: #fafafa;
+        }
+
+        .prop-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            color: #605e5c;
+        }
+
+        .prop-tab:hover {
+            background: #f0f0f0;
+        }
+
+        .prop-tab.active {
+            color: #0078d4;
+            border-bottom-color: #0078d4;
+        }
+
+        .prop-content {
+            display: none;
+            padding: 20px;
+        }
+
+        .prop-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #8a8886;
+            border-radius: 2px;
+            font-size: 13px;
+        }
+
+        .form-help {
+            font-size: 11px;
+            color: #605e5c;
+            margin-top: 4px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #0078d4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #106ebe;
+        }
+
+        .btn-success {
+            background: #107c10;
+            color: white;
+        }
+
+        .btn-default {
+            background: white;
+            border: 1px solid #8a8886;
+            color: #323130;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #0078d4;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 2px;
+            font-size: 12px;
+        }
+
+        .warning-box {
+            background: #fff4ce;
+            border-left: 4px solid #ffb900;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 2px;
+            font-size: 12px;
+        }
+
+        .success-box {
+            background: #dff6dd;
+            border-left: 4px solid #107c10;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 2px;
+            font-size: 12px;
+            display: none;
+        }
+
+        .dataset-preview {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border: 1px solid #e1e1e1;
+        }
+
+        .dataset-preview-header {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #323130;
+        }
+
+        .dataset-preview-detail {
+            font-size: 12px;
+            color: #605e5c;
+            margin: 4px 0;
+        }
+
+        .step-indicator {
+            background: #0078d4;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .connection-arrow {
+            text-align: center;
+            font-size: 32px;
+            color: #0078d4;
+            margin: 20px 0;
+        }
+
+        .config-status {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .status-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .status-item.configured {
+            background: #dff6dd;
+            color: #107c10;
+        }
+
+        .status-item.pending {
+            background: #fff4ce;
+            color: #8a6d3b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Pipeline: SAP_to_DataLake_KNA1 - Designer</h1>
+        <div>
+            <button class="btn btn-default" onclick="validatePipeline()">✅ Validate</button>
+            <button class="btn btn-primary" onclick="debugPipeline()">▶️ Debug</button>
+            <button class="btn btn-success" onclick="publishPipeline()">📤 Publish</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Left: Activities Palette -->
+        <div class="activities-panel">
+            <div class="panel-header">Activities</div>
+
+            <div class="activity-category">
+                <div class="category-title">Move & Transform</div>
+                <div class="activity-item" draggable="true" ondragstart="drag(event)" data-type="copy">
+                    <div class="activity-icon">📥</div>
+                    <div class="activity-label">Copy data</div>
+                </div>
+                <div class="activity-item" draggable="true" ondragstart="drag(event)" data-type="dataflow">
+                    <div class="activity-icon">🔄</div>
+                    <div class="activity-label">Data flow</div>
+                </div>
+            </div>
+
+            <div class="activity-category">
+                <div class="category-title">Iteration & Conditionals</div>
+                <div class="activity-item" draggable="true" ondragstart="drag(event)" data-type="foreach">
+                    <div class="activity-icon">🔁</div>
+                    <div class="activity-label">ForEach</div>
+                </div>
+                <div class="activity-item" draggable="true" ondragstart="drag(event)" data-type="if">
+                    <div class="activity-icon">🔀</div>
+                    <div class="activity-label">If Condition</div>
+                </div>
+            </div>
+
+            <div class="activity-category">
+                <div class="category-title">General</div>
+                <div class="activity-item" draggable="true" ondragstart="drag(event)" data-type="web">
+                    <div class="activity-icon">🌐</div>
+                    <div class="activity-label">Web</div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin: 20px 10px;">
+                <strong>💡 Getting Started:</strong>
+                <p style="margin-top: 8px;">Drag the <strong>"Copy data"</strong> activity to the canvas to start
+                    building your SAP to Data Lake pipeline!</p>
+            </div>
+        </div>
+
+        <!-- Center: Canvas -->
+        <div class="canvas-area">
+            <div class="canvas-toolbar">
+                <button class="btn btn-default" onclick="clearCanvas()">🗑️ Clear</button>
+                <button class="btn btn-default" onclick="showHelp()">❓ Help</button>
+            </div>
+
+            <div class="canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="canvas-drop-zone" id="canvasDropZone">
+                    <div class="canvas-empty" id="emptyState">
+                        <div class="canvas-empty-icon">📋</div>
+                        <div>Drag activities here to build your pipeline</div>
+                        <div style="font-size: 12px; margin-top: 10px;">Start with "Copy data" for SAP to Data Lake
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Properties Panel -->
+        <div class="properties-panel" id="propertiesPanel">
+            <div class="properties-tabs">
+                <div class="prop-tab active" onclick="switchTab(0)">General</div>
+                <div class="prop-tab" onclick="switchTab(1)">Source</div>
+                <div class="prop-tab" onclick="switchTab(2)">Sink</div>
+                <div class="prop-tab" onclick="switchTab(3)">Mapping</div>
+            </div>
+
+            <!-- General Tab -->
+            <div class="prop-content active" id="tab-0">
+                <div class="step-indicator">STEP 1: General Settings</div>
+
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-input" id="activity-name" value="Copy_SAP_KNA1_to_DataLake">
+                    <div class="form-help">Give your activity a descriptive name</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <input type="text" class="form-input"
+                        placeholder="Copy customer master data from SAP to bronze layer">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Timeout</label>
+                    <input type="text" class="form-input" value="7.00:00:00">
+                    <div class="form-help">Format: Days.Hours:Minutes:Seconds</div>
+                </div>
+
+                <div class="info-box">
+                    <strong>✅ Configuration Status:</strong>
+                    <div class="config-status">
+                        <div class="status-item configured">✓ General</div>
+                        <div class="status-item pending" id="source-status">⚠ Source</div>
+                        <div class="status-item pending" id="sink-status">⚠ Sink</div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>📍 Next Step:</strong> Click the <strong>"Source"</strong> tab to configure where to get
+                    data FROM (SAP).
+                </div>
+            </div>
+
+            <!-- Source Tab -->
+            <div class="prop-content" id="tab-1">
+                <div class="step-indicator">STEP 2: Configure Source (SAP)</div>
+
+                <div class="warning-box">
+                    <strong>🏢 This is where you tell ADF which SAP table to extract!</strong>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Source dataset *</label>
+                    <select class="form-select" id="source-dataset" onchange="updateSourcePreview()">
+                        <option value="">-- Select dataset --</option>
+                        <option value="sap-kna1">SAP_KNA1_Table</option>
+                        <option value="sap-vbak">SAP_VBAK_Table</option>
+                        <option value="sap-mara">SAP_MARA_Table</option>
+                        <option value="new">+ New dataset...</option>
+                    </select>
+                    <div class="form-help">Choose which SAP table to read from</div>
+                </div>
+
+                <div id="source-preview" style="display: none;">
+                    <div class="dataset-preview">
+                        <div class="dataset-preview-header">📊 Dataset Details:</div>
+                        <div class="dataset-preview-detail"><strong>Type:</strong> SAP Table</div>
+                        <div class="dataset-preview-detail"><strong>Linked Service:</strong> SAP_S4HANA_Production</div>
+                        <div class="dataset-preview-detail"><strong>Table Name:</strong> KNA1 (Customer Master)</div>
+                        <div class="dataset-preview-detail"><strong>Connection:</strong> sap-prod.company.com (System
+                            00)</div>
+                        <div class="dataset-preview-detail"><strong>Integration Runtime:</strong> SelfHostedIR-SAP</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Additional columns</label>
+                        <button class="btn btn-default" style="width: 100%;">+ Add column</button>
+                        <div class="form-help">Add extra columns like timestamp, pipeline name, etc.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Query (Optional)</label>
+                        <select class="form-select">
+                            <option>Table (default)</option>
+                            <option>Query</option>
+                        </select>
+                        <div class="form-help">Use "Query" to add WHERE clause for filtering</div>
+                    </div>
+
+                    <div class="success-box" id="source-success">
+                        ✅ Source configured! ADF will read data from SAP KNA1 table.
+                    </div>
+
+                    <button class="btn btn-primary" style="width: 100%;" onclick="confirmSource()">Confirm
+                        Source</button>
+
+                    <div class="info-box" style="margin-top: 15px;">
+                        <strong>📍 Next Step:</strong> Click the <strong>"Sink"</strong> tab to configure where to WRITE
+                        data (Data Lake).
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sink Tab -->
+            <div class="prop-content" id="tab-2">
+                <div class="step-indicator">STEP 3: Configure Sink (Data Lake)</div>
+
+                <div class="warning-box">
+                    <strong>💾 This is where you tell ADF where to WRITE data in Data Lake!</strong>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Sink dataset *</label>
+                    <select class="form-select" id="sink-dataset" onchange="updateSinkPreview()">
+                        <option value="">-- Select dataset --</option>
+                        <option value="bronze-parquet">DataLake_Bronze_Parquet</option>
+                        <option value="bronze-csv">DataLake_Bronze_CSV</option>
+                        <option value="new">+ New dataset...</option>
+                    </select>
+                    <div class="form-help">Choose where in Data Lake to write data</div>
+                </div>
+
+                <div id="sink-preview" style="display: none;">
+                    <div class="dataset-preview">
+                        <div class="dataset-preview-header">💾 Dataset Details:</div>
+                        <div class="dataset-preview-detail"><strong>Type:</strong> Parquet (Columnar format)</div>
+                        <div class="dataset-preview-detail"><strong>Linked Service:</strong> DataLake_Gen2</div>
+                        <div class="dataset-preview-detail"><strong>Storage Account:</strong> adlspostpaydev</div>
+                        <div class="dataset-preview-detail"><strong>Container:</strong> bronze</div>
+                        <div class="dataset-preview-detail"><strong>Folder Path:</strong> sap/kna1/</div>
+                        <div class="dataset-preview-detail"><strong>File Pattern:</strong>
+                            KNA1_@{formatDateTime(utcnow(), 'yyyyMMdd_HHmmss')}.parquet</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Copy behavior</label>
+                        <select class="form-select">
+                            <option>None</option>
+                            <option>Flatten hierarchy</option>
+                            <option>Merge files</option>
+                            <option>Preserve hierarchy</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Max concurrent connections</label>
+                        <input type="number" class="form-input" value="1">
+                        <div class="form-help">Number of parallel connections to storage</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Block size (MB)</label>
+                        <input type="number" class="form-input" value="4">
+                        <div class="form-help">Block size for Parquet files</div>
+                    </div>
+
+                    <div class="success-box" id="sink-success">
+                        ✅ Sink configured! Data will be written to bronze/sap/kna1/ in Parquet format.
+                    </div>
+
+                    <button class="btn btn-success" style="width: 100%;" onclick="confirmSink()">Confirm Sink</button>
+
+                    <div class="info-box" style="margin-top: 15px;">
+                        <strong>🎯 Complete Path:</strong>
+                        <div style="margin-top: 8px; font-family: monospace; font-size: 11px;">
+                            SAP Table (KNA1)<br>
+                            ↓<br>
+                            Copy Activity<br>
+                            ↓<br>
+                            adlspostpaydev/bronze/sap/kna1/KNA1_20260214_020000.parquet
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mapping Tab -->
+            <div class="prop-content" id="tab-3">
+                <div class="step-indicator">STEP 4: Column Mapping (Optional)</div>
+
+                <div class="info-box">
+                    <strong>💡 What is Mapping?</strong>
+                    <p style="margin-top: 8px;">Map source columns (SAP) to destination columns (Data Lake). You can
+                        rename columns here!</p>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-default" style="width: 100%;" onclick="importSchemas()">Import
+                        schemas</button>
+                    <div class="form-help">Auto-detect columns from source and sink</div>
+                </div>
+
+                <div id="mapping-preview" style="display: none;">
+                    <div class="dataset-preview">
+                        <div class="dataset-preview-header">Example Column Mappings:</div>
+                        <table style="width: 100%; margin-top: 10px; font-size: 12px;">
+                            <thead style="background: #f0f0f0;">
+                                <tr>
+                                    <th style="padding: 6px; text-align: left;">Source (SAP)</th>
+                                    <th style="padding: 6px; text-align: center;">→</th>
+                                    <th style="padding: 6px; text-align: left;">Sink (Lake)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 6px;">KUNNR</td>
+                                    <td style="padding: 6px; text-align: center;">→</td>
+                                    <td style="padding: 6px;">customer_id</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 6px;">NAME1</td>
+                                    <td style="padding: 6px; text-align: center;">→</td>
+                                    <td style="padding: 6px;">customer_name</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 6px;">LAND1</td>
+                                    <td style="padding: 6px; text-align: center;">→</td>
+                                    <td style="padding: 6px;">country_code</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 6px;">ORT01</td>
+                                    <td style="padding: 6px; text-align: center;">→</td>
+                                    <td style="padding: 6px;">city</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="success-box" style="display: block; margin-top: 15px;">
+                        ✅ Mapping complete! Column names will be transformed during copy.
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 15px;">
+                    <strong>📍 Optional:</strong> If you don't map columns, ADF will copy them as-is with the same
+                    names.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let activityAdded = false;
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            const type = ev.target.closest('.activity-item').getAttribute('data-type');
+            ev.dataTransfer.setData("activityType", type);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const type = ev.dataTransfer.getData("activityType");
+
+            if (type === 'copy' && !activityAdded) {
+                addCopyActivity();
+            }
+        }
+
+        function addCopyActivity() {
+            activityAdded = true;
+            document.getElementById('emptyState').style.display = 'none';
+
+            const activity = document.createElement('div');
+            activity.className = 'canvas-activity selected';
+            activity.onclick = function () { selectActivity(); };
+            activity.innerHTML = `
+                <div class="canvas-activity-icon">📥</div>
+                <div class="canvas-activity-name">Copy Data</div>
+                <div class="canvas-activity-type">Copy activity</div>
+                <div class="canvas-activity-status">⚙️ Configuring...</div>
+            `;
+
+            document.getElementById('canvasDropZone').appendChild(activity);
+            document.getElementById('propertiesPanel').classList.add('show');
+        }
+
+        function selectActivity() {
+            document.getElementById('propertiesPanel').classList.add('show');
+        }
+
+        function switchTab(index) {
+            document.querySelectorAll('.prop-tab').forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+            document.querySelectorAll('.prop-content').forEach((content, i) => {
+                content.classList.toggle('active', i === index);
+            });
+        }
+
+        function updateSourcePreview() {
+            const value = document.getElementById('source-dataset').value;
+            if (value && value !== 'new') {
+                document.getElementById('source-preview').style.display = 'block';
+            }
+        }
+
+        function confirmSource() {
+            document.getElementById('source-success').style.display = 'block';
+            document.getElementById('source-status').className = 'status-item configured';
+            document.getElementById('source-status').textContent = '✓ Source';
+
+            setTimeout(() => {
+                switchTab(2); // Move to Sink tab
+            }, 1000);
+        }
+
+        function updateSinkPreview() {
+            const value = document.getElementById('sink-dataset').value;
+            if (value && value !== 'new') {
+                document.getElementById('sink-preview').style.display = 'block';
+            }
+        }
+
+        function confirmSink() {
+            document.getElementById('sink-success').style.display = 'block';
+            document.getElementById('sink-status').className = 'status-item configured';
+            document.getElementById('sink-status').textContent = '✓ Sink';
+
+            const activityStatus = document.querySelector('.canvas-activity-status');
+            if (activityStatus) {
+                activityStatus.innerHTML = '✅ Configured';
+                activityStatus.style.background = '#dff6dd';
+                activityStatus.style.color = '#107c10';
+            }
+
+            setTimeout(() => {
+                alert('✅ Pipeline Configuration Complete!\n\nYour pipeline is now configured to:\n\n1. Connect to SAP (Table: KNA1)\n2. Extract customer master data\n3. Write to Data Lake (bronze/sap/kna1/)\n4. Format: Parquet (compressed)\n\nNext steps:\n- Click "Validate" to check for errors\n- Click "Debug" to test run\n- Click "Publish" to save');
+            }, 1000);
+        }
+
+        function importSchemas() {
+            document.getElementById('mapping-preview').style.display = 'block';
+        }
+
+        function validatePipeline() {
+            if (!activityAdded) {
+                alert('⚠️ No activities in pipeline!\n\nAdd a "Copy data" activity first.');
+                return;
+            }
+
+            const sourceConfigured = document.getElementById('source-status').textContent.includes('✓');
+            const sinkConfigured = document.getElementById('sink-status').textContent.includes('✓');
+
+            if (!sourceConfigured || !sinkConfigured) {
+                alert('⚠️ Pipeline not fully configured!\n\nPlease configure both Source and Sink.');
+                return;
+            }
+
+            alert('✅ Validation successful!\n\nYour pipeline is correctly configured with no errors.\n\nReady to debug or publish.');
+        }
+
+        function debugPipeline() {
+            if (!activityAdded) {
+                alert('⚠️ No activities in pipeline!');
+                return;
+            }
+
+            alert('▶️ Debug run started!\n\nIn real ADF, this would:\n\n1. Connect to SAP via Self-Hosted IR\n2. Extract data from KNA1 table\n3. Transform to Parquet format\n4. Upload to Data Lake bronze/sap/kna1/\n5. Show progress in real-time\n\nYou can monitor the run in the"Monitor" section.');
+        }
+
+        function publishPipeline() {
+            alert('📤 Publishing pipeline...\n\nIn real ADF, this saves your pipeline to the ADF service.\n\nOnce published, you can:\n- Create triggers to run automatically\n- Monitor execution history\n- Set up alerts\n\nYour co-workers can also see and use this pipeline!');
+        }
+
+        function clearCanvas() {
+            if (confirm('Are you sure you want to clear the canvas?')) {
+                activityAdded = false;
+                document.getElementById('canvasDropZone').innerHTML = `
+                    <div class="canvas-empty" id="emptyState">
+                        <div class="canvas-empty-icon">📋</div>
+                        <div>Drag activities here to build your pipeline</div>
+                        <div style="font-size: 12px; margin-top: 10px;">Start with "Copy data" for SAP to Data Lake</div>
+                    </div>
+                `;
+                document.getElementById('propertiesPanel').classList.remove('show');
+            }
+        }
+
+        function showHelp() {
+            alert('📚 Pipeline Builder Help\n\n1. Drag "Copy data" from Activities panel to canvas\n2. Configure Source (SAP table)\n3. Configure Sink (Data Lake location)\n4. Optionally map column names\n5. Validate, Debug, then Publish\n\nThe Copy activity tells ADF:\n"Get data FROM this source, WRITE to this destination"');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Data Factory Studio - Practice Environment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            overflow: hidden;
+        }
+
+        /* Top Header - Azure Portal Style */
+        .azure-header {
+            background: linear-gradient(135deg, #003366 0%, #0050ad 100%);
+            color: white;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .azure-header .logo {
+            font-size: 16px;
+            font-weight: 600;
+            margin-right: 30px;
+        }
+
+        .azure-header .breadcrumb {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .azure-header .actions {
+            margin-left: auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Left Sidebar - ADF Studio Style */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 50px;
+            width: 48px;
+            height: calc(100vh - 50px);
+            background: #1e1e1e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 10px;
+            z-index: 90;
+            transition: width 0.3s;
+        }
+
+        .sidebar:hover {
+            width: 200px;
+        }
+
+        .sidebar-item {
+            width: 100%;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            cursor: pointer;
+            color: #ccc;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .sidebar-item:hover {
+            background: #2d2d30;
+            color: white;
+        }
+
+        .sidebar-item.active {
+            background: #0e639c;
+            color: white;
+        }
+
+        .sidebar-item .icon {
+            font-size: 20px;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-item .label {
+            margin-left: 15px;
+            font-size: 13px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar:hover .sidebar-item .label {
+            opacity: 1;
+        }
+
+        /* Factory Resources Panel */
+        .resources-panel {
+            position: fixed;
+            left: 48px;
+            top: 50px;
+            width: 0;
+            height: calc(100vh - 50px);
+            background: white;
+            border-right: 1px solid #e1e1e1;
+            overflow-y: auto;
+            transition: width 0.3s;
+            z-index: 85;
+        }
+
+        .resources-panel.expanded {
+            width: 280px;
+        }
+
+        .resources-header {
+            padding: 15px;
+            border-bottom: 1px solid #e1e1e1;
+            background: #fafafa;
+        }
+
+        .resources-header h3 {
+            font-size: 14px;
+            color: #323130;
+            margin-bottom: 10px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #8a8886;
+            border-radius: 2px;
+            font-size: 13px;
+        }
+
+        .resource-section {
+            border-bottom: 1px solid #e1e1e1;
+        }
+
+        .resource-section-header {
+            padding: 12px 15px;
+            background: #f5f5f5;
+            font-size: 12px;
+            font-weight: 600;
+            color: #605e5c;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .resource-item {
+            padding: 10px 15px 10px 30px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .resource-item:hover {
+            background: #f0f0f0;
+        }
+
+        .resource-item .icon {
+            margin-right: 8px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            position: fixed;
+            left: 48px;
+            top: 50px;
+            right: 0;
+            bottom: 0;
+            background: #f5f5f5;
+            overflow-y: auto;
+            transition: left 0.3s;
+        }
+
+        .main-content.with-panel {
+            left: 328px;
+        }
+
+        .content-header {
+            background: white;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e1e1e1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-header h1 {
+            font-size: 24px;
+            color: #323130;
+            font-weight: 400;
+        }
+
+        .toolbar {
+            background: white;
+            padding: 12px 30px;
+            border-bottom: 1px solid #e1e1e1;
+            display: flex;
+            gap: 10px;
+        }
+
+        .content-body {
+            padding: 30px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #0078d4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #106ebe;
+        }
+
+        .btn-success {
+            background: #107c10;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #0e6b0e;
+        }
+
+        .btn-default {
+            background: white;
+            border: 1px solid #8a8886;
+            color: #323130;
+        }
+
+        .btn-default:hover {
+            background: #f3f2f1;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e1e1e1;
+            font-size: 16px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* List Items */
+        .list-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f3f2f1;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-item:hover {
+            background: #fafafa;
+        }
+
+        .list-item-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 5px;
+        }
+
+        .list-item-subtitle {
+            font-size: 12px;
+            color: #605e5c;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 3% auto;
+            width: 60%;
+            max-width: 800px;
+            max-height: 85vh;
+            border-radius: 2px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e1e1e1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: #323130;
+        }
+
+        .modal-close {
+            cursor: pointer;
+            font-size: 24px;
+            color: #605e5c;
+            background: none;
+            border: none;
+        }
+
+        .modal-close:hover {
+            color: #323130;
+        }
+
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e1e1e1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #8a8886;
+            border-radius: 2px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #0078d4;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-help {
+            font-size: 12px;
+            color: #605e5c;
+            margin-top: 4px;
+        }
+
+        /* Banners */
+        .info-banner {
+            background: #e3f2fd;
+            border-left: 4px solid #0078d4;
+            padding: 12px 16px;
+            margin: 20px 0;
+            border-radius: 2px;
+        }
+
+        .warning-banner {
+            background: #fff4ce;
+            border-left: 4px solid #ffb900;
+            padding: 12px 16px;
+            margin: 20px 0;
+            border-radius: 2px;
+        }
+
+        .success-banner {
+            background: #dff6dd;
+            border-left: 4px solid #107c10;
+            padding: 12px 16px;
+            margin: 20px 0;
+            border-radius: 2px;
+            display: none;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #605e5c;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state-text {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state-subtext {
+            font-size: 13px;
+        }
+
+        /* Tab Navigation */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e1e1e1;
+            background: white;
+            padding: 0 30px;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            color: #605e5c;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: #323130;
+        }
+
+        .tab.active {
+            color: #0078d4;
+            border-bottom-color: #0078d4;
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Azure Header -->
+    <div class="azure-header">
+        <div class="logo">🏭 Azure Data Factory</div>
+        <div class="breadcrumb">Home &gt; Data factories &gt; adf-postpay-dev</div>
+        <div class="actions">
+            <button class="btn btn-primary">📤 Publish all</button>
+        </div>
+    </div>
+
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-item active" onclick="showSection('author')">
+            <span class="icon">✏️</span>
+            <span class="label">Author</span>
+        </div>
+        <div class="sidebar-item" onclick="showSection('monitor')">
+            <span class="icon">📊</span>
+            <span class="label">Monitor</span>
+        </div>
+        <div class="sidebar-item" onclick="showSection('manage')">
+            <span class="icon">⚙️</span>
+            <span class="label">Manage</span>
+        </div>
+    </div>
+
+    <!-- Factory Resources Panel -->
+    <div class="resources-panel expanded" id="resourcesPanel">
+        <div class="resources-header">
+            <h3>Factory Resources</h3>
+            <input type="text" class="search-box" placeholder="Search resources...">
+        </div>
+
+        <div class="resource-section">
+            <div class="resource-section-header">
+                📋 Pipelines
+            </div>
+            <div id="pipeline-resources">
+                <div class="resource-item" onclick="openPipelineDetails('SAP_to_DataLake_KNA1')">
+                    <span class="icon">📋</span>
+                    SAP_to_DataLake_KNA1
+                </div>
+                <div class="resource-item" onclick="openPipelineDetails('SAP_to_DataLake_VBAK')">
+                    <span class="icon">📋</span>
+                    SAP_to_DataLake_VBAK
+                </div>
+            </div>
+        </div>
+
+        <div class="resource-section">
+            <div class="resource-section-header">
+                💾 Datasets
+            </div>
+            <div class="resource-item">
+                <span class="icon">💾</span>
+                SAP_KNA1_Table
+            </div>
+            <div class="resource-item">
+                <span class="icon">💾</span>
+                DataLake_Bronze_Parquet
+            </div>
+        </div>
+
+        <div class="resource-section">
+            <div class="resource-section-header">
+                🔄 Data flows
+            </div>
+            <div class="empty-state" style="padding: 20px 15px;">
+                <div style="font-size: 12px; color: #999;">No data flows yet</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content with-panel" id="mainContent">
+        <!-- Author Section -->
+        <div id="author-section">
+            <div class="content-header">
+                <h1>Pipelines</h1>
+                <button class="btn btn-success" onclick="openModal('createPipelineModal')">+ New pipeline</button>
+            </div>
+
+            <div class="toolbar">
+                <button class="btn btn-default">▶️ Debug</button>
+                <button class="btn btn-default">✅ Validate</button>
+                <button class="btn btn-primary">📤 Publish</button>
+            </div>
+
+            <div class="content-body">
+                <div class="warning-banner">
+                    <strong>⚠️ Practice Environment</strong>
+                    <p style="margin-top: 5px; font-size: 13px;">This simulator shows you EXACTLY what Azure Data
+                        Factory Studio looks like. Try creating a pipeline, linked service,or trigger!</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Your Pipelines</div>
+                    <div class="card-body" style="padding: 0;">
+                        <div id="pipeline-list">
+                            <div class="list-item" onclick="openPipelineDetails('SAP_to_DataLake_KNA1')">
+                                <div>
+                                    <div class="list-item-title">📋 SAP_to_DataLake_KNA1</div>
+                                    <div class="list-item-subtitle">Last modified: Today, 2:00 AM • 1 activity</div>
+                                </div>
+                                <span style="color: #0078d4;">→</span>
+                            </div>
+                            <div class="list-item" onclick="openPipelineDetails('SAP_to_DataLake_VBAK')">
+                                <div>
+                                    <div class="list-item-title">📋 SAP_to_DataLake_VBAK</div>
+                                    <div class="list-item-subtitle">Last modified: Today, 2:00 AM • 1 activity</div>
+                                </div>
+                                <span style="color: #0078d4;">→</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monitor Section -->
+        <div id="monitor-section" style="display: none;">
+            <div class="content-header">
+                <h1>Pipeline runs</h1>
+            </div>
+
+            <div class="tabs">
+                <div class="tab active">Pipeline runs</div>
+                <div class="tab">Trigger runs</div>
+                <div class="tab">Activity runs</div>
+            </div>
+
+            <div class="content-body">
+                <div class="card">
+                    <div class="card-body" style="padding: 0;">
+                        <div class="list-item">
+                            <div>
+                                <div class="list-item-title">SAP_to_DataLake_KNA1</div>
+                                <div class="list-item-subtitle">Run ID: a1b2c3d4 • Started: 2026-02-14 02:00:15 •
+                                    Duration: 42s</div>
+                            </div>
+                            <span style="color: #107c10; font-weight: 600;">✓ Succeeded</span>
+                        </div>
+                        <div class="list-item">
+                            <div>
+                                <div class="list-item-title">SAP_to_DataLake_VBAK</div>
+                                <div class="list-item-subtitle">Run ID: e5f6g7h8 • Started: 2026-02-14 02:00:10 •
+                                    Duration: 38s</div>
+                            </div>
+                            <span style="color: #107c10; font-weight: 600;">✓ Succeeded</span>
+                        </div>
+                        <div class="list-item">
+                            <div>
+                                <div class="list-item-title">SAP_to_DataLake_KNA1</div>
+                                <div class="list-item-subtitle">Run ID: i9j0k1l2 • Started: 2026-02-13 02:00:08 •
+                                    Duration: Timeout</div>
+                            </div>
+                            <span style="color: #c50f1f; font-weight: 600;">✗ Failed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Section -->
+        <div id="manage-section" style="display: none;">
+            <div class="content-header">
+                <h1>Manage</h1>
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="showManageTab(0)">Linked services</div>
+                <div class="tab" onclick="showManageTab(1)">Integration runtimes</div>
+                <div class="tab" onclick="showManageTab(2)">Triggers</div>
+            </div>
+
+            <div class="content-body">
+                <!-- Linked Services Tab -->
+                <div class="manage-tab-content active" id="manage-tab-0">
+                    <button class="btn btn-success" onclick="openModal('createLinkedServiceModal')"
+                        style="margin-bottom: 20px;">+ New</button>
+
+                    <div class="warning-banner">
+                        <strong>⭐ THIS IS WHERE YOU CONNECT ADF TO DATA LAKE!</strong>
+                        <p style="margin-top: 5px; font-size: 13px;">Click "+ New" and select "Azure Data Lake Storage
+                            Gen2" to practice creating the connection.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body" style="padding: 0;">
+                            <div class="list-item">
+                                <div>
+                                    <div class="list-item-title">🔗 SAP_S4HANA_Production</div>
+                                    <div class="list-item-subtitle">Type: SAP Table • IR: SelfHostedIR-SAP</div>
+                                </div>
+                            </div>
+                            <div class="list-item">
+                                <div>
+                                    <div class="list-item-title">🔗 DataLake_Gen2</div>
+                                    <div class="list-item-subtitle">Type: Azure Data Lake Storage Gen2 • Account:
+                                        adlspostpaydev</div>
+                                </div>
+                            </div>
+                            <div class="list-item">
+                                <div>
+                                    <div class="list-item-title">🔗 AzureKeyVault</div>
+                                    <div class="list-item-subtitle">Type: Azure Key Vault • Vault: kv-postpay-prod</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Integration Runtimes Tab -->
+                <div class="manage-tab-content" id="manage-tab-1">
+                    <div class="card">
+                        <div class="card-body" style="padding: 0;">
+                            <div class="list-item">
+                                <div>
+                                    <div class="list-item-title">🌐 SelfHostedIR-SAP</div>
+                                    <div class="list-item-subtitle">Type: Self-hosted • Status: Running • Version:
+                                        5.28.8488.1</div>
+                                </div>
+                                <span style="color: #107c10; font-weight: 600;">● Running</span>
+                            </div>
+                            <div class="list-item">
+                                <div>
+                                    <div class="list-item-title">🌐 AutoResolveIntegrationRuntime</div>
+                                    <div class="list-item-subtitle">Type: Azure • Region: Auto-resolve</div>
+                                </div>
+                                <span style="color: #107c10; font-weight: 600;">● Available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Triggers Tab -->
+                <div class="manage-tab-content" id="manage-tab-2">
+                    <button class="btn btn-success" onclick="openModal('createTriggerModal')"
+                        style="margin-bottom: 20px;">+ New trigger</button>
+
+                    <div class="warning-banner">
+                        <strong>🎯 THIS IS WHERE YOU SCHEDULE "DAILY AT 2 AM"!</strong>
+                        <p style="margin-top: 5px; font-size: 13px;">Click "+ New trigger" to practice creating a
+                            schedule.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body" style="padding: 0;">
+                            <div class="list-item">
+                                <div>
+                                    <div class="list-item-title">⏰ Daily-SAP-Extract</div>
+                                    <div class="list-item-subtitle">Type: Schedule • Recurrence: Daily at 02:00 AM
+                                        (UTC+4) • Pipeline: SAP_to_DataLake_KNA1</div>
+                                </div>
+                                <span style="color: #107c10; font-weight: 600;">✓ Started</span>
+                            </div>
+                            <div class="list-item">
+                                <div>
+                                    <div class="list-item-title">⏰ Hourly-Incremental</div>
+                                    <div class="list-item-subtitle">Type: Schedule • Recurrence: Every 6 hours •
+                                        Pipeline: SAP_CDC_Incremental</div>
+                                </div>
+                                <span style="color: #107c10; font-weight: 600;">✓ Started</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Create Pipeline -->
+    <div id="createPipelineModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">New pipeline</h2>
+                <button class="modal-close" onclick="closeModal('createPipelineModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Name *</label>
+                    <input type="text" class="form-input" id="pipeline-name" placeholder="Enter pipeline name">
+                    <div class="form-help">Use descriptive names like: Source_to_Destination_TableName</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" id="pipeline-desc"
+                        placeholder="What does this pipeline do?"></textarea>
+                </div>
+
+                <div class="info-banner">
+                    <strong>📍 Next steps after creation:</strong>
+                    <ol style="margin: 10px 0 0 20px; font-size: 13px;">
+                        <li>Pipeline canvas will open</li>
+                        <li>Drag "Copy data" activity from the Activities panel</li>
+                        <li>Configure Source dataset (connects via SAP Linked Service)</li>
+                        <li>Configure Sink dataset (connects via Data Lake Linked Service)</li>
+                        <li>Debug to test, then Publish to save</li>
+                    </ol>
+                </div>
+
+                <div id="pipeline-success" class="success-banner">
+                    ✅ Pipeline created successfully! In real ADF, the pipeline designer canvas would now open.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" onclick="closeModal('createPipelineModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="createPipeline()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Create Linked Service -->
+    <div id="createLinkedServiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">New linked service</h2>
+                <button class="modal-close" onclick="closeModal('createLinkedServiceModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Data store *</label>
+                    <select class="form-select" id="ls-type" onchange="showLSFields()">
+                        <option value="">-- Select a data store --</option>
+                        <option value="datalake">Azure Data Lake Storage Gen2</option>
+                        <option value="sap">SAP Table</option>
+                        <option value="sql">Azure SQL Database</option>
+                        <option value="blob">Azure Blob Storage</option>
+                    </select>
+                </div>
+
+                <div id="datalake-fields" style="display: none;">
+                    <div class="warning-banner">
+                        <strong>⭐ YOU ARE CREATING THE CONNECTION FROM ADF TO DATA LAKE!</strong>
+                        <p style="margin-top: 5px; font-size: 13px;">Fill in these fields exactly as they appear in
+                            Azure Portal.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Name *</label>
+                        <input type="text" class="form-input" value="DataLake_Gen2" id="ls-name">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">URL *</label>
+                        <input type="text" class="form-input" value="https://adlspostpaydev.dfs.core.windows.net/">
+                        <div class="form-help">Get from: Data Lake → Properties → Primary endpoint (DFS)</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Authentication type *</label>
+                        <select class="form-select">
+                            <option value="mi">System Assigned Managed Identity (Recommended)</option>
+                            <option value="key">Account key</option>
+                            <option value="sp">Service principal</option>
+                            <option value="sas">SAS URI</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Connect via integration runtime *</label>
+                        <select class="form-select">
+                            <option>AutoResolveIntegrationRuntime</option>
+                            <option>SelfHostedIR-SAP</option>
+                        </select>
+                        <div class="form-help">Use Azure IR for Azure-to-Azure connections</div>
+                    </div>
+                </div>
+
+                <div id="sap-fields" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">Name *</label>
+                        <input type="text" class="form-input" placeholder="SAP_S4HANA_Production">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Application server host *</label>
+                        <input type="text" class="form-input" placeholder="sap-prod.company.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">System number *</label>
+                        <input type="text" class="form-input" placeholder="00">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Client ID *</label>
+                        <input type="text" class="form-input" placeholder="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Connect via integration runtime *</label>
+                        <select class="form-select">
+                            <option>SelfHostedIR-SAP</option>
+                        </select>
+                        <div class="form-help">Self-Hosted IR required for on-premise SAP</div>
+                    </div>
+                </div>
+
+                <div id="ls-success" class="success-banner">
+                    ✅ Linked service created! Your pipelines can now use this connection to read/write data.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" onclick="testConnection()">Test connection</button>
+                <button class="btn btn-default" onclick="closeModal('createLinkedServiceModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="createLinkedService()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Create Trigger -->
+    <div id="createTriggerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">New trigger</h2>
+                <button class="modal-close" onclick="closeModal('createTriggerModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Name *</label>
+                    <input type="text" class="form-input" id="trigger-name" placeholder="Daily-SAP-Extract-2AM">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Type *</label>
+                    <select class="form-select">
+                        <option value="schedule">Schedule</option>
+                        <option value="storage">Storage events</option>
+                        <option value="tumbling">Tumbling window</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Recurrence *</label>
+                    <select class="form-select" id="trigger-recurrence">
+                        <option value="daily">Every Day</option>
+                        <option value="weekly">Every Week</option>
+                        <option value="monthly">Every Month</option>
+                        <option value="hours">Every N Hours</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">At these times *</label>
+                    <input type="time" class="form-input" value="02:00" id="trigger-time">
+                    <div class="form-help">Specify when the trigger should run</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Time zone *</label>
+                    <select class="form-select">
+                        <option>(UTC+04:00) Abu Dhabi, Muscat</option>
+                        <option>(UTC) Coordinated Universal Time</option>
+                        <option>(UTC-05:00) Eastern Time (US & Canada)</option>
+                        <option>(UTC+08:00) Beijing, Hong Kong</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Pipeline *</label>
+                    <select class="form-select" id="trigger-pipeline">
+                        <option>SAP_to_DataLake_KNA1</option>
+                        <option>SAP_to_DataLake_VBAK</option>
+                        <option>Full_SAP_Extract</option>
+                    </select>
+                </div>
+
+                <div class="warning-banner">
+                    <strong>⏰ How it works:</strong>
+                    <p style="margin-top: 5px; font-size: 13px;">ADF will automatically run your pipeline at the
+                        specified time every day. You can monitor runs in the Monitor section.</p>
+                </div>
+
+                <div id="trigger-success" class="success-banner">
+                    ✅ Trigger created and started! Your pipeline will now run automatically on schedule.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" onclick="closeModal('createTriggerModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="createTrigger()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 'author';
+
+        function showSection(section) {
+            currentSection = section;
+            document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
+            event.target.closest('.sidebar-item').classList.add('active');
+
+            document.getElementById('author-section').style.display = section === 'author' ? 'block' : 'none';
+            document.getElementById('monitor-section').style.display = section === 'monitor' ? 'block' : 'none';
+            document.getElementById('manage-section').style.display = section === 'manage' ? 'block' : 'none';
+        }
+
+        function showManageTab(index) {
+            document.querySelectorAll('.tabs .tab').forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+            document.querySelectorAll('.manage-tab-content').forEach((content, i) => {
+                content.classList.toggle('active', i === index);
+            });
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.querySelectorAll('.success-banner').forEach(b => b.style.display = 'none');
+        }
+
+        function showLSFields() {
+            const type = document.getElementById('ls-type').value;
+            document.getElementById('datalake-fields').style.display = type === 'datalake' ? 'block' : 'none';
+            document.getElementById('sap-fields').style.display = type === 'sap' ? 'block' : 'none';
+        }
+
+        function testConnection() {
+            alert('✓ Connection successful!\n\nIn real ADF, this would verify that ADF can connect to your selected data store using the provided credentials.');
+        }
+
+        function createPipeline() {
+            const name = document.getElementById('pipeline-name').value.trim();
+            if (!name) {
+                alert('Please enter a pipeline name');
+                return;
+            }
+
+            document.getElementById('pipeline-success').style.display = 'block';
+
+            setTimeout(() => {
+                const listItem = document.createElement('div');
+                listItem.className = 'list-item';
+                listItem.innerHTML = `
+                    <div>
+                        <div class="list-item-title">📋 ${name}</div>
+                        <div class="list-item-subtitle">Last modified: Just now • 0 activities</div>
+                    </div>
+                    <span style="color: #0078d4;">→</span>
+                `;
+                document.getElementById('pipeline-list').appendChild(listItem);
+
+                const resourceItem = document.createElement('div');
+                resourceItem.className = 'resource-item';
+                resourceItem.innerHTML = `<span class="icon">📋</span> ${name}`;
+                document.getElementById('pipeline-resources').appendChild(resourceItem);
+
+                setTimeout(() => closeModal('createPipelineModal'), 1500);
+                document.getElementById('pipeline-name').value = '';
+                document.getElementById('pipeline-desc').value = '';
+            }, 800);
+        }
+
+        function createLinkedService() {
+            const type = document.getElementById('ls-type').value;
+            if (!type) {
+                alert('Please select a data store type');
+                return;
+            }
+
+            document.getElementById('ls-success').style.display = 'block';
+            setTimeout(() => closeModal('createLinkedServiceModal'), 2000);
+        }
+
+        function createTrigger() {
+            const name = document.getElementById('trigger-name').value.trim();
+            if (!name) {
+                alert('Please enter a trigger name');
+                return;
+            }
+
+            document.getElementById('trigger-success').style.display = 'block';
+            setTimeout(() => closeModal('createTriggerModal'), 2000);
+        }
+
+        function openPipelineDetails(name) {
+            alert(`In real ADF, this would open the pipeline designer for "${name}" where you can:\n\n• View/edit activities\n• Configure datasets\n• Set parameters\n• Debug and test\n• View run history`);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function (event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

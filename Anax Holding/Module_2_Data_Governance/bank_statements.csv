@@ -1,0 +1,4 @@
+transaction_id,user_id,bank_deposit_amount,date
+TXN-001,1001,5000.00,2026-04-12
+TXN-002,1002,2000.00,2026-04-12
+TXN-003,1003,7250.50,2026-04-12

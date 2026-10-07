@@ -1,0 +1,5 @@
+InstrumentKey,instrument_symbol,instrument_type
+1,XAUUSD,Commodity
+2,EURUSD,Forex
+3,AAPL,Stock
+4,BTCUSD,Crypto

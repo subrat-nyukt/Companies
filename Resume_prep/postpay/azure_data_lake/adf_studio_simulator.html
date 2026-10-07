@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Data Factory Studio - Interactive Simulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f3f2f1;
+            overflow: hidden;
+        }
+
+        .adf-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Left Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #323130;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            padding: 20px;
+            background: #201f1e;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu {
+            flex: 1;
+            padding: 10px 0;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background 0.2s;
+        }
+
+        .menu-item:hover {
+            background: #3b3a39;
+        }
+
+        .menu-item.active {
+            background: #0078d4;
+            border-left: 4px solid #ffffff;
+        }
+
+        .menu-icon {
+            font-size: 20px;
+            width: 24px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .top-bar {
+            background: white;
+            border-bottom: 1px solid #e1dfdd;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .breadcrumb {
+            color: #605e5c;
+            font-size: 14px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #0078d4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #106ebe;
+        }
+
+        .btn-secondary {
+            background: #f3f2f1;
+            color: #323130;
+            border: 1px solid #8a8886;
+        }
+
+        .btn-secondary:hover {
+            background: #e1dfdd;
+        }
+
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            background: #faf9f8;
+        }
+
+        .wizard-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .wizard-header {
+            background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+            color: white;
+            padding: 25px 40px;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .wizard-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .wizard-subtitle {
+            opacity: 0.9;
+        }
+
+        .wizard-steps {
+            display: flex;
+            background: #f8f8f8;
+            border-bottom: 1px solid #e1dfdd;
+            padding: 0 40px;
+        }
+
+        .step {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .step.active {
+            border-bottom-color: #0078d4;
+            background: white;
+        }
+
+        .step.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #107c10;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e1dfdd;
+            color: #605e5c;
+            line-height: 32px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .step.active .step-number {
+            background: #0078d4;
+            color: white;
+        }
+
+        .step-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .wizard-body {
+            padding: 40px;
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.4s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #323130;
+            font-size: 14px;
+        }
+
+        .form-label .required {
+            color: #c50f1f;
+            margin-left: 4px;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #8a8886;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #0078d4;
+            box-shadow: 0 0 0 1px #0078d4;
+        }
+
+        .form-help {
+            font-size: 12px;
+            color: #605e5c;
+            margin-top: 4px;
+        }
+
+        .info-box {
+            background: #f3f2f1;
+            border-left: 4px solid #0078d4;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .info-box-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .success-box {
+            background: #dff6dd;
+            border-left-color: #107c10;
+        }
+
+        .warning-box {
+            background: #fff4ce;
+            border-left-color: #ffb900;
+        }
+
+        .code-preview {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            margin: 20px 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .json-key {
+            color: #9cdcfe;
+        }
+
+        .json-string {
+            color: #ce9178;
+        }
+
+        .json-number {
+            color: #b5cea8;
+        }
+
+        .wizard-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            background: #f8f8f8;
+            border-top: 1px solid #e1dfdd;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .test-connection-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: #107c10;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .test-connection-btn:hover {
+            background: #0e6b0e;
+        }
+
+        .test-connection-btn.testing {
+            background: #ffb900;
+            pointer-events: none;
+        }
+
+        .test-connection-btn.success {
+            background: #107c10;
+        }
+
+        .test-connection-btn.error {
+            background: #c50f1f;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e1dfdd;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card.selected {
+            border-color: #0078d4;
+            border-width: 2px;
+            background: #f3f9fd;
+        }
+
+        .card-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #323130;
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: #605e5c;
+            line-height: 1.5;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #e1dfdd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 20px;
+            color: #323130;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #605e5c;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .progress-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #0078d4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .progress-icon.pending {
+            background: #e1dfdd;
+            color: #605e5c;
+        }
+
+        .progress-icon.success {
+            background: #107c10;
+        }
+
+        .progress-content h4 {
+            margin-bottom: 5px;
+            color: #323130;
+        }
+
+        .progress-content p {
+            color: #605e5c;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="adf-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <span style="font-size: 24px;">⚡</span>
+                <span>Azure Data Factory</span>
+            </div>
+            <div class="menu">
+                <div class="menu-item active" onclick="switchView('manage')">
+                    <span class="menu-icon">⚙️</span>
+                    <span>Manage</span>
+                </div>
+                <div class="menu-item" onclick="switchView('author')">
+                    <span class="menu-icon">✏️</span>
+                    <span>Author</span>
+                </div>
+                <div class="menu-item" onclick="switchView('monitor')">
+                    <span class="menu-icon">📊</span>
+                    <span>Monitor</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="top-bar">
+                <div class="breadcrumb">
+                    Data Factory > <span id="currentPage">Linked services</span>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-secondary" onclick="showJSON()">View JSON</button>
+                    <button class="btn btn-primary" onclick="exportConfig()">📥 Export Config</button>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <!-- Wizard Container -->
+                <div class="wizard-container">
+                    <div class="wizard-header">
+                        <h1 class="wizard-title">🔌 SAP S/4HANA Connection Setup</h1>
+                        <p class="wizard-subtitle">Configure your complete SAP to Azure Data Lake pipeline</p>
+                    </div>
+
+                    <div class="wizard-steps">
+                        <div class="step active" onclick="goToStep(0)">
+                            <div class="step-number">0</div>
+                            <div class="step-label">Connector Gallery</div>
+                        </div>
+                        <div class="step" onclick="goToStep(1)">
+                            <div class="step-number">1</div>
+                            <div class="step-label">Integration Runtime</div>
+                        </div>
+                        <div class="step" onclick="goToStep(2)">
+                            <div class="step-number">2</div>
+                            <div class="step-label">SAP Connection</div>
+                        </div>
+                        <div class="step" onclick="goToStep(3)">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Data Lake</div>
+                        </div>
+                        <div class="step" onclick="goToStep(4)">
+                            <div class="step-number">4</div>
+                            <div class="step-label">Pipeline</div>
+                        </div>
+                        <div class="step" onclick="goToStep(5)">
+                            <div class="step-number">5</div>
+                            <div class="step-label">Review</div>
+                        </div>
+                    </div>
+
+                    <div class="wizard-body">
+                        <!-- Step 0: Connector Gallery -->
+                        <div class="form-section active" id="step-0">
+                            <h2 style="margin-bottom: 20px;">Select Data Source Connector</h2>
+
+                            <div class="info-box">
+                                <div class="info-box-title">
+                                    <span>🔌</span> Choose from 90+ Connectors
+                                </div>
+                                <p>Azure Data Factory can connect to databases, cloud apps, files, APIs, and more.
+                                    Select your source system.</p>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-input" placeholder="🔍 Search connectors..."
+                                    onkeyup="filterConnectors(this.value)">
+                            </div>
+
+                            <h3 style="margin: 30px 0 15px 0; color: #323130;">Popular Connectors</h3>
+                            <div class="grid-2" id="connectorGrid">
+                                <div class="card" onclick="selectDataSource(this, 'azure-sql')">
+                                    <div class="card-icon">🗄️</div>
+                                    <div class="card-title">Azure SQL Database</div>
+                                    <div class="card-description">Microsoft cloud database</div>
+                                </div>
+                                <div class="card" onclick="selectDataSource(this, 'sql-server')">
+                                    <div class="card-icon">💾</div>
+                                    <div class="card-title">SQL Server</div>
+                                    <div class="card-description">On-premise or Azure VM</div>
+                                </div>
+                                <div class="card selected" onclick="selectDataSource(this, 'sap')">
+                                    <div class="card-icon">🏢</div>
+                                    <div class="card-title">SAP S/4HANA</div>
+                                    <div class="card-description">SAP ERP system</div>
+                                </div>
+                                <div class="card" onclick="selectDataSource(this, 'oracle')">
+                                    <div class="card-icon">🔴</div>
+                                    <div class="card-title">Oracle Database</div>
+                                    <div class="card-description">Enterprise database</div>
+                                </div>
+                                <div class="card" onclick="selectDataSource(this, 'snowflake')">
+                                    <div class="card-icon">❄️</div>
+                                    <div class="card-title">Snowflake</div>
+                                    <div class="card-description">Cloud data warehouse</div>
+                                </div>
+                                <div class="card" onclick="selectDataSource(this, 'blob')">
+                                    <div class="card-icon">📁</div>
+                                    <div class="card-title">Azure Blob Storage</div>
+                                    <div class="card-description">Object storage</div>
+                                </div>
+                                <div class="card" onclick="selectDataSource(this, 'salesforce')">
+                                    <div class="card-icon">☁️</div>
+                                    <div class="card-title">Salesforce</div>
+                                    <div class="card-description">CRM platform</div>
+                                </div>
+                                <div class="card" onclick="selectDataSource(this, 'rest')">
+                                    <div class="card-icon">🔌</div>
+                                    <div class="card-title">REST API</div>
+                                    <div class="card-description">Generic web service</div>
+                                </div>
+                                <div class="card" onclick="selectDataSource(this, 'dynamics')">
+                                    <div class="card-icon">🔷</div>
+                                    <div class="card-title">Dynamics 365</div>
+                                    <div class="card-description">Microsoft CRM/ERP</div>
+                                </div>
+                                <div class="card" onclick="selectDataSource(this, 'mongodb')">
+                                    <div class="card-icon">🍃</div>
+                                    <div class="card-title">MongoDB</div>
+                                    <div class="card-description">NoSQL database</div>
+                                </div>
+                                <div class="card" onclick="selectDataSource(this, 'postgresql')">
+                                    <div class="card-icon">🐘</div>
+                                    <div class="card-title">PostgreSQL</div>
+                                    <div class="card-description">Open source database</div>
+                                </div>
+                                <div class="card" onclick="selectDataSource(this, 's3')">
+                                    <div class="card-icon">📦</div>
+                                    <div class="card-title">Amazon S3</div>
+                                    <div class="card-description">AWS object storage</div>
+                                </div>
+                            </div>
+
+                            <div class="info-box" style="margin-top: 30px;">
+                                <div class="info-box-title">
+                                    <span>ℹ️</span> Currently Selected: SAP S/4HANA
+                                </div>
+                                <p>You can connect to SAP ERP tables (KNA1, VBAK, MARA, etc.) or use OData/CDC for
+                                    advanced scenarios.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 1: Integration Runtime -->
+                        <div class="form-section" id="step-1">
+                            <h2 style="margin-bottom: 20px;">Step 1: Self-Hosted Integration Runtime</h2>
+
+                            <div class="info-box">
+                                <div class="info-box-title">
+                                    <span>💡</span> What is Self-Hosted Integration Runtime?
+                                </div>
+                                <p>A bridge software installed on a Windows machine that connects SAP (on-premise) to
+                                    Azure (cloud).</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Integration Runtime Name <span class="required">*</span>
+                                </label>
+                                <input type="text" class="form-input" id="irName" value="SelfHostedIR-SAP"
+                                    placeholder="e.g., SelfHostedIR-SAP">
+                                <p class="form-help">Choose a descriptive name for your integration runtime</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Description
+                                </label>
+                                <input type="text" class="form-input" id="irDescription"
+                                    value="Integration Runtime for SAP S/4HANA connection"
+                                    placeholder="Optional description">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    VM/Server Details <span class="required">*</span>
+                                </label>
+                                <input type="text" class="form-input" id="irServer" value="vm-sap-gateway.company.local"
+                                    placeholder="Hostname or IP of Windows Server">
+                                <p class="form-help">The Windows machine where IR will be installed</p>
+                            </div>
+
+                            <button class="test-connection-btn" onclick="generateIRKey()">
+                                <span>🔑</span> Generate Authentication Key
+                            </button>
+
+                            <div id="irKeyResult" style="display: none; margin-top: 20px;">
+                                <div class="success-box info-box">
+                                    <div class="info-box-title">
+                                        <span>✅</span> Authentication Key Generated!
+                                    </div>
+                                    <p style="margin-top: 10px;">Copy this key and paste it during IR installation on
+                                        your Windows machine:</p>
+                                    <div class="code-preview"
+                                        style="margin-top: 10px; max-height: 100px; word-wrap: break-word;">
+                                        IR23x-5hGjK-9pLmN-4qRsT-vWxYz-2aBcD-7eFgH-iJkLm-NoPqR-sTuVw
+                                    </div>
+                                    <p style="margin-top: 10px; font-size: 13px;">
+                                        📥 <a href="#" onclick="downloadIRInstaller(); return false;"
+                                            style="color: #0078d4;">Download Integration Runtime installer</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: SAP Connection -->
+                        <div class="form-section" id="step-2">
+                            <h2 style="margin-bottom: 20px;">Step 2: Configure SAP Linked Service</h2>
+
+                            <div class="form-group">
+                                <label class="form-label">Connector Type</label>
+                                <div class="grid-2">
+                                    <div class="card selected" onclick="selectConnector(this, 'sap-table')">
+                                        <div class="card-icon">📋</div>
+                                        <div class="card-title">SAP Table</div>
+                                        <div class="card-description">Extract full tables (KNA1, VBAK). Best for batch
+                                            loads.</div>
+                                    </div>
+                                    <div class="card" onclick="selectConnector(this, 'sap-cdc')">
+                                        <div class="card-icon">🔄</div>
+                                        <div class="card-title">SAP CDC</div>
+                                        <div class="card-description">Change Data Capture. Only delta changes.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        SAP Server Hostname <span class="required">*</span>
+                                    </label>
+                                    <input type="text" class="form-input" id="sapServer" value="sap-server.company.com"
+                                        placeholder="e.g., sap.company.com">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        System Number <span class="required">*</span>
+                                    </label>
+                                    <input type="text" class="form-input" id="sapSystem" value="00" placeholder="00"
+                                        maxlength="2">
+                                </div>
+                            </div>
+
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        Client ID <span class="required">*</span>
+                                    </label>
+                                    <input type="text" class="form-input" id="sapClient" value="100" placeholder="100">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        Language
+                                    </label>
+                                    <select class="form-select" id="sapLanguage">
+                                        <option value="EN" selected>EN - English</option>
+                                        <option value="DE">DE - German</option>
+                                        <option value="AR">AR - Arabic</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        Username <span class="required">*</span>
+                                    </label>
+                                    <input type="text" class="form-input" id="sapUsername" value="RFC_USER"
+                                        placeholder="SAP username">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        Password <span class="required">*</span>
+                                    </label>
+                                    <input type="password" class="form-input" id="sapPassword" value="••••••••"
+                                        placeholder="Enter password">
+                                    <p class="form-help">🔒 Stored securely in Azure Key Vault</p>
+                                </div>
+                            </div>
+
+                            <button class="test-connection-btn" onclick="testSAPConnection()">
+                                <span>🔌</span> Test Connection
+                            </button>
+
+                            <div id="sapTestResult" style="display: none;"></div>
+                        </div>
+
+                        <!-- Step 3: Data Lake -->
+                        <div class="form-section" id="step-3">
+                            <h2 style="margin-bottom: 20px;">Step 3: Azure Data Lake Configuration</h2>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Storage Account Name <span class="required">*</span>
+                                </label>
+                                <input type="text" class="form-input" id="adlsAccount" value="adlspostpaydev"
+                                    placeholder="e.g., adlspostpaydev">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Authentication Method
+                                </label>
+                                <select class="form-select" id="adlsAuth">
+                                    <option value="key">Account Key</option>
+                                    <option value="sas" selected>Shared Access Signature (SAS)</option>
+                                    <option value="msi">Managed Identity</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Container Structure</label>
+                                <div class="code-preview">
+                                    adlspostpaydev/
+                                    ├── 📁 bronze/ <span style="color: #6a9955;">// Raw data from SAP</span>
+                                    │ ├── sap/
+                                    │ │ ├── kna1/
+                                    │ │ └── vbak/
+                                    ├── 📁 silver/ <span style="color: #6a9955;">// Cleaned data</span>
+                                    │ └── clean_tables/
+                                    └── 📁 gold/ <span style="color: #6a9955;">// Analytics-ready</span>
+                                    └── business_metrics/
+                                </div>
+                            </div>
+
+                            <button class="test-connection-btn" onclick="testADLSConnection()">
+                                <span>🔌</span> Test Connection
+                            </button>
+
+                            <div id="adlsTestResult" style="display: none;"></div>
+                        </div>
+
+                        <!-- Step 4: Pipeline -->
+                        <div class="form-section" id="step-4">
+                            <h2 style="margin-bottom: 20px;">Step 4: Create Copy Pipeline</h2>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Pipeline Name <span class="required">*</span>
+                                </label>
+                                <input type="text" class="form-input" id="pipelineName" value="SAP_to_DataLake_KNA1"
+                                    placeholder="e.g., SAP_to_DataLake_KNA1">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    SAP Table to Extract <span class="required">*</span>
+                                </label>
+                                <select class="form-select" id="sapTable">
+                                    <option value="KNA1">KNA1 - Customer Master</option>
+                                    <option value="VBAK">VBAK - Sales Document Header</option>
+                                    <option value="VBAP">VBAP - Sales Document Item</option>
+                                    <option value="BSEG">BSEG - Accounting Document Segment</option>
+                                    <option value="MARA">MARA - Material Master</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Target Container</label>
+                                <select class="form-select" id="targetContainer">
+                                    <option value="bronze" selected>bronze - Raw Data</option>
+                                    <option value="silver">silver - Cleaned Data</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">File Format</label>
+                                <div class="grid-2">
+                                    <div class="card selected" onclick="selectFormat(this, 'parquet')">
+                                        <div class="card-icon">📦</div>
+                                        <div class="card-title">Parquet</div>
+                                        <div class="card-description">Recommended. Compressed columnar format.</div>
+                                    </div>
+                                    <div class="card" onclick="selectFormat(this, 'csv')">
+                                        <div class="card-icon">📄</div>
+                                        <div class="card-title">CSV</div>
+                                        <div class="card-description">Text format. Human readable.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="info-box">
+                                <div class="info-box-title">
+                                    <span>⚡</span> Performance Settings
+                                </div>
+                                <div class="grid-2" style="margin-top: 10px;">
+                                    <div>
+                                        <label
+                                            style="font-size: 13px; margin-bottom: 5px; display: block;">Parallelism:</label>
+                                        <select class="form-select">
+                                            <option value="auto" selected>Auto</option>
+                                            <option value="4">4 parallel copies</option>
+                                            <option value="8">8 parallel copies</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label style="font-size: 13px; margin-bottom: 5px; display: block;">Data
+                                            Integration Units:</label>
+                                        <select class="form-select">
+                                            <option value="auto" selected>Auto</option>
+                                            <option value="4">4 DIUs</option>
+                                            <option value="8">8 DIUs</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Review -->
+                        <div class="form-section" id="step-5">
+                            <h2 style="margin-bottom: 20px;">Step 5: Review & Deploy</h2>
+
+                            <div class="success-box info-box">
+                                <div class="info-box-title">
+                                    <span>✅</span> Configuration Complete!
+                                </div>
+                                <p>Review your settings below and click Deploy to create resources.</p>
+                            </div>
+
+                            <h3 style="margin: 30px 0 15px 0; color: #323130;">📋 Configuration Summary</h3>
+
+                            <div style="background: #f8f8f8; padding: 20px; border-radius: 8px; font-size: 14px;">
+                                <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+                                    <strong>Integration Runtime:</strong>
+                                    <span id="reviewIR">-</span>
+
+                                    <strong>SAP Server:</strong>
+                                    <span id="reviewSAP">-</span>
+
+                                    <strong>Storage Account:</strong>
+                                    <span id="reviewADLS">-</span>
+
+                                    <strong>Pipeline:</strong>
+                                    <span id="reviewPipeline">-</span>
+
+                                    <strong>Source Table:</strong>
+                                    <span id="reviewTable">-</span>
+
+                                    <strong>Target Format:</strong>
+                                    <span id="reviewFormat">-</span>
+                                </div>
+                            </div>
+
+                            <h3 style="margin: 30px 0 15px 0; color: #323130;">📄 Generated Pipeline JSON</h3>
+                            <div class="code-preview" id="finalJSON"></div>
+
+                            <button class="btn btn-primary"
+                                style="margin-top: 20px; padding: 12px 30px; font-size: 16px;"
+                                onclick="deployPipeline()">
+                                🚀 Deploy to Azure
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="wizard-footer">
+                        <button class="btn btn-secondary" id="prevBtn" onclick="previousStep()" style="display: none;">
+                            ← Previous
+                        </button>
+                        <button class="btn btn-primary" id="nextBtn" onclick="nextStep()">
+                            Next →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Testing Connection -->
+    <div class="modal" id="testModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Testing Connection...</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const totalSteps = 6;
+        let selectedConnector = 'sap-table';
+        let selectedFormat = 'parquet';
+        let config = {};
+
+        function goToStep(step) {
+            if (step >= 0 && step < totalSteps) {
+                currentStep = step;
+                updateWizard();
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps - 1) {
+                markStepComplete(currentStep);
+                currentStep++;
+                updateWizard();
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateWizard();
+            }
+        }
+
+        function updateWizard() {
+            // Update steps
+            document.querySelectorAll('.step').forEach((step, index) => {
+                step.classList.toggle('active', index === currentStep);
+            });
+
+            // Update sections
+            document.querySelectorAll('.form-section').forEach((section, index) => {
+                section.classList.toggle('active', index === currentStep);
+            });
+
+            // Update buttons
+            document.getElementById('prevBtn').style.display = currentStep === 0 ? 'none' : 'inline-block';
+            document.getElementById('nextBtn').textContent = currentStep === totalSteps - 1 ? 'Finish' : 'Next →';
+
+            // Update review if on last step
+            if (currentStep === 4) {
+                updateReview();
+            }
+        }
+
+        function markStepComplete(step) {
+            document.querySelectorAll('.step')[step].classList.add('completed');
+        }
+
+        function generateIRKey() {
+            document.getElementById('irKeyResult').style.display = 'block';
+            markStepComplete(0);
+        }
+
+        function selectConnector(element, type) {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedConnector = type;
+        }
+
+        function selectFormat(element, format) {
+            element.parentElement.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedFormat = format;
+        }
+
+        function testSAPConnection() {
+            const modal = document.getElementById('testModal');
+            const body = document.getElementById('modalBody');
+
+            body.innerHTML = `
+                <div class="progress-step">
+                    <div class="progress-icon"><div class="spinner"></div></div>
+                    <div class="progress-content">
+                        <h4>Connecting to SAP Server...</h4>
+                        <p>Verifying network connectivity</p>
+                    </div>
+                </div>
+                <div class="progress-step">
+                    <div class="progress-icon pending">⏳</div>
+                    <div class="progress-content">
+                        <h4>Authenticating...</h4>
+                        <p>Validating credentials</p>
+                    </div>
+                </div>
+                <div class="progress-step">
+                    <div class="progress-icon pending">⏳</div>
+                    <div class="progress-content">
+                        <h4>Testing table access...</h4>
+                        <p>Checking permissions</p>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.add('show');
+
+            // Simulate connection test
+            setTimeout(() => {
+                body.innerHTML = `
+                    <div class="progress-step">
+                        <div class="progress-icon success">✓</div>
+                        <div class="progress-content">
+                            <h4>Network connectivity verified</h4>
+                            <p>Connected to ${document.getElementById('sapServer').value}</p>
+                        </div>
+                    </div>
+                    <div class="progress-step">
+                        <div class="progress-icon success">✓</div>
+                        <div class="progress-content">
+                            <h4>Authentication successful</h4>
+                            <p>User: ${document.getElementById('sapUsername').value}</p>
+                        </div>
+                    </div>
+                    <div class="progress-step">
+                        <div class="progress-icon success">✓</div>
+                        <div class="progress-content">
+                            <h4>Table access confirmed</h4>
+                            <p>Found 15 accessible tables</p>
+                        </div>
+                    </div>
+                    <div class="success-box info-box" style="margin-top: 20px;">
+                        <div class="info-box-title">
+                            <span>✅</span> Connection Successful!
+                        </div>
+                        <p>SAP connection is configured correctly.</p>
+                    </div>
+                `;
+                markStepComplete(1);
+            }, 3000);
+        }
+
+        function testADLSConnection() {
+            const modal = document.getElementById('testModal');
+            const body = document.getElementById('modalBody');
+
+            body.innerHTML = `
+                <div class="progress-step">
+                    <div class="progress-icon"><div class="spinner"></div></div>
+                    <div class="progress-content">
+                        <h4>Connecting to Azure Storage...</h4>
+                        <p>Verifying authentication</p>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.add('show');
+
+            setTimeout(() => {
+                body.innerHTML = `
+                    <div class="progress-step">
+                        <div class="progress-icon success">✓</div>
+                        <div class="progress-content">
+                            <h4>Storage account accessible</h4>
+                            <p>Connected to ${document.getElementById('adlsAccount').value}</p>
+                        </div>
+                    </div>
+                    <div class="progress-step">
+                        <div class="progress-icon success">✓</div>
+                        <div class="progress-content">
+                            <h4>Containers verified</h4>
+                            <p>bronze, silver, gold - All accessible</p>
+                        </div>
+                    </div>
+                    <div class="success-box info-box" style="margin-top: 20px;">
+                        <div class="info-box-title">
+                            <span>✅</span> Connection Successful!
+                        </div>
+                        <p>Data Lake storage is ready.</p>
+                    </div>
+                `;
+                markStepComplete(2);
+            }, 2000);
+        }
+
+        function closeModal() {
+            document.getElementById('testModal').classList.remove('show');
+        }
+
+        function updateReview() {
+            document.getElementById('reviewIR').textContent = document.getElementById('irName').value;
+            document.getElementById('reviewSAP').textContent = document.getElementById('sapServer').value + ':' + document.getElementById('sapSystem').value;
+            document.getElementById('reviewADLS').textContent = document.getElementById('adlsAccount').value;
+            document.getElementById('reviewPipeline').textContent = document.getElementById('pipelineName').value;
+            document.getElementById('reviewTable').textContent = document.getElementById('sapTable').value;
+            document.getElementById('reviewFormat').textContent = selectedFormat.toUpperCase();
+
+            const json = {
+                name: document.getElementById('pipelineName').value,
+                properties: {
+                    activities: [{
+                        name: "Copy_SAP_to_ADLS",
+                        type: "Copy",
+                        inputs: [{
+                            referenceName: "DS_SAP_" + document.getElementById('sapTable').value,
+                            type: "DatasetReference"
+                        }],
+                        outputs: [{
+                            referenceName: "DS_ADLS_Bronze",
+                            type: "DatasetReference"
+                        }],
+                        typeProperties: {
+                            source: {
+                                type: "SapTableSource",
+                                partitionOption: "PhysicalPartitionsOfTable"
+                            },
+                            sink: {
+                                type: "ParquetSink",
+                                storeSettings: {
+                                    type: "AzureBlobFSWriteSettings"
+                                }
+                            }
+                        }
+                    }]
+                }
+            };
+
+            document.getElementById('finalJSON').textContent = JSON.stringify(json, null, 2);
+        }
+
+        function deployPipeline() {
+            alert('🎉 Pipeline deployed successfully!\n\nIn a real scenario, this would:\n1. Create resources in Azure\n2. Configure connections\n3. Deploy the pipeline\n\nYou can now export this configuration to use in real Azure ADF.');
+        }
+
+        function showJSON() {
+            alert('JSON view would show the complete ARM template here.');
+        }
+
+        function exportConfig() {
+            const config = {
+                integrationRuntime: document.getElementById('irName').value,
+                sapConnection: {
+                    server: document.getElementById('sapServer').value,
+                    systemNumber: document.getElementById('sapSystem').value,
+                    client: document.getElementById('sapClient').value
+                },
+                dataLake: document.getElementById('adlsAccount').value,
+                pipeline: document.getElementById('pipelineName').value
+            };
+
+            const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'adf-config.json';
+            a.click();
+        }
+
+        function downloadIRInstaller() {
+            alert('📥 In a real scenario, this would download:\n\nIntegrationRuntime_5.x.x.msi\n\nFrom: https://www.microsoft.com/en-us/download/details.aspx?id=39717');
+        }
+
+        function switchView(view) {
+            alert(`Switching to ${view} view (not implemented in this demo)`);
+        }
+
+        function selectDataSource(element, type) {
+            document.querySelectorAll('#connectorGrid .card').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function filterConnectors(searchText) {
+            const cards = document.querySelectorAll('#connectorGrid .card');
+            const search = searchText.toLowerCase();
+
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const desc = card.querySelector('.card-description').textContent.toLowerCase();
+
+                if (title.includes(search) || desc.includes(search)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize
+        updateWizard();
+    </script>
+</body>
+
+</html>

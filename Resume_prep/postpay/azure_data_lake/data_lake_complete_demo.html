@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Data Lake Gen2 - End-to-End Pipeline Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+            color: white;
+            padding: 20px 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .header p {
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            background: white;
+            border-bottom: 2px solid #e1dfdd;
+            display: flex;
+            padding: 0 40px;
+        }
+
+        .nav-tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-tab:hover {
+            background: #f8f9fa;
+        }
+
+        .nav-tab.active {
+            border-bottom-color: #0078d4;
+            color: #0078d4;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .panel {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            color: #323130;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #323130;
+            font-size: 14px;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #8a8886;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #0078d4;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #0078d4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #005a9e;
+        }
+
+        .btn-success {
+            background: #107c10;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #0e6b0e;
+        }
+
+        .folder-tree {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .folder-tree .folder {
+            color: #ffd700;
+        }
+
+        .folder-tree .file {
+            color: #4fc3f7;
+        }
+
+        .data-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 40px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .flow-box {
+            text-align: center;
+            flex: 1;
+        }
+
+        .flow-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .flow-arrow {
+            font-size: 40px;
+            color: #0078d4;
+            margin: 0 20px;
+        }
+
+        .flow-label {
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 8px;
+        }
+
+        .flow-details {
+            font-size: 13px;
+            color: #605e5c;
+        }
+
+        .container-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .container-card {
+            background: white;
+            border: 2px solid #e1dfdd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .container-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .container-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .container-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #323130;
+        }
+
+        .container-files {
+            font-size: 24px;
+            color: #0078d4;
+            margin: 10px 0;
+        }
+
+        .container-label {
+            font-size: 12px;
+            color: #605e5c;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: #0078d4;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #0078d4;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -21px;
+            top: 16px;
+            width: 2px;
+            height: calc(100% - 16px);
+            background: #e1dfdd;
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .timeline-item.completed::before {
+            background: #107c10;
+            box-shadow: 0 0 0 2px #107c10;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e1dfdd;
+        }
+
+        .timeline-content h4 {
+            margin-bottom: 8px;
+            color: #323130;
+        }
+
+        .timeline-content p {
+            color: #605e5c;
+            font-size: 13px;
+        }
+
+        .schedule-form {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            border: 2px solid #e1dfdd;
+        }
+
+        .schedule-option {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            border: 2px solid #e1dfdd;
+            transition: all 0.3s;
+        }
+
+        .schedule-option:hover {
+            border-color: #0078d4;
+        }
+
+        .schedule-option.selected {
+            border-color: #0078d4;
+            background: #f3f9fd;
+        }
+
+        .schedule-option input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .schedule-details {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .schedule-details.show {
+            display: block;
+        }
+
+        .monitor-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        .monitor-table th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e1dfdd;
+        }
+
+        .monitor-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e1dfdd;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background: #dff6dd;
+            color: #107c10;
+        }
+
+        .status-running {
+            background: #fff4ce;
+            color: #8a6d3b;
+        }
+
+        .status-failed {
+            background: #fde7e9;
+            color: #c50f1f;
+        }
+
+        .info-box {
+            background: #f3f2f1;
+            border-left: 4px solid #0078d4;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #dff6dd;
+            border-left-color: #107c10;
+        }
+
+        .warning-box {
+            background: #fff4ce;
+            border-left-color: #ffb900;
+        }
+
+        .metric-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .metric-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e1dfdd;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #0078d4;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            color: #605e5c;
+            font-size: 13px;
+        }
+
+        .live-log {
+            background: #1e1e1e;
+            color: #4caf50;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+
+        .log-entry {
+            margin: 5px 0;
+            opacity: 0;
+            animation: logAppear 0.3s forwards;
+        }
+
+        @keyframes logAppear {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e1dfdd;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0078d4, #00bcf2);
+            width: 0%;
+            transition: width 0.5s;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>🌊 Azure Data Lake Storage Gen2 - Complete Pipeline</h1>
+        <p>SAP S/4HANA → Azure Data Factory → Data Lake → Databricks</p>
+    </div>
+
+    <div class="nav-tabs">
+        <div class="nav-tab active" onclick="showPanel(0)">1. Create Storage Account</div>
+        <div class="nav-tab" onclick="showPanel(1)">2. Connect with ADF</div>
+        <div class="nav-tab" onclick="showPanel(2)">3. Data Lake Explorer</div>
+        <div class="nav-tab" onclick="showPanel(3)">4. Schedule Pipeline</div>
+        <div class="nav-tab" onclick="showPanel(4)">5. Monitor Runs</div>
+    </div>
+
+    <div class="container">
+        <!-- Panel 1: Create Storage Account -->
+        <div class="panel active" id="panel-0">
+            <div class="card">
+                <h2>📦 Create Azure Data Lake Storage Gen2 Account</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Storage Account Name</label>
+                        <input type="text" class="form-input" value="adlspostpaydev" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Region</label>
+                        <select class="form-select">
+                            <option>UAE North</option>
+                            <option>East US</option>
+                            <option>West Europe</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Performance</label>
+                        <select class="form-select">
+                            <option>Standard</option>
+                            <option>Premium</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Redundancy</label>
+                        <select class="form-select">
+                            <option>Locally-redundant storage (LRS)</option>
+                            <option>Geo-redundant storage (GRS)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="warning-box info-box">
+                    <strong>⚠️ CRITICAL: Enable Hierarchical Namespace</strong>
+                    <p style="margin-top: 8px;">This option MUST be enabled to create Data Lake Gen2. Without it, you
+                        only get Blob Storage.</p>
+                    <label style="display: flex; align-items: center; margin-top: 15px; cursor: pointer;">
+                        <input type="checkbox" checked disabled style="margin-right: 10px; transform: scale(1.3);">
+                        <strong>Enable hierarchical namespace</strong>
+                    </label>
+                </div>
+
+                <button class="btn btn-success" onclick="createStorage()">✅ Create Storage Account</button>
+
+                <div id="storageCreated" style="display: none; margin-top: 20px;">
+                    <div class="success-box info-box">
+                        <strong>✅ Storage Account Created Successfully!</strong>
+                        <p style="margin-top: 8px;">Account Name: adlspostpaydev.dfs.core.windows.net</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📁 Create Containers (Bronze, Silver, Gold)</h2>
+                <p style="margin-bottom: 20px; color: #605e5c;">Containers organize your data into the Medallion
+                    Architecture layers.</p>
+
+                <div class="container-grid">
+                    <div class="container-card">
+                        <div class="container-icon">🥉</div>
+                        <div class="container-name">bronze</div>
+                        <div class="container-label">Raw data from SAP</div>
+                    </div>
+                    <div class="container-card">
+                        <div class="container-icon">🥈</div>
+                        <div class="container-name">silver</div>
+                        <div class="container-label">Cleaned & validated</div>
+                    </div>
+                    <div class="container-card">
+                        <div class="container-icon">🥇</div>
+                        <div class="container-name">gold</div>
+                        <div class="container-label">Business aggregates</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="createContainers()">Create All Containers</button>
+
+                <div id="containersCreated" style="display: none; margin-top: 20px;">
+                    <div class="success-box info-box">
+                        <strong>✅ All Containers Created!</strong>
+                        <p style="margin-top: 8px;">Bronze, Silver, and Gold containers are ready for data.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel 2: Connect with ADF -->
+        <div class="panel" id="panel-1">
+            <div class="card">
+                <h2>🔗 Connect Data Lake with Azure Data Factory</h2>
+
+                <div class="data-flow">
+                    <div class="flow-box">
+                        <div class="flow-icon">🏢</div>
+                        <div class="flow-label">SAP S/4HANA</div>
+                        <div class="flow-details">Source System</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">
+                        <div class="flow-icon">🏭</div>
+                        <div class="flow-label">Azure Data Factory</div>
+                        <div class="flow-details">ETL Pipeline</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box">
+                        <div class="flow-icon">💾</div>
+                        <div class="flow-label">Data Lake Gen2</div>
+                        <div class="flow-details">adlspostpaydev</div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px 0;">Setup Steps:</h3>
+
+                <div class="timeline">
+                    <div class="timeline-item completed">
+                        <div class="timeline-content">
+                            <h4>1. Create Linked Service in ADF</h4>
+                            <p>Type: Azure Data Lake Storage Gen2<br>
+                                Account: adlspostpaydev<br>
+                                Authentication: Account Key / SAS Token</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item completed">
+                        <div class="timeline-content">
+                            <h4>2. Test Connection</h4>
+                            <p>Verify ADF can access all containers (bronze, silver, gold)</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item completed">
+                        <div class="timeline-content">
+                            <h4>3. Create Copy Pipeline</h4>
+                            <p>Source: SAP S/4HANA (via Self-Hosted IR)<br>
+                                Sink: Data Lake bronze/ container</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Connection String</label>
+                    <input type="text" class="form-input"
+                        value="DefaultEndpointsProtocol=https;AccountName=adlspostpaydev;EndpointSuffix=core.windows.net"
+                        readonly>
+                </div>
+
+                <button class="btn btn-success" onclick="testConnection()">🔌 Test Connection from ADF</button>
+
+                <div id="connectionResult" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Panel 3: Data Lake Explorer -->
+        <div class="panel" id="panel-2">
+            <div class="card">
+                <h2>📊 Data Lake Explorer - Browse Your Data</h2>
+
+                <div class="metric-row">
+                    <div class="metric-box">
+                        <div class="metric-value" id="bronzeFiles">0</div>
+                        <div class="metric-label">Bronze Files</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value" id="silverFiles">0</div>
+                        <div class="metric-label">Silver Files</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value" id="goldFiles">0</div>
+                        <div class="metric-label">Gold Files</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">2.4 MB</div>
+                        <div class="metric-label">Total Size</div>
+                    </div>
+                </div>
+
+                <div class="folder-tree">
+                    <span class="folder">📁 adlspostpaydev/</span>
+                    ├── <span class="folder">📁 bronze/</span> <span style="color: #6a9955;">// Raw data from SAP</span>
+                    │ ├── <span class="folder">📁 sap/</span>
+                    │ │ ├── <span class="folder">📁 kna1/</span>
+                    │ │ │ └── <span class="file">KNA1_20260214_120000.parquet</span>
+                    │ │ └── <span class="folder">📁 vbak/</span>
+                    │ │ └── <span class="file">VBAK_20260214_120000.parquet</span>
+                    ├── <span class="folder">📁 silver/</span> <span style="color: #6a9955;">// Cleaned data</span>
+                    │ ├── <span class="file">clean_customers.parquet</span>
+                    │ └── <span class="file">clean_sales.parquet</span>
+                    └── <span class="folder">📁 gold/</span> <span style="color: #6a9955;">// Business metrics</span>
+                    └── <span class="file">country_sales_summary.csv</span>
+                </div>
+
+                <button class="btn btn-primary" onclick="simulateDataFlow()" style="margin-top: 20px;">
+                    ▶️ Simulate Data Flow (SAP → Bronze)
+                </button>
+
+                <div id="dataFlowLog" style="display: none;">
+                    <h3 style="margin: 30px 0 15px 0;">Live Data Transfer Log:</h3>
+                    <div class="live-log" id="logContent"></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="dataProgress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel 4: Schedule Pipeline -->
+        <div class="panel" id="panel-3">
+            <div class="card">
+                <h2>⏰ Schedule Your Pipeline to Run Automatically</h2>
+
+                <div class="info-box">
+                    <strong>💡 What is Pipeline Scheduling?</strong>
+                    <p style="margin-top: 8px;">Configure your pipeline to run automatically at specific times without
+                        manual intervention. Perfect for daily SAP data extraction.</p>
+                </div>
+
+                <div class="schedule-form">
+                    <h3 style="margin-bottom: 20px;">Choose Schedule Type:</h3>
+
+                    <div class="schedule-option selected" onclick="selectSchedule(this, 'daily')">
+                        <label style="cursor: pointer; display: flex; align-items: center;">
+                            <input type="radio" name="schedule" checked>
+                            <div>
+                                <strong>Daily Schedule</strong>
+                                <p style="margin-top: 5px; color: #605e5c; font-size: 13px;">Run every day at a specific
+                                    time (e.g., 2:00 AM)</p>
+                            </div>
+                        </label>
+                        <div class="schedule-details show">
+                            <label class="form-label">Run Time</label>
+                            <input type="time" class="form-input" value="02:00">
+                            <label class="form-label" style="margin-top: 15px;">Time Zone</label>
+                            <select class="form-select">
+                                <option>(UTC+04:00) Abu Dhabi, Muscat</option>
+                                <option>(UTC) Coordinated Universal Time</option>
+                                <option>(UTC-05:00) Eastern Time</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="schedule-option" onclick="selectSchedule(this, 'hourly')">
+                        <label style="cursor: pointer; display: flex; align-items: center;">
+                            <input type="radio" name="schedule">
+                            <div>
+                                <strong>Hourly Schedule</strong>
+                                <p style="margin-top: 5px; color: #605e5c; font-size: 13px;">Run every N hours (e.g.,
+                                    every 6 hours)</p>
+                            </div>
+                        </label>
+                        <div class="schedule-details">
+                            <label class="form-label">Frequency (hours)</label>
+                            <select class="form-select">
+                                <option value="1">Every 1 hour</option>
+                                <option value="2">Every 2 hours</option>
+                                <option value="6">Every 6 hours</option>
+                                <option value="12">Every 12 hours</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="schedule-option" onclick="selectSchedule(this, 'event')">
+                        <label style="cursor: pointer; display: flex; align-items: center;">
+                            <input type="radio" name="schedule">
+                            <div>
+                                <strong>Event-Based (File Arrival)</strong>
+                                <p style="margin-top: 5px; color: #605e5c; font-size: 13px;">Run when a new file is
+                                    added to a container</p>
+                            </div>
+                        </label>
+                        <div class="schedule-details">
+                            <label class="form-label">Monitor Container</label>
+                            <select class="form-select">
+                                <option>bronze/sap/incoming/</option>
+                                <option>bronze/sap/kna1/</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <button class="btn btn-success" onclick="activateSchedule()">
+                        ✅ Activate Schedule
+                    </button>
+                </div>
+
+                <div id="scheduleActive" style="display: none; margin-top: 20px;">
+                    <div class="success-box info-box">
+                        <strong>✅ Pipeline Schedule Activated!</strong>
+                        <p style="margin-top: 8px;">Your pipeline will run daily at 2:00 AM (UTC+4)</p>
+                        <p style="margin-top: 8px;"><strong>Next Run:</strong> Tomorrow at 02:00 AM</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🔔 Configure Alerts</h2>
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; cursor: pointer;">
+                        <input type="checkbox" checked style="margin-right: 10px;">
+                        <span>Email notification on pipeline failure</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; cursor: pointer;">
+                        <input type="checkbox" checked style="margin-right: 10px;">
+                        <span>Email notification on pipeline success</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" value="admin@postpay.com">
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel 5: Monitor Runs -->
+        <div class="panel" id="panel-4">
+            <div class="card">
+                <h2>📊 Pipeline Run History & Monitoring</h2>
+
+                <div class="metric-row">
+                    <div class="metric-box">
+                        <div class="metric-value">15</div>
+                        <div class="metric-label">Total Runs</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value" style="color: #107c10;">14</div>
+                        <div class="metric-label">Succeeded</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value" style="color: #c50f1f;">1</div>
+                        <div class="metric-label">Failed</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">45s</div>
+                        <div class="metric-label">Avg Duration</div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px 0;">Recent Pipeline Runs:</h3>
+
+                <table class="monitor-table">
+                    <thead>
+                        <tr>
+                            <th>Run ID</th>
+                            <th>Pipeline Name</th>
+                            <th>Trigger Type</th>
+                            <th>Start Time</th>
+                            <th>Duration</th>
+                            <th>Status</th>
+                            <th>Records</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#RUN-00015</td>
+                            <td>SAP_to_DataLake_KNA1</td>
+                            <td>Schedule (Daily 2AM)</td>
+                            <td>2026-02-14 02:00:15</td>
+                            <td>42s</td>
+                            <td><span class="status-badge status-success">✓ Succeeded</span></td>
+                            <td>250 rows</td>
+                        </tr>
+                        <tr>
+                            <td>#RUN-00014</td>
+                            <td>SAP_to_DataLake_VBAK</td>
+                            <td>Schedule (Daily 2AM)</td>
+                            <td>2026-02-13 02:00:10</td>
+                            <td>38s</td>
+                            <td><span class="status-badge status-success">✓ Succeeded</span></td>
+                            <td>1,200 rows</td>
+                        </tr>
+                        <tr>
+                            <td>#RUN-00013</td>
+                            <td>SAP_to_DataLake_KNA1</td>
+                            <td>Schedule (Daily 2AM)</td>
+                            <td>2026-02-12 02:00:08</td>
+                            <td>TIMEOUT</td>
+                            <td><span class="status-badge status-failed">✗ Failed</span></td>
+                            <td>0 rows</td>
+                        </tr>
+                        <tr>
+                            <td>#RUN-00012</td>
+                            <td>SAP_to_DataLake_KNA1</td>
+                            <td>Manual Trigger</td>
+                            <td>2026-02-11 14:30:22</td>
+                            <td>45s</td>
+                            <td><span class="status-badge status-success">✓ Succeeded</span></td>
+                            <td>250 rows</td>
+                        </tr>
+                        <tr>
+                            <td>#RUN-00011</td>
+                            <td>SAP_to_DataLake_VBAK</td>
+                            <td>Schedule (Daily 2AM)</td>
+                            <td>2026-02-11 02:00:05</td>
+                            <td>52s</td>
+                            <td><span class="status-badge status-success">✓ Succeeded</span></td>
+                            <td>1,150 rows</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button class="btn btn-primary" onclick="simulatePipelineRun()" style="margin-top: 20px;">
+                    ▶️ Run Pipeline Now (Manual Trigger)
+                </button>
+
+                <div id="liveRun" style="display: none; margin-top: 20px;">
+                    <div class="info-box">
+                        <strong>⏳ Pipeline Running...</strong>
+                        <p style="margin-top: 8px;">Run ID: #RUN-00016</p>
+                    </div>
+                    <div class="live-log" id="runLog"></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="runProgress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPanel = 0;
+
+        function showPanel(index) {
+            document.querySelectorAll('.nav-tab').forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+            document.querySelectorAll('.panel').forEach((panel, i) => {
+                panel.classList.toggle('active', i === index);
+            });
+            currentPanel = index;
+        }
+
+        function createStorage() {
+            document.getElementById('storageCreated').style.display = 'block';
+        }
+
+        function createContainers() {
+            document.getElementById('containersCreated').style.display = 'block';
+        }
+
+        function testConnection() {
+            const result = document.getElementById('connectionResult');
+            result.style.display = 'block';
+            result.innerHTML = `
+                <div class="success-box info-box" style="margin-top: 20px;">
+                    <strong>✅ Connection Successful!</strong>
+                    <p style="margin-top: 8px;">ADF can access your Data Lake storage account.</p>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>✓ bronze container - Accessible</li>
+                        <li>✓ silver container - Accessible</li>
+                        <li>✓ gold container - Accessible</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        function simulateDataFlow() {
+            const logDiv = document.getElementById('dataFlowLog');
+            const logContent = document.getElementById('logContent');
+            const progress = document.getElementById('dataProgress');
+
+            logDiv.style.display = 'block';
+            logContent.innerHTML = '';
+
+            const logs = [
+                '[ADF] Pipeline SAP_to_DataLake_KNA1 triggered',
+                '[SAP] Connecting to SAP S/4HANA server...',
+                '[SAP] Connected successfully',
+                '[SAP] Executing query: SELECT * FROM KNA1 WHERE...',
+                '[SAP] Retrieved 250 rows from KNA1',
+                '[ADF] Writing data to adlspostpaydev/bronze/sap/kna1/',
+                '[ADLS] Creating file: KNA1_20260214_120000.parquet',
+                '[ADLS] Written 250 rows (125 KB)',
+                '[ADF] Pipeline completed successfully'
+            ];
+
+            let delay = 0;
+            logs.forEach((log, index) => {
+                setTimeout(() => {
+                    const entry = document.createElement('div');
+                    entry.className = 'log-entry';
+                    entry.textContent = log;
+                    logContent.appendChild(entry);
+                    logContent.scrollTop = logContent.scrollHeight;
+
+                    progress.style.width = ((index + 1) / logs.length * 100) + '%';
+
+                    if (index === logs.length - 1) {
+                        document.getElementById('bronzeFiles').textContent = '2';
+                    }
+                }, delay);
+                delay += 600;
+            });
+        }
+
+        function selectSchedule(element, type) {
+            document.querySelectorAll('.schedule-option').forEach(opt => {
+                opt.classList.remove('selected');
+                opt.querySelector('.schedule-details').classList.remove('show');
+            });
+            element.classList.add('selected');
+            const details = element.querySelector('.schedule-details');
+            if (details) details.classList.add('show');
+        }
+
+        function activateSchedule() {
+            document.getElementById('scheduleActive').style.display = 'block';
+        }
+
+        function simulatePipelineRun() {
+            const liveDiv = document.getElementById('liveRun');
+            const runLog = document.getElementById('runLog');
+            const progress = document.getElementById('runProgress');
+
+            liveDiv.style.display = 'block';
+            runLog.innerHTML = '';
+
+            const logs = [
+                '[02:00:00] Pipeline started by manual trigger',
+                '[02:00:01] Activity: Copy_SAP_KNA1 started',
+                '[02:00:02] Connecting to SAP via Self-Hosted IR...',
+                '[02:00:05] Extracting data from table KNA1...',
+                '[02:00:15] Copied 250 rows',
+                '[02:00:20] Writing to bronze/sap/kna1/',
+                '[02:00:35] Copy activity completed',
+                '[02:00:42] Pipeline succeeded'
+            ];
+
+            let delay = 0;
+            logs.forEach((log, index) => {
+                setTimeout(() => {
+                    const entry = document.createElement('div');
+                    entry.className = 'log-entry';
+                    entry.textContent = log;
+                    runLog.appendChild(entry);
+                    runLog.scrollTop = runLog.scrollHeight;
+
+                    progress.style.width = ((index + 1) / logs.length * 100) + '%';
+                }, delay);
+                delay += 700;
+            });
+        }
+    </script>
+</body>
+
+</html>

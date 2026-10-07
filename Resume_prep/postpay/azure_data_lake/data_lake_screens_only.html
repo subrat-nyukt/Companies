@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Data Lake Storage Gen2 - Interface Only</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+        }
+
+        .azure-header {
+            background: #0078d4;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .azure-header h1 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-left: 15px;
+        }
+
+        .breadcrumb {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e1dfdd;
+            font-size: 14px;
+            color: #605e5c;
+        }
+
+        .breadcrumb a {
+            color: #0078d4;
+            text-decoration: none;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 90px;
+            width: 250px;
+            background: white;
+            height: calc(100vh - 90px);
+            border-right: 1px solid #e1dfdd;
+            overflow-y: auto;
+        }
+
+        .menu-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .menu-item:hover {
+            background: #f3f2f1;
+        }
+
+        .menu-item.active {
+            background: #e3f2fd;
+            border-left-color: #0078d4;
+            font-weight: 600;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #323130;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 4px;
+            border-left: 4px solid #0078d4;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #323130;
+        }
+
+        .stat-label {
+            color: #605e5c;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .container-list {
+            margin: 20px 0;
+        }
+
+        .container-item {
+            background: white;
+            border: 1px solid #e1dfdd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .container-item:hover {
+            background: #f8f9fa;
+            border-color: #0078d4;
+        }
+
+        .container-icon {
+            font-size: 32px;
+            margin-right: 15px;
+        }
+
+        .container-info {
+            flex: 1;
+        }
+
+        .container-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: #323130;
+        }
+
+        .container-meta {
+            color: #605e5c;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #0078d4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #005a9e;
+        }
+
+        .file-tree {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .folder {
+            color: #ffd700;
+            cursor: pointer;
+        }
+
+        .file {
+            color: #4fc3f7;
+            cursor: pointer;
+        }
+
+        .file:hover,
+        .folder:hover {
+            text-decoration: underline;
+        }
+
+        .access-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .access-table th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e1dfdd;
+        }
+
+        .access-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e1dfdd;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-owner {
+            background: #dff6dd;
+            color: #107c10;
+        }
+
+        .badge-contributor {
+            background: #e3f2fd;
+            color: #0078d4;
+        }
+
+        .badge-reader {
+            background: #fff4ce;
+            color: #8a6d3b;
+        }
+
+        .info-banner {
+            background: #e3f2fd;
+            border-left: 4px solid #0078d4;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .metric-chart {
+            background: white;
+            padding: 20px;
+            border: 1px solid #e1dfdd;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #323130;
+            font-size: 14px;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #8a8886;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .properties-list {
+            list-style: none;
+        }
+
+        .properties-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #e1dfdd;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .prop-key {
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .prop-value {
+            color: #605e5c;
+        }
+
+        .warning-box {
+            background: #fff4ce;
+            border-left: 4px solid #ffb900;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="azure-header">
+        <span style="font-size: 24px;">☁️</span>
+        <h1>Azure Portal - Data Lake Storage Gen2</h1>
+    </div>
+
+    <div class="breadcrumb">
+        <a href="#">Home</a> &gt;
+        <a href="#">Storage accounts</a> &gt;
+        <strong>adlspostpaydev</strong>
+    </div>
+
+    <div class="sidebar">
+        <div class="menu-item active" onclick="showScreen(0)">📊 Overview</div>
+        <div class="menu-item" onclick="showScreen(1)">📁 Containers</div>
+        <div class="menu-item" onclick="showScreen(2)">🗂️ Storage Explorer</div>
+        <div class="menu-item" onclick="showScreen(3)">🔐 Access Control (IAM)</div>
+        <div class="menu-item" onclick="showScreen(4)">📈 Metrics</div>
+        <div class="menu-item" onclick="showScreen(5)">⚙️ Properties</div>
+        <div class="menu-item" onclick="showScreen(6)">🔑 Access Keys</div>
+    </div>
+
+    <div class="main-content">
+        <!-- Screen 0: Overview -->
+        <div class="screen active" id="screen-0">
+            <div class="info-banner">
+                <strong>💡 This is Azure Data Lake Storage Gen2</strong>
+                <p style="margin-top: 8px;">This interface is for STORAGE ONLY. You cannot schedule pipelines here -
+                    that's done in Azure Data Factory.</p>
+            </div>
+
+            <div class="card">
+                <h2>Storage Account: adlspostpaydev</h2>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Containers</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">2.4 GB</div>
+                        <div class="stat-label">Total Storage</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">1,250</div>
+                        <div class="stat-label">Total Files</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">UAE North</div>
+                        <div class="stat-label">Region</div>
+                    </div>
+                </div>
+
+                <ul class="properties-list">
+                    <li>
+                        <span class="prop-key">Resource Group</span>
+                        <span class="prop-value">rg-postpay-dev</span>
+                    </li>
+                    <li>
+                        <span class="prop-key">Subscription</span>
+                        <span class="prop-value">Postpay Production</span>
+                    </li>
+                    <li>
+                        <span class="prop-key">Performance Tier</span>
+                        <span class="prop-value">Standard</span>
+                    </li>
+                    <li>
+                        <span class="prop-key">Replication</span>
+                        <span class="prop-value">Locally-redundant storage (LRS)</span>
+                    </li>
+                    <li>
+                        <span class="prop-key">Hierarchical Namespace</span>
+                        <span class="prop-value">✅ Enabled (Data Lake Gen2)</span>
+                    </li>
+                    <li>
+                        <span class="prop-key">Primary Endpoint</span>
+                        <span class="prop-value">https://adlspostpaydev.dfs.core.windows.net/</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Screen 1: Containers -->
+        <div class="screen" id="screen-1">
+            <div class="card">
+                <h2>Containers (Medallion Architecture)</h2>
+                <p style="color: #605e5c; margin-bottom: 20px;">Containers organize your data into Bronze, Silver, and
+                    Gold layers.</p>
+
+                <div class="container-list">
+                    <div class="container-item" onclick="alert('Opening bronze container...')">
+                        <span class="container-icon">🥉</span>
+                        <div class="container-info">
+                            <div class="container-name">bronze</div>
+                            <div class="container-meta">Raw data from SAP | 1.2 GB | 850 files | Last modified: Today,
+                                2:00 AM</div>
+                        </div>
+                        <button class="btn btn-primary">Browse →</button>
+                    </div>
+
+                    <div class="container-item" onclick="alert('Opening silver container...')">
+                        <span class="container-icon">🥈</span>
+                        <div class="container-info">
+                            <div class="container-name">silver</div>
+                            <div class="container-meta">Cleaned data | 950 MB | 300 files | Last modified: Today, 3:00
+                                AM</div>
+                        </div>
+                        <button class="btn btn-primary">Browse →</button>
+                    </div>
+
+                    <div class="container-item" onclick="alert('Opening gold container...')">
+                        <span class="container-icon">🥇</span>
+                        <div class="container-info">
+                            <div class="container-name">gold</div>
+                            <div class="container-meta">Business metrics | 250 MB | 100 files | Last modified: Today,
+                                3:30 AM</div>
+                        </div>
+                        <button class="btn btn-primary">Browse →</button>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" style="margin-top: 20px;">+ New Container</button>
+            </div>
+        </div>
+
+        <!-- Screen 2: Storage Explorer -->
+        <div class="screen" id="screen-2">
+            <div class="card">
+                <h2>Storage Explorer - Browse Files</h2>
+                <p style="color: #605e5c; margin-bottom: 20px;">Navigate through your Data Lake containers and folders.
+                </p>
+
+                <div class="file-tree">
+                    <span class="folder">📁 adlspostpaydev/</span>
+                    ├── <span class="folder">📁 bronze/</span>
+                    │ ├── <span class="folder">📁 sap/</span>
+                    │ │ ├── <span class="folder">📁 kna1/</span>
+                    │ │ │ ├── <span class="file">📄 KNA1_20260214_020000.parquet</span> (125 KB)
+                    │ │ │ ├── <span class="file">📄 KNA1_20260213_020000.parquet</span> (125 KB)
+                    │ │ │ └── <span class="file">📄 KNA1_20260212_020000.parquet</span> (125 KB)
+                    │ │ ├── <span class="folder">📁 vbak/</span>
+                    │ │ │ ├── <span class="file">📄 VBAK_20260214_020000.parquet</span> (450 KB)
+                    │ │ │ └── <span class="file">📄 VBAK_20260213_020000.parquet</span> (450 KB)
+                    │ │ └── <span class="folder">📁 mara/</span>
+                    │ │ └── <span class="file">📄 MARA_20260214_020000.parquet</span> (280 KB)
+                    │
+                    ├── <span class="folder">📁 silver/</span>
+                    │ ├── <span class="file">📄 clean_customers.parquet</span> (95 KB)
+                    │ ├── <span class="file">📄 clean_sales.parquet</span> (320 KB)
+                    │ └── <span class="file">📄 clean_products.parquet</span> (215 KB)
+                    │
+                    └── <span class="folder">📁 gold/</span>
+                    ├── <span class="file">📄 country_sales_summary.csv</span> (12 KB)
+                    ├── <span class="file">📄 monthly_revenue.csv</span> (8 KB)
+                    └── <span class="file">📄 customer_360_view.parquet</span> (45 KB)
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-primary">Upload File</button>
+                    <button class="btn btn-primary" style="margin-left: 10px;">New Folder</button>
+                    <button class="btn btn-primary" style="margin-left: 10px;">Download</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Access Control -->
+        <div class="screen" id="screen-3">
+            <div class="card">
+                <h2>Access Control (IAM)</h2>
+                <p style="color: #605e5c; margin-bottom: 20px;">Manage who has access to your Data Lake storage.</p>
+
+                <div class="warning-box">
+                    <strong>⚠️ Notice</strong>
+                    <p style="margin-top: 8px;">Azure Data Factory needs "Storage Blob Data Contributor" role to write
+                        data here.</p>
+                </div>
+
+                <table class="access-table">
+                    <thead>
+                        <tr>
+                            <th>User / Service</th>
+                            <th>Type</th>
+                            <th>Role</th>
+                            <th>Scope</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>admin@postpay.com</td>
+                            <td>User</td>
+                            <td><span class="badge badge-owner">Owner</span></td>
+                            <td>Full storage account</td>
+                        </tr>
+                        <tr>
+                            <td>adf-postpay-dev</td>
+                            <td>Service Principal</td>
+                            <td><span class="badge badge-contributor">Storage Blob Data Contributor</span></td>
+                            <td>bronze, silver, gold containers</td>
+                        </tr>
+                        <tr>
+                            <td>databricks-workspace</td>
+                            <td>Managed Identity</td>
+                            <td><span class="badge badge-contributor">Storage Blob Data Contributor</span></td>
+                            <td>All containers</td>
+                        </tr>
+                        <tr>
+                            <td>data-analysts@postpay.com</td>
+                            <td>Group</td>
+                            <td><span class="badge badge-reader">Storage Blob Data Reader</span></td>
+                            <td>gold container only</td>
+                        </tr>
+                        <tr>
+                            <td>powerbi-service</td>
+                            <td>Service Principal</td>
+                            <td><span class="badge badge-reader">Storage Blob Data Reader</span></td>
+                            <td>gold container only</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button class="btn btn-primary" style="margin-top: 20px;">+ Add Role Assignment</button>
+            </div>
+        </div>
+
+        <!-- Screen 4: Metrics -->
+        <div class="screen" id="screen-4">
+            <div class="card">
+                <h2>Storage Metrics & Monitoring</h2>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-value">145</div>
+                        <div class="stat-label">Read Requests (Today)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">23</div>
+                        <div class="stat-label">Write Requests (Today)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">98.2 MB</div>
+                        <div class="stat-label">Data Ingested (Today)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">12.5 MB</div>
+                        <div class="stat-label">Data Retrieved (Today)</div>
+                    </div>
+                </div>
+
+                <div class="metric-chart">
+                    <h3 style="margin-bottom: 15px;">Storage Usage (Last 7 Days)</h3>
+                    <div
+                        style="height: 200px; background: linear-gradient(to right, #e3f2fd 0%, #0078d4 100%); border-radius: 4px; display: flex; align-items: flex-end; padding: 20px;">
+                        <div style="text-align: center; color: white; font-weight: bold;">📊 Storage growing steadily
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-banner">
+                    <strong>💡 Note:</strong> This shows STORAGE metrics only. For pipeline execution metrics, go to
+                    Azure Data Factory.
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 5: Properties -->
+        <div class="screen" id="screen-5">
+            <div class="card">
+                <h2>Storage Account Properties</h2>
+
+                <div class="form-group">
+                    <label class="form-label">Storage Account Name</label>
+                    <input type="text" class="form-input" value="adlspostpaydev" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Primary Endpoint (DFS)</label>
+                    <input type="text" class="form-input" value="https://adlspostpaydev.dfs.core.windows.net/" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Primary Endpoint (Blob)</label>
+                    <input type="text" class="form-input" value="https://adlspostpaydev.blob.core.windows.net/"
+                        readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Hierarchical Namespace</label>
+                    <input type="text" class="form-input" value="Enabled ✅" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Account Kind</label>
+                    <input type="text" class="form-input" value="StorageV2 (general purpose v2)" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Default Tier</label>
+                    <select class="form-select">
+                        <option>Hot</option>
+                        <option>Cool</option>
+                        <option>Archive</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+
+        <!-- Screen 6: Access Keys -->
+        <div class="screen" id="screen-6">
+            <div class="card">
+                <h2>Access Keys</h2>
+
+                <div class="warning-box">
+                    <strong>⚠️ Security Warning</strong>
+                    <p style="margin-top: 8px;">These keys provide full access to your storage account. Use Azure Key
+                        Vault to store them securely.</p>
+                </div>
+
+                <h3 style="margin: 30px 0 15px 0;">Key 1</h3>
+                <div class="form-group">
+                    <label class="form-label">Storage Account Name</label>
+                    <input type="text" class="form-input" value="adlspostpaydev" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Key</label>
+                    <input type="password" class="form-input" value="ThisIsASecretKey123456789ABCDEFGH==" id="key1">
+                </div>
+                <button class="btn btn-primary" onclick="toggleKey('key1')">👁️ Show Key</button>
+                <button class="btn btn-primary" style="margin-left: 10px;">📋 Copy</button>
+
+                <h3 style="margin: 30px 0 15px 0;">Connection String</h3>
+                <div class="form-group">
+                    <label class="form-label">Connection String (for ADF Linked Service)</label>
+                    <textarea class="form-input" rows="3"
+                        readonly>DefaultEndpointsProtocol=https;AccountName=adlspostpaydev;AccountKey=***;EndpointSuffix=core.windows.net</textarea>
+                </div>
+                <button class="btn btn-primary">📋 Copy Connection String</button>
+
+                <div class="info-banner" style="margin-top: 30px;">
+                    <strong>💡 Using this in ADF:</strong>
+                    <p style="margin-top: 8px;">When creating a Data Lake Linked Service in ADF, paste this connection
+                        string in the "Account Key" authentication method.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(index) {
+            document.querySelectorAll('.menu-item').forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+            document.querySelectorAll('.screen').forEach((screen, i) => {
+                screen.classList.toggle('active', i === index);
+            });
+        }
+
+        function toggleKey(id) {
+            const input = document.getElementById(id);
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+    </script>
+</body>
+
+</html>

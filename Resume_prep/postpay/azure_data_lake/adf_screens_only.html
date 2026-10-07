@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Data Factory - Interface Only</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+        }
+
+        .adf-header {
+            background: linear-gradient(135deg, #003366 0%, #005a9e 100%);
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .adf-header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 60px;
+            width: 200px;
+            background: #1e1e1e;
+            height: calc(100vh - 60px);
+            color: white;
+            overflow-y: auto;
+        }
+
+        .menu-section {
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .menu-title {
+            padding: 8px 20px;
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .menu-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-item:hover {
+            background: #333;
+        }
+
+        .menu-item.active {
+            background: #0078d4;
+            font-weight: 600;
+        }
+
+        .menu-item span {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .main-content {
+            margin-left: 200px;
+            padding: 30px;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #323130;
+        }
+
+        .pipeline-canvas {
+            background: #f8f9fa;
+            border: 2px dashed #e1dfdd;
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .activity-box {
+            background: white;
+            border: 2px solid #0078d4;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .activity-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .activity-name {
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .arrow {
+            font-size: 32px;
+            color: #0078d4;
+            margin: 0 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background: #0078d4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #005a9e;
+        }
+
+        .btn-success {
+            background: #107c10;
+            color: white;
+        }
+
+        .trigger-card {
+            background: white;
+            border: 2px solid #e1dfdd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .trigger-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .trigger-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .trigger-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: #323130;
+        }
+
+        .trigger-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #dff6dd;
+            color: #107c10;
+        }
+
+        .status-inactive {
+            background: #f3f2f1;
+            color: #605e5c;
+        }
+
+        .trigger-details {
+            color: #605e5c;
+            font-size: 13px;
+        }
+
+        .runs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .runs-table th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e1dfdd;
+        }
+
+        .runs-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e1dfdd;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-succeeded {
+            background: #dff6dd;
+            color: #107c10;
+        }
+
+        .status-running {
+            background: #fff4ce;
+            color: #8a6d3b;
+        }
+
+        .status-failed {
+            background: #fde7e9;
+            color: #c50f1f;
+        }
+
+        .linked-service-list {
+            list-style: none;
+        }
+
+        .linked-service-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border-left: 4px solid #0078d4;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .linked-service-item:hover {
+            background: #e3f2fd;
+        }
+
+        .ls-name {
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 5px;
+        }
+
+        .ls-type {
+            color: #605e5c;
+            font-size: 13px;
+        }
+
+        .info-banner {
+            background: #e3f2fd;
+            border-left: 4px solid #0078d4;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .warning-banner {
+            background: #fff4ce;
+            border-left: 4px solid #ffb900;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .metric-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .metric-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 4px;
+            text-align: center;
+            border-left: 4px solid #0078d4;
+        }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #323130;
+        }
+
+        .metric-label {
+            color: #605e5c;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #323130;
+            font-size: 14px;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #8a8886;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .ir-card {
+            background: white;
+            border: 2px solid #e1dfdd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .ir-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ir-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .ir-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #dff6dd;
+            color: #107c10;
+        }
+
+        .ir-details {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e1dfdd;
+        }
+
+        .ir-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 13px;
+        }
+
+        .detail-key {
+            color: #605e5c;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: #323130;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="adf-header">
+        <h1>
+            <span style="font-size: 24px;">🏭</span>
+            Azure Data Factory - adf-postpay-dev
+        </h1>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn btn-primary">▶️ Debug</button>
+            <button class="btn btn-primary">📤 Publish</button>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="menu-section">
+            <div class="menu-title">Author</div>
+            <div class="menu-item active" onclick="showScreen(0)">
+                <span>📋</span> Pipelines
+            </div>
+            <div class="menu-item" onclick="showScreen(1)">
+                <span>💾</span> Datasets
+            </div>
+            <div class="menu-item" onclick="showScreen(2)">
+                <span>🔄</span> Data Flows
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-title">Manage</div>
+            <div class="menu-item" onclick="showScreen(3)">
+                <span>🔗</span> Linked Services
+            </div>
+            <div class="menu-item" onclick="showScreen(4)">
+                <span>🌐</span> Integration Runtimes
+            </div>
+            <div class="menu-item" onclick="showScreen(5)">
+                <span>⏰</span> Triggers
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-title">Monitor</div>
+            <div class="menu-item" onclick="showScreen(6)">
+                <span>📊</span> Pipeline Runs
+            </div>
+            <div class="menu-item" onclick="showScreen(7)">
+                <span>🔔</span> Alerts
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- Screen 0: Pipelines -->
+        <div class="screen active" id="screen-0">
+            <div class="warning-banner">
+                <strong>⚠️ This is Azure Data Factory</strong>
+                <p style="margin-top: 8px;">This is where you BUILD, SCHEDULE, and EXECUTE pipelines. This is NOT
+                    storage - storage is in Data Lake.</p>
+            </div>
+
+            <div class="card">
+                <h2>📋 Pipelines - Design Your Data Workflows</h2>
+                <p style="color: #605e5c; margin-bottom: 20px;">Create pipelines to copy, transform, and orchestrate
+                    data movement.</p>
+
+                <button class="btn btn-success">+ New Pipeline</button>
+
+                <h3 style="margin: 30px 0 15px 0;">Existing Pipelines:</h3>
+
+                <div class="linked-service-list">
+                    <div class="linked-service-item" onclick="alert('Opening pipeline designer...')">
+                        <div class="ls-name">📋 SAP_to_DataLake_KNA1</div>
+                        <div class="ls-type">Copies KNA1 table from SAP to bronze/ container</div>
+                    </div>
+                    <div class="linked-service-item" onclick="alert('Opening pipeline designer...')">
+                        <div class="ls-name">📋 SAP_to_DataLake_VBAK</div>
+                        <div class="ls-type">Copies VBAK table from SAP to bronze/ container</div>
+                    </div>
+                    <div class="linked-service-item" onclick="alert('Opening pipeline designer...')">
+                        <div class="ls-name">📋 Full_SAP_Extract</div>
+                        <div class="ls-type">Master pipeline that runs all SAP extracts</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Pipeline Designer - SAP_to_DataLake_KNA1</h2>
+                <p style="color: #605e5c; margin-bottom: 20px;">Drag and drop activities to build your pipeline</p>
+
+                <div class="pipeline-canvas">
+                    <div style="display: flex; align-items: center;">
+                        <div class="activity-box">
+                            <div class="activity-icon">📥</div>
+                            <div class="activity-name">Copy Data</div>
+                            <div style="font-size: 12px; color: #605e5c; margin-top: 8px;">
+                                Source: SAP_LinkedService<br>
+                                Sink: DataLake_LinkedService
+                            </div>
+                        </div>
+                        <div class="arrow">→</div>
+                        <div class="activity-box">
+                            <div class="activity-icon">📧</div>
+                            <div class="activity-name">Send Email</div>
+                            <div style="font-size: 12px; color: #605e5c; margin-top: 8px;">
+                                On Success
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-primary">▶️ Debug</button>
+                    <button class="btn btn-primary">✅ Validate</button>
+                    <button class="btn btn-success">📤 Publish</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 1: Datasets -->
+        <div class="screen" id="screen-1">
+            <div class="card">
+                <h2>💾 Datasets - Define Data Structures</h2>
+                <p style="color: #605e5c; margin-bottom: 20px;">Datasets represent the structure of your data in stores.
+                </p>
+
+                <button class="btn btn-success">+ New Dataset</button>
+
+                <h3 style="margin: 30px 0 15px 0;">Existing Datasets:</h3>
+
+                <div class="linked-service-list">
+                    <div class="linked-service-item">
+                        <div class="ls-name">💾 SAP_KNA1_Table</div>
+                        <div class="ls-type">Type: SAP Table | Connection: SAP_LinkedService | Table: KNA1</div>
+                    </div>
+                    <div class="linked-service-item">
+                        <div class="ls-name">💾 DataLake_Bronze_Parquet</div>
+                        <div class="ls-type">Type: Parquet | Connection: DataLake_LinkedService | Path: bronze/sap/
+                        </div>
+                    </div>
+                    <div class="linked-service-item">
+                        <div class="ls-name">💾 SAP_VBAK_Table</div>
+                        <div class="ls-type">Type: SAP Table | Connection: SAP_LinkedService | Table: VBAK</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 2: Data Flows -->
+        <div class="screen" id="screen-2">
+            <div class="card">
+                <h2>🔄 Data Flows - Visual Transformations</h2>
+                <p style="color: #605e5c; margin-bottom: 20px;">Create data transformation logic visually without code.
+                </p>
+
+                <button class="btn btn-success">+ New Data Flow</button>
+
+                <div class="info-banner" style="margin-top: 20px;">
+                    <strong>💡 What are Data Flows?</strong>
+                    <p style="margin-top: 8px;">Data Flows let you clean, transform, and aggregate data using visual
+                        drag-and-drop operations (filter, join, aggregate, etc.)</p>
+                </div>
+
+                <h3 style="margin: 30px 0 15px 0;">Existing Data Flows:</h3>
+
+                <div class="linked-service-list">
+                    <div class="linked-service-item">
+                        <div class="ls-name">🔄 Clean_Customer_Data</div>
+                        <div class="ls-type">Remove nulls, standardize country codes, deduplicate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Linked Services -->
+        <div class="screen" id="screen-3">
+            <div class="card">
+                <h2>🔗 Linked Services - Connections to Data Sources</h2>
+                <p style="color: #605e5c; margin-bottom: 20px;">Define connections to SAP, Data Lake, databases, and
+                    other services.</p>
+
+                <button class="btn btn-success">+ New</button>
+
+                <h3 style="margin: 30px 0 15px 0;">Configured Linked Services:</h3>
+
+                <div class="linked-service-list">
+                    <div class="linked-service-item">
+                        <div class="ls-name">🔗 SAP_S4HANA_Production</div>
+                        <div class="ls-type">Type: SAP Table | Server: sap-prod.company.com | IR: SelfHostedIR-SAP</div>
+                    </div>
+                    <div class="linked-service-item">
+                        <div class="ls-name">🔗 DataLake_Gen2</div>
+                        <div class="ls-type">Type: Azure Data Lake Gen2 | Account: adlspostpaydev | Auth: Account Key
+                        </div>
+                    </div>
+                    <div class="linked-service-item">
+                        <div class="ls-name">🔗 AzureKeyVault</div>
+                        <div class="ls-type">Type: Azure Key Vault | Vault: kv-postpay-prod | Used for secrets</div>
+                    </div>
+                </div>
+
+                <div class="info-banner" style="margin-top: 30px;">
+                    <strong>💡 Connection to Data Lake:</strong>
+                    <p style="margin-top: 8px;">The "DataLake_Gen2" linked service connects ADF to your storage account
+                        (adlspostpaydev). This is how ADF writes data to bronze/silver/gold containers.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 4: Integration Runtimes -->
+        <div class="screen" id="screen-4">
+            <div class="card">
+                <h2>🌐 Integration Runtimes - Data Movement Infrastructure</h2>
+                <p style="color: #605e5c; margin-bottom: 20px;">Integration Runtimes provide the compute to execute your
+                    pipelines.</p>
+
+                <button class="btn btn-success">+ New</button>
+
+                <h3 style="margin: 30px 0 15px 0;">Configured Integration Runtimes:</h3>
+
+                <div class="ir-card">
+                    <div class="ir-header">
+                        <div class="ir-name">🌐 SelfHostedIR-SAP</div>
+                        <div class="ir-status">✓ Running</div>
+                    </div>
+                    <div class="ir-details">
+                        <div class="ir-detail-row">
+                            <span class="detail-key">Type:</span>
+                            <span class="detail-value">Self-Hosted</span>
+                        </div>
+                        <div class="ir-detail-row">
+                            <span class="detail-key">Nodes:</span>
+                            <span class="detail-value">1 Active</span>
+                        </div>
+                        <div class="ir-detail-row">
+                            <span class="detail-key">Location:</span>
+                            <span class="detail-value">vm-sap-gateway.company.local</span>
+                        </div>
+                        <div class="ir-detail-row">
+                            <span class="detail-key">Version:</span>
+                            <span class="detail-value">5.28.8488.1</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ir-card">
+                    <div class="ir-header">
+                        <div class="ir-name">🌐 AutoResolveIntegrationRuntime</div>
+                        <div class="ir-status">✓ Available</div>
+                    </div>
+                    <div class="ir-details">
+                        <div class="ir-detail-row">
+                            <span class="detail-key">Type:</span>
+                            <span class="detail-value">Azure (Managed)</span>
+                        </div>
+                        <div class="ir-detail-row">
+                            <span class="detail-key">Region:</span>
+                            <span class="detail-value">Auto-resolve (UAE North)</span>
+                        </div>
+                        <div class="ir-detail-row">
+                            <span class="detail-key">Use Case:</span>
+                            <span class="detail-value">Azure-to-Azure data movement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-banner" style="margin-top: 30px;">
+                    <strong>💡 Why Self-Hosted IR?</strong>
+                    <p style="margin-top: 8px;">SAP is on-premise, so you need Self-Hosted IR installed on a Windows VM
+                        that can access SAP. Azure IR is used for Azure-to-Azure tasks (like Data Lake to Databricks).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 5: Triggers (SCHEDULING!) -->
+        <div class="screen" id="screen-5">
+            <div class="card">
+                <h2>⏰ Triggers - Schedule and Automate Pipeline Runs</h2>
+                <p style="color: #605e5c; margin-bottom: 20px;">⭐ THIS IS WHERE YOU SCHEDULE YOUR PIPELINES! ⭐</p>
+
+                <div class="warning-banner">
+                    <strong>🎯 IMPORTANT: Scheduling Happens HERE!</strong>
+                    <p style="margin-top: 8px;">This is the screen where you set "Run daily at 2:00 AM". Data Lake does
+                        NOT have this feature!</p>
+                </div>
+
+                <button class="btn btn-success">+ New Trigger</button>
+
+                <h3 style="margin: 30px 0 15px 0;">Active Triggers:</h3>
+
+                <div class="trigger-card">
+                    <div class="trigger-header">
+                        <div class="trigger-name">⏰ Daily-SAP-Extract</div>
+                        <div class="trigger-status status-active">✓ Active</div>
+                    </div>
+                    <div class="trigger-details">
+                        <strong>Type:</strong> Schedule Trigger<br>
+                        <strong>Recurrence:</strong> Daily at 02:00 AM (UTC+4)<br>
+                        <strong>Pipelines:</strong> SAP_to_DataLake_KNA1, SAP_to_DataLake_VBAK<br>
+                        <strong>Next Run:</strong> Tomorrow at 02:00 AM<br>
+                        <strong>Last Run:</strong> Today at 02:00 AM - Succeeded ✓
+                    </div>
+                </div>
+
+                <div class="trigger-card">
+                    <div class="trigger-header">
+                        <div class="trigger-name">⏰ Hourly-Incremental</div>
+                        <div class="trigger-status status-active">✓ Active</div>
+                    </div>
+                    <div class="trigger-details">
+                        <strong>Type:</strong> Schedule Trigger<br>
+                        <strong>Recurrence:</strong> Every 6 hours<br>
+                        <strong>Pipelines:</strong> SAP_CDC_Incremental<br>
+                        <strong>Next Run:</strong> In 4 hours 23 minutes
+                    </div>
+                </div>
+
+                <div class="trigger-card">
+                    <div class="trigger-header">
+                        <div class="trigger-name">⏰ Weekend-Full-Load</div>
+                        <div class="trigger-status status-inactive">○ Inactive</div>
+                    </div>
+                    <div class="trigger-details">
+                        <strong>Type:</strong> Schedule Trigger<br>
+                        <strong>Recurrence:</strong> Every Sunday at 00:00<br>
+                        <strong>Pipelines:</strong> Full_SAP_Extract<br>
+                        <strong>Status:</strong> Disabled for testing
+                    </div>
+                </div>
+
+                <div class="info-banner" style="margin-top: 30px;">
+                    <strong>💡 How Triggers Work:</strong>
+                    <ol style="margin-top: 10px; margin-left: 20px;">
+                        <li>You create a trigger with a schedule (e.g., "Daily at 2 AM")</li>
+                        <li>You associate the trigger with one or more pipelines</li>
+                        <li>ADF automatically runs those pipelines at the scheduled time</li>
+                        <li>You monitor the runs in the "Pipeline Runs" section</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 6: Pipeline Runs (Monitoring) -->
+        <div class="screen" id="screen-6">
+            <div class="card">
+                <h2>📊 Pipeline Runs - Monitor Execution History</h2>
+                <p style="color: #605e5c; margin-bottom: 20px;">See which pipelines ran, when, and if they succeeded or
+                    failed.</p>
+
+                <div class="metric-row">
+                    <div class="metric-box">
+                        <div class="metric-value">24</div>
+                        <div class="metric-label">Runs Today</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value" style="color: #107c10;">22</div>
+                        <div class="metric-label">Succeeded</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value" style="color: #c50f1f;">2</div>
+                        <div class="metric-label">Failed</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">48s</div>
+                        <div class="metric-label">Avg Duration</div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px 0;">Recent Pipeline Runs:</h3>
+
+                <table class="runs-table">
+                    <thead>
+                        <tr>
+                            <th>Pipeline Name</th>
+                            <th>Run ID</th>
+                            <th>Trigger</th>
+                            <th>Start Time</th>
+                            <th>Duration</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr onclick="alert('Showing run details...')" style="cursor: pointer;">
+                            <td>SAP_to_DataLake_KNA1</td>
+                            <td>#RUN-000245</td>
+                            <td>Daily-SAP-Extract</td>
+                            <td>2026-02-14 02:00:15</td>
+                            <td>42s</td>
+                            <td><span class="status-badge status-succeeded">✓ Succeeded</span></td>
+                        </tr>
+                        <tr onclick="alert('Showing run details...')" style="cursor: pointer;">
+                            <td>SAP_to_DataLake_VBAK</td>
+                            <td>#RUN-000244</td>
+                            <td>Daily-SAP-Extract</td>
+                            <td>2026-02-14 02:00:10</td>
+                            <td>38s</td>
+                            <td><span class="status-badge status-succeeded">✓ Succeeded</span></td>
+                        </tr>
+                        <tr onclick="alert('Showing run details...')" style="cursor: pointer;">
+                            <td>SAP_CDC_Incremental</td>
+                            <td>#RUN-000243</td>
+                            <td>Hourly-Incremental</td>
+                            <td>2026-02-13 20:00:05</td>
+                            <td>12s</td>
+                            <td><span class="status-badge status-succeeded">✓ Succeeded</span></td>
+                        </tr>
+                        <tr onclick="alert('Showing run details...')" style="cursor: pointer;">
+                            <td>SAP_to_DataLake_KNA1</td>
+                            <td>#RUN-000242</td>
+                            <td>Daily-SAP-Extract</td>
+                            <td>2026-02-13 02:00:08</td>
+                            <td>TIMEOUT</td>
+                            <td><span class="status-badge status-failed">✗ Failed</span></td>
+                        </tr>
+                        <tr onclick="alert('Showing run details...')" style="cursor: pointer;">
+                            <td>SAP_to_DataLake_KNA1</td>
+                            <td>#RUN-000241</td>
+                            <td>Manual</td>
+                            <td>2026-02-12 14:30:22</td>
+                            <td>45s</td>
+                            <td><span class="status-badge status-succeeded">✓ Succeeded</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-banner" style="margin-top: 30px;">
+                    <strong>💡 Understanding This View:</strong>
+                    <p style="margin-top: 8px;">This shows you the EXECUTION history. Each row is one time the pipeline
+                        ran. You can see:</p>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li><strong>Trigger:</strong> What caused it to run (schedule vs manual)</li>
+                        <li><strong>Status:</strong> Did it succeed or fail?</li>
+                        <li><strong>Duration:</strong> How long it took</li>
+                        <li><strong>Click a row</strong> to see detailed logs and data flow</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 7: Alerts -->
+        <div class="screen" id="screen-7">
+            <div class="card">
+                <h2>🔔 Alerts - Get Notified on Pipeline Events</h2>
+                <p style="color: #605e5c; margin-bottom: 20px;">Configure alerts to be notified via email when pipelines
+                    fail or succeed.</p>
+
+                <button class="btn btn-success">+ New Alert Rule</button>
+
+                <h3 style="margin: 30px 0 15px 0;">Active Alert Rules:</h3>
+
+                <div class="trigger-card">
+                    <div class="trigger-header">
+                        <div class="trigger-name">🔔 Pipeline Failure Alert</div>
+                        <div class="trigger-status status-active">✓ Active</div>
+                    </div>
+                    <div class="trigger-details">
+                        <strong>Condition:</strong> Pipeline run fails<br>
+                        <strong>Action:</strong> Send email to admin@postpay.com<br>
+                        <strong>Pipelines:</strong> All pipelines<br>
+                        <strong>Last Triggered:</strong> Yesterday at 02:00 AM
+                    </div>
+                </div>
+
+                <div class="trigger-card">
+                    <div class="trigger-header">
+                        <div class="trigger-name">🔔 Daily Success Report</div>
+                        <div class="trigger-status status-active">✓ Active</div>
+                    </div>
+                    <div class="trigger-details">
+                        <strong>Condition:</strong> All daily pipelines complete<br>
+                        <strong>Action:</strong> Send summary email<br>
+                        <strong>Schedule:</strong> Daily at 03:00 AM<br>
+                        <strong>Recipients:</strong> data-team@postpay.com
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(index) {
+            document.querySelectorAll('.menu-item').forEach((item, i) => {
+                item.classList.remove('active');
+            });
+            document.querySelectorAll('.screen').forEach((screen, i) => {
+                screen.classList.remove('active');
+            });
+
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems[index].classList.add('active');
+
+            const screens = document.querySelectorAll('.screen');
+            screens[index].classList.add('active');
+        }
+    </script>
+</body>
+
+</html>
