@@ -1,0 +1,26 @@
+# databricks.yml
+bundle:
+  name: practice_product
+
+# 1. Compile the Python code from the local directory into a wheel
+artifacts:
+  default:
+    type: whl
+    path: .
+
+# 2. Include all resource files
+include:
+  - resources/*.yml
+
+# 3. Define deployment targets
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      root_path: /Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+
+  prod:
+    mode: production
+    workspace:
+      root_path: /Shared/.bundle/${bundle.name}/${bundle.target}

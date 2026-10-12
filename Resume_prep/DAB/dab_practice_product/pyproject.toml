@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "revenue_calculator"
+version = "0.1.0"
+description = "My First Databricks Asset Bundle Product"
+requires-python = ">=3.9"
+
+[tool.setuptools.packages.find]
+where = ["src"]

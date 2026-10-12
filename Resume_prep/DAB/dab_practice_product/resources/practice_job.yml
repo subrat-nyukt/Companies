@@ -1,0 +1,18 @@
+resources:
+  jobs:
+    my_practice_job:
+      name: "${bundle.name}_${bundle.target}_job"
+
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "4"
+            dependencies:
+              - "../dist/*.whl"
+
+      tasks:
+        - task_key: run_calculator
+          environment_key: default
+          python_wheel_task:
+            package_name: revenue_calculator
+            entry_point: run
