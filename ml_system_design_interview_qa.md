@@ -1403,3 +1403,60 @@ Gradient checkpointing:
 | Tokenization | BPE/WordPiece subword. 1 token ≈ 0.75 English words |
 | Embeddings | Dense vectors from contrastive learning. Cosine similarity for retrieval |
 | Fine-tuning internals | AdamW + warmup/cosine LR. LoRA adds low-rank ΔW=BA. bf16 + gradient checkpointing |
+
+
+
+
+
+**XGBoost regression: predicting house prices
+**In regression, XGBoost predicts a number—here, a house price—instead of a category like “fraud” or “not fraud.”
+Imagine training data with features such as:
+
+<img width="368" height="150" alt="image" src="https://github.com/user-attachments/assets/d142fec3-8fa6-44b1-bdd8-ba22084efbce" />
+
+
+
+These numbers are made up to explain the process.
+1. Start with a basic prediction
+A simple starting prediction could be the average house price in the training data. Suppose that average is $343,750. At first, the model predicts that price for every house.
+That’s not very accurate, but it gives XGBoost a starting point.
+2. Calculate the errors
+For each house, XGBoost compares the prediction with the actual price:
+text
+Error = actual price − predicted price
+For House A, the starting prediction is too high. For House C, it is too low. The model uses these errors to work out how its predictions should change.
+3. Build a tree that adjusts the predictions
+The first decision tree might split the houses by size:
+text
+Is the house larger than 110 m²?
+├── No: lower the predicted price
+└── Yes: raise the predicted price
+The tree’s leaves provide adjustments to the current predictions. They are not necessarily the final house prices.
+For example, a small-house leaf might adjust predictions downward, while a large-house leaf adjusts them upward.
+4. Add the adjustment
+XGBoost applies the tree’s adjustments to its current predictions. A setting called the learning rate controls how much of each adjustment is applied.
+For illustration, a model might make a prediction of $343,750 for a house, then add an adjustment of $40,000, scaled by the learning rate. If the learning rate were 0.1, the update would be:
+text
+$343,750 + (0.1 × $40,000) = $347,750
+Those values are only examples. In practice, XGBoost calculates the adjustments from the training data.
+5. Add more trees
+The next tree looks at the model’s remaining errors. It might learn that, among houses of similar size, newer houses tend to cost more. Another tree might capture how bedrooms, neighborhood, or other features affect prices.
+The prediction is built up step by step:
+text
+Starting price
++ size-based adjustment
++ age-based adjustment
++ location-based adjustment
++ other learned adjustments
+= final predicted price
+So, XGBoost is not usually making one big decision such as “a 3-bedroom house costs $X.” It combines many smaller tree-based adjustments.
+6. Evaluate the model
+To check whether the model predicts well, you can compare its predictions with prices it did not train on. Common regression metrics include:
+MAE: average absolute difference between predicted and actual prices. Easy to interpret in dollars.
+RMSE: like MAE, but penalizes large errors more.
+R²: measures how much of the variation in prices the model explains; it should not be used alone.
+For example, if a model’s MAE is $18,000, its predictions are off by about $18,000 on average on the evaluation data. That is an illustrative interpretation, not a result from the example table.
+
+
+
+
