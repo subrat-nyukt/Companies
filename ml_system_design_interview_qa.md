@@ -1459,4 +1459,289 @@ For example, if a model’s MAE is $18,000, its predictions are off by about $18
 
 
 
-
+XGBoost regression formula, with a house-price example
+XGBoost builds a prediction by adding the outputs of many decision trees:
+y
+^
+i
+=
+∑
+k
+=
+1
+K
+f
+k
+(
+x
+i
+)
+y
+^
+​
+  
+i
+​
+ = 
+k=1
+∑
+K
+​
+ f 
+k
+​
+ (x 
+i
+​
+ )
+where:
+x
+i
+x 
+i
+​
+  is the information about house 
+i
+i, such as area and age.
+f
+k
+f 
+k
+​
+  is the 
+k
+k-th decision tree.
+K
+K is the total number of trees.
+y
+^
+i
+y
+^
+​
+  
+i
+​
+  is the predicted price.
+Each tree outputs a value for the house’s leaf. These values are added together to produce the prediction.
+A small numerical example
+Suppose we have two features:
+Area in square metres
+Age in years
+For a particular house, imagine the trained XGBoost model has three trees:
+Tree
+Example rule reached by the house
+Price adjustment
+1
+Area is over 100 m²
++$40,000
+2
+House is less than 15 years old
++$25,000
+3
+Area is over 100 m² and house is older than 25 years
+−$10,000
+Assume the model’s starting prediction is $200,000, and these tree outputs already include the learning-rate scaling. Then:
+y
+^
+=
+200,000
++
+40,000
++
+25,000
+−
+10,000
+=
+$
+255,000
+y
+^
+​
+ =200,000+40,000+25,000−10,000=$255,000
+This is an illustrative example: real trees are learned from training data, and their leaf values are calculated by the algorithm.
+How does XGBoost learn each tree?
+For squared-error regression, a common loss function is:
+L
+=
+∑
+i
+=
+1
+n
+(
+y
+i
+−
+y
+^
+i
+)
+2
+L= 
+i=1
+∑
+n
+​
+ (y 
+i
+​
+ − 
+y
+^
+​
+  
+i
+​
+ ) 
+2
+ 
+where 
+y
+i
+y 
+i
+​
+  is the actual price and 
+y
+^
+i
+y
+^
+​
+  
+i
+​
+  is the predicted price. The model tries to make this loss smaller.
+At each boosting round, XGBoost adds a new tree to improve the existing predictions. It uses the loss’s gradient and Hessian—roughly, information about the direction and curvature of the error—to decide which splits and leaf values are useful.
+A regularized objective is commonly written as:
+Objective
+=
+∑
+i
+=
+1
+n
+l
+(
+y
+i
+,
+y
+^
+i
+)
++
+∑
+k
+=
+1
+K
+Ω
+(
+f
+k
+)
+Objective= 
+i=1
+∑
+n
+​
+ l(y 
+i
+​
+ , 
+y
+^
+​
+  
+i
+​
+ )+ 
+k=1
+∑
+K
+​
+ Ω(f 
+k
+​
+ )
+Here:
+l
+(
+y
+i
+,
+y
+^
+i
+)
+l(y 
+i
+​
+ , 
+y
+^
+​
+  
+i
+​
+ ) measures prediction error.
+Ω
+(
+f
+k
+)
+Ω(f 
+k
+​
+ ) penalizes overly complicated trees, helping reduce overfitting.
+A simplified tree-complexity penalty is:
+Ω
+(
+f
+)
+=
+γ
+T
++
+1
+2
+λ
+∑
+j
+=
+1
+T
+w
+j
+2
+Ω(f)=γT+ 
+2
+1
+​
+ λ 
+j=1
+∑
+T
+​
+ w 
+j
+2
+​
+ 
+where 
+T
+T is the number of leaves, 
+w
+j
+w 
+j
+​
+  is the output value of leaf 
+j
+j, and 
+γ
+γ and 
+λ
+λ control regularization.
